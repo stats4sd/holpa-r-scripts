@@ -366,7 +366,7 @@ div_score <- function(var){
     )
     )
   
-  return(scores)
+  return(scores[[1]])
    
 }
 
@@ -384,7 +384,7 @@ div_labels <- function(var){
         )
     )
   
-  return(labels)
+  return(labels[[1]])
 }
 
 biodiversity_scores <- function(){
@@ -447,20 +447,20 @@ biodiversity_scores <- function(){
       ),
       biodiversity_4_score = div_score(tree_diversity),
       biodiversity_4_label = div_labels(tree_diversity)
-      # biodiversity_5_score = div_score(bushland_diversity),
-      # biodiversity_5_label = div_labels(bushland_diversity),
-      # biodiversity_6_score = div_score(fallow_land_diversity),
-      # biodiversity_6_label = div_labels(fallow_land_diversity),
-      # biodiversity_7_score = div_score(hedgerows_diversity),
-      # biodiversity_7_label = div_labels(hedgerows_diversity),
-      # biodiversity_8_score = div_score(grassland_diversity),
-      # biodiversity_8_label = div_labels(grassland_diversity),
-      # biodiversity_9_score = div_score(forest_patches_diversity),
-      # biodiversity_9_label = div_labels(forest_patches_diversity),
-      # biodiversity_10_score = div_score(wetlands_diversity),
-      # biodiversity_10_label = div_labels(wetlands_diversity),
-      # biodiversity_11_score = div_score(woodlots_diversity),
-      # biodiversity_11_label = div_labels(woodlots_diversity)
+      biodiversity_5_score = div_score(bushland_diversity),
+      biodiversity_5_label = div_labels(bushland_diversity),
+      biodiversity_6_score = div_score(fallow_land_diversity),
+      biodiversity_6_label = div_labels(fallow_land_diversity),
+      biodiversity_7_score = div_score(hedgerows_diversity),
+      biodiversity_7_label = div_labels(hedgerows_diversity),
+      biodiversity_8_score = div_score(grassland_diversity),
+      biodiversity_8_label = div_labels(grassland_diversity),
+      biodiversity_9_score = div_score(forest_patches_diversity),
+      biodiversity_9_label = div_labels(forest_patches_diversity),
+      biodiversity_10_score = div_score(wetlands_diversity),
+      biodiversity_10_label = div_labels(wetlands_diversity),
+      biodiversity_11_score = div_score(woodlots_diversity),
+      biodiversity_11_label = div_labels(woodlots_diversity)
     )%>%
     select(id, starts_with("biodiversity"))
   
