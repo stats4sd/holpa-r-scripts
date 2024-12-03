@@ -361,7 +361,7 @@ div_score <- function(var){
         case_when(
       {{var}} == "high" ~ 5,
       {{var}} == "medium" ~ 3.67,
-      {{var}} == "low" ~ 2.34,
+      {{var}} == "low" ~ 2.33,
       {{var}} == "none" ~ 1
     )
     )
@@ -446,7 +446,7 @@ biodiversity_scores <- function(){
         )
       ),
       biodiversity_4_score = div_score(tree_diversity),
-      biodiversity_4_label = div_labels(tree_diversity)
+      biodiversity_4_label = div_labels(tree_diversity),
       biodiversity_5_score = div_score(bushland_diversity),
       biodiversity_5_label = div_labels(bushland_diversity),
       biodiversity_6_score = div_score(fallow_land_diversity),
