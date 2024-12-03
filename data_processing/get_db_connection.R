@@ -5,7 +5,7 @@ library(tidyverse)
 library(jsonlite)
 library(dotenv)
 
-source("db_functions.R")
+source("data_processing/db_functions.R")
 
 load_dot_env(".env")
 

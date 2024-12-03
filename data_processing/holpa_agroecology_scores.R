@@ -7,7 +7,7 @@ library(data.table)
 # IMPORT DATA FROM DATABASE
 ################################################################################ 
 
-source("get_db_connection.R")
+source("data_processing/get_db_connection.R")
 
 agroecology_scores <- data%>%select(id)
 
