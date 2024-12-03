@@ -952,6 +952,6 @@ agroecology_scores <- participation_scores()
 # WRITE TABLE TO DATABSE
 ################################################################################
 
-dbWriteTable(conn,"agroecology_scores",indicators,overwrite=TRUE)
+dbWriteTable(conn,"agroecology_scores",agroecology_scores,overwrite=TRUE)
 
 dbDisconnect(conn)

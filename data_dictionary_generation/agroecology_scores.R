@@ -44,4 +44,4 @@ data_dictionary <- data_dictionary%>%
          -score_label)%>%
   relocate(variable, .after = indicator_no)
 
-dbWriteTable(conn,"agroecology_scores_data_dictionary",indicators,overwrite=TRUE)
+dbWriteTable(conn,"agroecology_scores_data_dictionary",data_dictionary,overwrite=TRUE)
