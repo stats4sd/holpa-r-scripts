@@ -7,24 +7,24 @@ library(dotenv)
 
 source("data_processing/db_functions.R")
 
-load_dot_env(".env")
+env_path <- paste(getwd(), ".env", sep = '/')
 
-ssh_command<-forge_tunnel(ip=Sys.getenv("IP"),ssh_priv_local=Sys.getenv("SSH_PRIV_LOCAL"))
 
-pid <- sys::r_background(std_out = FALSE,
-                         std_err = FALSE,
-                         args = c("-e", ssh_command))
+dotenv::load_dot_env(env_path)
 
-Sys.sleep(5)
+get_db <- function() {
+  return(dbConnect(RMariaDB::MariaDB(),
+                   dbname = Sys.getenv("DB_DATABASE"),
+                   host = Sys.getenv("DB_HOST"),
+                   port = as.integer(Sys.getenv("DB_PORT")),
+                   user = Sys.getenv("DB_USERNAME"),
+                   password = Sys.getenv("DB_PASSWORD"),
+                   bigint = "numeric",
+                   int = "numeric"
+                   
+  ))
+}
 
-conn <- dbConnect(
-  RMariaDB::MariaDB(),
-  
-  password=Sys.getenv("DB_PASSWORD"),
-  dbname=Sys.getenv("DB_DATABASE"),
-  
-  user=DB_USER,
-  host=DB_HOST,
-  port=DB_PORT)
+con <- get_db()
 
-data <- dbGetQuery(conn,"SELECT * FROM main_surveys")
+data <- dbGetQuery(con,"SELECT * FROM main_surveys")
