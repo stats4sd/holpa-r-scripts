@@ -43,3 +43,6 @@ dd <- bind_rows(dd, multiple_selects)
 
 dbWriteTable(con,"raw_global_code_lists",code_lists,overwrite=TRUE)
 dbWriteTable(con,"raw_global_data_dictionary",dd,overwrite=TRUE)
+
+write.xlsx(dd, "dictionaries/Raw global data dictionary.xlsx")
+write.xlsx(code_lists, "dictionaries/Raw global codelists.xlsx")

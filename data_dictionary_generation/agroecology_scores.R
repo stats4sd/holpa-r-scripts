@@ -45,3 +45,5 @@ data_dictionary <- data_dictionary%>%
   relocate(variable, .after = indicator_no)
 
 dbWriteTable(con,"agroecology_scores_data_dictionary",data_dictionary,overwrite=TRUE)
+
+write.xlsx(data_dictionary, "dictionaries/Agroecology Scores data dictionary.xlsx")
