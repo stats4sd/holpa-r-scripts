@@ -81,7 +81,7 @@ tmp <- data%>%
     )
   )%>%
   rowwise()%>%
-  mutate(kpi3_soil_health = median(c_across(fert_score, erosion_score), na.rm = TRUE))
+  mutate(kpi3_soil_health = median(c_across(c(fert_score, erosion_score)), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(id, kpi3_soil_health))
@@ -107,10 +107,10 @@ tmp <- data%>%
   )%>%
   rowwise()%>%
   mutate(
-    kpi5a_animal_diversity = median(c_across(pollinator_diversity, pest_diversity,
-                                             pest_enemy_diversity, mammal_diversity),
+    kpi5a_animal_diversity = median(c_across(c(pollinator_diversity, pest_diversity,
+                                             pest_enemy_diversity, mammal_diversity)),
                                     na.rm = TRUE),
-    kpi5b_tree_diversity = median(c_across(tree_cover, tree_diversity),
+    kpi5b_tree_diversity = median(c_across(c(tree_cover, tree_diversity)),
                                   na.rm = TRUE)
   )
 
@@ -139,15 +139,15 @@ tmp <- data%>%
   )%>%
   rowwise()%>%
   mutate(
-    lc1 = median(c_across(natural_vegetation, bushland, fallow_land, hedgerows,
+    lc1 = median(c_across(c(natural_vegetation, bushland, fallow_land, hedgerows,
                           grassland, ponds,forest_patches, wetlands, woodlots,
-                          other_land_covering),
+                          other_land_covering)),
                  na.rm = TRUE),
-    lc2 = median(c_across(bushland_diversity, fallow_land_diversity,
+    lc2 = median(c_across(c(bushland_diversity, fallow_land_diversity,
                           hedgerows_diversity,grassland_diversity,
                           forest_patches_diversity, wetlands_diversity,
-                          woodlots_diversity)),
-    kpi7_landscape_complexity = median(c_across(lc1,lc2), na.rm = TRUE)
+                          woodlots_diversity))),
+    kpi7_landscape_complexity = median(c_across(lc1:lc2), na.rm = TRUE)
   )
 
 performance_indicators <- performance_indicators%>%
@@ -257,6 +257,207 @@ performance_indicators <- performance_indicators%>%
 # CLIMATE RESILIENCE (KPI 14)
 ################################################################################
 
+## ABS Pillar
+
+# data <- data.frame(
+#   id = 1:100,
+#   distanceunit_farmland = sample(c("km", "minutes"),size = 100, replace = TRUE),
+#   transportation_farmland = sample(c("walking", "cycling", "motorbike", "car", "horse", "donkey"), size = 100, replace = TRUE),
+#   distance_farmland = sample(0:25, size = 100, replace = TRUE),
+#   distanceunit_freshwater = sample(c("km", "minutes"),size = 100, replace = TRUE),
+#   transportation_freshwater = sample(c("walking", "cycling", "motorbike", "car", "horse", "donkey"), size = 100, replace = TRUE),
+#   distance_freshwater = sample(0:25, size = 100, replace = TRUE),
+#   piped_drinking_water = sample(0:1, size = 100, replace = TRUE), 
+#   piped_toilet = sample(0:1, size = 100, replace = TRUE), 
+#   electricity = sample(0:1, size = 100, replace = TRUE), 
+#   waste_collection = sample(0:1, size = 100, replace = TRUE), 
+#   phone_reception = sample(0:1, size = 100, replace = TRUE), 
+#   internet = sample(0:1, size = 100, replace = TRUE)
+# )
+
+abs1 <- data%>%
+  select(id, starts_with("distanceunit"), starts_with("transportation_"), starts_with("distance"))%>%
+  pivot_longer(
+    cols = distanceunit_farmland:distance_freshwater,
+    names_to = c(".value", "place"),
+    names_sep = "_"
+  )%>%
+  mutate(transportation = ifelse(distanceunit == "km", NA, transportation))%>%
+  mutate(distance = ifelse(distance %in% c(99,999,9999,99999), NA, distance))%>%
+  mutate(walking_time = case_when(
+    distanceunit == "km" ~ (distance/5)*60,
+    transportation %in% c("motorbike", "car") ~ distance*10,
+    transportation == "cycling" ~ distance*3,
+    transportation %in% c("horse", "donkey") ~ distance*2,
+    transportation == "walking" ~ distance
+  ))%>%
+  mutate(
+    walking_time_score = case_when(
+      walking_time < 5 ~ 5,
+      walking_time < 20 ~ 2.5,
+      walking_time >= 20 ~ 0
+    )
+  )%>%
+  group_by(id)%>%
+  summarise(ABS_service_access = mean(walking_time_score, na.rm = TRUE))
+
+abs2 <- data%>%
+  select(id, piped_drinking_water, piped_toilet, electricity, waste_collection, phone_reception, internet)%>%
+  rowwise()%>%
+  mutate(ABS_utilities = sum(c_across(piped_drinking_water:internet), na.rm = TRUE))%>%
+  mutate(ABS_utilities = case_when(
+    ABS_utilities >= 3 ~ 5,
+    ABS_utilities > 0 ~ 2.5,
+    ABS_utilities == 0 ~ 0
+  ))%>%
+  select(id, ABS_utilities)
+
+abs <- full_join(abs1, abs2)%>%
+  rowwise()%>%
+  mutate(ABS_score = mean(c_across(ABS_service_access:ABS_utilities), na.rm = TRUE))
+
+## ASSET PILLAR
+
+# data <- data.frame(
+#   id = 1:100,
+#   cars = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   motorbikes = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   bicycles = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   gas_cookers = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   electric_cookers = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   mobile_phones = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   smartphones = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   ox_plough = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   tractors = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   seed_drills = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   plows = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   crop_facilities = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
+#   asset_other_count = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1))
+# )
+
+ast <- data%>%
+  select(id, cars:crop_facilities,asset_other_count)%>%
+  mutate_at(vars(cars:asset_other_count), function(x) ifelse(x>0,1,0))%>%
+  rowwise()%>%
+  mutate(asset_sum = sum(c_across(cars:asset_other_count), na.rm = TRUE))%>%
+  mutate(AST_score = case_when(
+    asset_sum >= 3 ~ 5,
+    asset_sum > 0 ~ 2.5,
+    asset_sum == 0 ~ 0
+  ))%>%
+  select(id, AST_score)
+
+## SOCIAL SECURITY PILLAR
+
+# data <- data.frame(
+#   id = 1:100,
+#   free_school_meals = sample(1:5, size = 100, replace = TRUE),
+#   support_banks = sample(c(0,1,999), size = 100, replace = TRUE),
+#   support_community_leaders = sample(c(0,1,999), size = 100, replace = TRUE),
+#   support_other_community = sample(c(0,1,999), size = 100, replace = TRUE),
+#   support_my_community = sample(c(0,1,999), size = 100, replace = TRUE),
+#   support_farmer_coops = sample(c(0,1,999), size = 100, replace = TRUE)
+# )
+
+ssn <- data%>%
+  select(id, "SSN_school_meals" = free_school_meals, starts_with("support"))%>%
+  mutate_at(vars(starts_with("support")), function(x) na_if(x, 999))%>%
+  rowwise()%>%
+  mutate(SSN_hh_support = sum(c_across(starts_with("support")), na.rm = TRUE))%>%
+  mutate(SSN_hh_support = case_when(
+    SSN_hh_support >= 3 ~ 5,
+    SSN_hh_support > 0 ~ 2.5,
+    SSN_hh_support == 0 ~ 0
+  ))%>%
+  mutate(SSN_score = mean(c_across(c(SSN_school_meals, SSN_hh_support)), na.rm = TRUE))
+
+## ADAPTIVE CAPACITY PILLAR
+
+ac <- data%>%
+  select(id, read_write, highest_education_male, highest_education_female,
+         agricultural_training, business_training, other_training_yn,
+         income_count, food_expentiture_percent, credit_access,
+         debt_repayment, debt, agricultural_loss_insurance, subsidies)%>%
+  mutate(
+    AC_literacy = case_when(
+      read_write == 3 ~ 5,
+      read_write %in% c(1,2) ~ 2.5,
+      read_write %in% c(0,777) ~ 0
+    ),
+    highest_education_male = case_when(
+      highest_education_male >= 2 ~ 5,
+      highest_education_male == 1 ~ 2.5,
+      highest_education_male == 0 ~ 0
+    ),
+    highest_education_female = case_when(
+      highest_education_female >= 2 ~ 5,
+      highest_education_female == 1 ~ 2.5,
+      highest_education_female == 0 ~ 0
+    ),
+    AC_training = ifelse(
+      agricultural_training == 1 |
+        business_training == 1 |
+          other_training_yn == 1, 5, 0
+    ),
+    AC_income_sources = case_when( #FLAG AS NOT CURRENRLY POSSIBLE TO EQUAL 0
+      income_count >= 3 ~ 5,
+      income_count > 0 ~ 2.5,
+      income_count == 0 ~ 0
+    ),
+    AC_food_expenditure = case_when(
+      food_expenditure_percent %in% ("0", "1_25") ~ 5 #CHECK ON 0,
+      food_expenditure_percent == "26_50" ~ 3.33,
+      food_expenditure_percent == "51_75" ~ 1.66,
+      food_expenditure_percent == "76_100" ~ 0
+    ),
+    AC_credit_access = case_when(
+      credit_access == 2 ~ 5,
+      credit_access == 999 ~ NA,
+      .default = 0
+    ),
+    AC_credit_repayment = case_when(
+      credit_access == 2 & debt == 1 ~ 5,
+      debt_repayment == 4 ~ 5,
+      debt_repayment == 3 ~ 3.33,
+      debt_repayment == 2 ~ 1.66,
+      dept_repayment == 1 | credit_acess %in% c(1,0) ~ 0
+    ),
+    AC_insurance == case_when(
+      agricultural_loss_insurance > 0 ~ 5,
+      agricultural_loss_insurance == 0 ~ 0
+    ),
+    AC_subsidies = case_when(
+      subsidies == 1 ~ 5,
+      subsidies == 0 ~ 0
+    )
+  )%>%
+  rowwise()%>%
+  mutate(AC_education = mean(c_across(c(highest_education_male,
+                                        highest_education_female)),
+                             na.rm = TRUE))%>%
+  mutate(AC_score = mean(c_across(starts_with("AC_")), na.rm = TRUE))
+
+## RIMA
+
+# ac <- data.frame(
+#   id = 1:100,
+#   AC_score = sample(0:5, size = 100, replace = TRUE)
+# )
+
+RIMA <- abs%>%
+  select(id, ABS_score)%>%
+  left_join(ast%>%select(id, AST_score))%>%
+  left_join(ssn%>%select(id, SSN_score))%>%
+  left_join(ac%>%select(id, AC_score))%>%
+  rowwise()%>%
+  mutate(kpi14a_climate_resilience = sum(c_across(ends_with("_score")), na.rm = TRUE))
+
+
+performance_indicators <- performance_indicators%>%
+  left_join(RIMA%>%select(id, kpi14a_climate_resilience))%>%
+  left_join(data%>%select(id, "kpi_14b_climate_resilience" = capacity_to_recover))
+
+
 ################################################################################
 # DIET QUALITY (KPI 15)
 ################################################################################
@@ -276,10 +477,10 @@ tmp <- data%>%
     fruit = ifelse(citrus==1|otherfruit==1)
   )%>%
   rowwise()%>%
-  mutate(kpi15_diet_diversity = sum(c_across(grains,pulses,nuts_seeds,
+  mutate(kpi15_diet_diversity = sum(c_across(c(grains,pulses,nuts_seeds,
                                              dairy, meats, eggs, 
                                              dark_leafy_veg,
-                                             vitA, veg, fruit), na.rm = TRUE))
+                                             vitA, veg, fruit)), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(id, kpi15_diet_diversity))
@@ -294,8 +495,8 @@ tmp <- data%>%
     hhmen_agency_step_now = na_if(hhmen_agency_step_now,999)
   )%>%
   rowwise()%>%
-  mutate(kpi16_farmer_agency = mean(c_across(hhwomen_agency_step_now,
-                                             hhmen_agency_step_now),
+  mutate(kpi16_farmer_agency = mean(c_across(c(hhwomen_agency_step_now,
+                                             hhmen_agency_step_now)),
                                     na.rm = TRUE)
   )
 
@@ -308,23 +509,14 @@ performance_indicators <- performance_indicators%>%
 
 tmp <- data%>%
   mutate(
-    land_security_recalc = 
-      case_when(
-        land_security_perception == 5 ~ 0,
-        land_security_perception == 4 ~ 0.25,
-        land_security_perception == 3 ~ 0.5,
-        land_security_perception == 2 ~ 0.75,
-        land_security_perception == 1 ~ 1
-      ),
     vulnerable_share = area_at_threat_ha/total_land_ha,
     land_owned_share = (area_owned_ha/total_land_ha)*100,
-    land_security_weighted = 
-     vulnerable_share * land_security_recalc,
-    land_security_weighted = ifelse(
-      land_security_perception == 5, 5,
-      4 - (4*land_security_weighted)
+    kpi17a_land_security_perception = land_security_perception + (1-vulnerable_share),
+    kpi17b_land_tenure = land_owned_share
   )
-  )
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select(id, kpi17a_land_security_perception, kpi17b_land_tenure))
 
 ################################################################################
 # HUMAN WELLBEING (KPI 18)

@@ -720,9 +720,9 @@ fairness_scores <- function(){
       fairness_4_score = trees_fair_price,
       fariness_4_label = fairness_labels(trees_fair_price),
       fairness_5_score = honey_fair_price,
-      fariness_5_label = fairness_labels(honey_fair_price),
-      fairness_6_score = other_prod_fair_price,
-      fariness_6_label = fairness_labels(other_prod_fair_price)
+      fariness_5_label = fairness_labels(honey_fair_price)#,
+      # fairness_6_score = other_prod_fair_price,
+      # fariness_6_label = fairness_labels(other_prod_fair_price) COMING FROM A REPEAT _ WILL HAVE TO RETHINK
     )%>%
     select(id, starts_with("fairness_"))
   
