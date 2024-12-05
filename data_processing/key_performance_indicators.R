@@ -121,6 +121,44 @@ performance_indicators <- performance_indicators%>%
 # BIODIVERSITY - RICHNESS (KPI 6)
 ################################################################################
 
+## CROP RICHNESS
+
+# repeat_crop_production_details <- data.frame(
+#   id = 1:300,
+#   farm_id = rep(c(1:100),3),
+#   primary_crop_name = sample(c("maize", "cotton", "wheat", "millet", "rice", "sorghum"), size = 300, replace = TRUE),
+#   primary_crop_area_ha = sample(1:5, size = 300, replace = TRUE)
+# )
+# 
+# data <- data.frame(
+#   id = 1:100,
+#   crop_count = sample(3:10, size = 100, replace = TRUE),
+#   crop_area_ha = sample(1:8, size = 100, replace = TRUE)
+# )
+
+tmp1 <- data%>%
+  select(id, crop_count, crop_area_ha)%>%
+  mutate(
+    crop_richness_min = min(crop_count, na.rm = TRUE),
+    crop_richness_max = max(crop_count, na.rm = TRUE),
+    crop_richness_median = median(crop_count, na.rm = TRUE)
+  )%>%
+  mutate(kpi6a_crop_richness_index = 
+           (crop_count - crop_richness_min)/(crop_richness_max-crop_richness_min)*100)
+
+tmp2 <- data%>%
+  select(id, seed_type, exotic_local)%>%
+  mutate(
+    exotic_local = ifelse(exotic_local == 6 | exotice_local == 7, NA, exotic_local),
+  )%>%
+  rowwise()%>%
+  mutate(kpi6b_variety_richness = median(c_across(seed_type:exotic_local), na.rm = TRUE))
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp1%>%select(id, kpi6a_crop_richness_index))%>%
+  left_join(tmp2%>%select(id, kpi6b_variety_richness))
+
+
 ################################################################################
 # BIODIVERSITY - LANDSCAPE COMPLEXITY (KPI 7)
 ################################################################################
