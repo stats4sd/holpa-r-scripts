@@ -270,13 +270,11 @@ performance_indicators <- performance_indicators%>%
 # INCOME (KPI 11)
 ################################################################################
 
-#income sum - use reference values or if not available use mean income of the data (ADD OPTION FOR REFERENCE VALUES)
-
 tmp <- data%>%
-  #left_join(ref_values%>%filter(section == "income"))%>%
+  left_join(ref_income%>%select(team_id, ref_income), by = "team_id")%>%
   group_by(team_id)%>%
   mutate(median_income = median(income_sum, na.rm = TRUE))%>%
-  mutate(kpi11a_income_ratio = income_sum / median_income)
+  mutate(kpi11a_income_ratio = income_sum / coalesce(ref_income, median_income))
 
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(id, kpi11a_income_ratio))
