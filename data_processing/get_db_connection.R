@@ -28,3 +28,5 @@ get_db <- function() {
 con <- get_db()
 
 data <- dbGetQuery(con,"SELECT * FROM main_surveys")
+
+#ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation")

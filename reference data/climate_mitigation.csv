@@ -1,0 +1,30 @@
+﻿region,practice_group,practice_name,practice_number,score_overall
+Sub-Saharan Africa,Cropping systems,Monocultures annual,1,2.666666667
+Sub-Saharan Africa,Cropping systems,Monocultures perennial,2,3.833333333
+Sub-Saharan Africa,Cropping systems,Agroforestry,3,4.66
+Sub-Saharan Africa,Cropping systems,Vegetation clearance,4,1.666666667
+Sub-Saharan Africa,Cropping systems,Green manure,5,3
+Sub-Saharan Africa,Cropping systems,Crop rotation,6,3
+Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - fallow,7,4.33
+Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - hedgerows,8,4.33
+Sub-Saharan Africa,Cropping systems,Homegarden,9,4.66
+Sub-Saharan Africa,Cropping systems,Intercropping,10,4.33
+Sub-Saharan Africa,Cropping systems,Vegetation clearance,11,1.666666667
+Sub-Saharan Africa,Cropping systems,Mulching,12,3.33
+Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - natural strips/vegetation,13,4.33
+Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - pollinator strips,14,4.33
+Sub-Saharan Africa,Cropping systems,Push-Pull,15,4.33
+Sub-Saharan Africa,Cropping systems,Other,other,3.630888889
+Sub-Saharan Africa,Cropping systems,Biochar,,2.66
+Sub-Saharan Africa,Cropping systems,Drip irrigation,,2.66
+Sub-Saharan Africa,Cropping systems,Microdosing,,2.66
+Sub-Saharan Africa,Cropping systems,Reduced tillage,,3.66
+Sub-Saharan Africa,Lowland rice systems,Rice_Biochar,,3.33
+Sub-Saharan Africa,Lowland rice systems,Rice_Green manure,,4
+Sub-Saharan Africa,Lowland rice systems,Rice_Microdosing,,3.33
+Sub-Saharan Africa,Lowland rice systems,Rice-fish integration,,3.33
+Sub-Saharan Africa,Lowland rice systems,Alternate wetting and drying,,3.33
+Sub-Saharan Africa,Livestock systems,Improved feed quality,,4
+Sub-Saharan Africa,Livestock systems,Planting N-fixing legumes,,3.33
+Sub-Saharan Africa,Livestock systems,Rotational grazing,,3.33
+Sub-Saharan Africa,Fish systems,Improved feed quality,,3

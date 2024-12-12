@@ -11,13 +11,15 @@ source("data_processing/get_db_connection.R")
 
 performance_indicators <- data%>%select(id)
 
+ref_cli_mitigation <- read.csv("reference data/climate_mitigation.csv") # MOVE TO DATABASE
+
 ################################################################################
 # CROP HEALTH (KPI 1)
 ################################################################################
 
 #Household
 performance_indicators <- performance_indicators%>%
-  left_join(data%>%select(id, "kpi1_crop_health" = crop_loss_perc))
+  left_join(data%>%select(id, "kpi1a_crop_health" = crop_loss_perc))
 
 #Fieldwork
 
@@ -29,10 +31,10 @@ tmp <- fieldwork_sites%>%
     function(x) median(x, na.rm = TRUE)
   )%>%
   rowwise()%>%
-  mutate(kpi1b_crop_health = median(c_across(appearance_description:management), na.rm = TRUE))
+  mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:management), na.rm = TRUE))
   
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, kpi1b_crop_health))
+  left_join(tmp%>%select(id, kpi1b_crop_health_fieldwork))
 
 ################################################################################
 # ANIMAL HEALTH (KPI 2)
@@ -90,6 +92,20 @@ performance_indicators <- performance_indicators%>%
 # NUTRIENT USE (KPI 4)
 ################################################################################
 
+#first choice should be to use reference values here but could be difficult to effectively implement, 
+# and most existing implementations do not have sufficient data
+
+tmp <- data%>%
+  rowwise()%>%
+  mutate(total_fertiliser_input = sum(c_across(chem_fert_kg_ha,
+                                               own_organic_fert_kg_ha,
+                                               bought_organic_fert_kg_ha)))%>%
+  mutate(median_input = sum(total_fertiliser_input))%>%
+  mutaet(kpi4_nutrient_use = total_fertiliser_input/median_input)
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select(id, kpi4_nutrient_use))
+
 ################################################################################
 # BIODIVERSITY - DESCRIPTIVE (KPI 5)
 ################################################################################
@@ -122,19 +138,6 @@ performance_indicators <- performance_indicators%>%
 ################################################################################
 
 ## CROP RICHNESS
-
-# repeat_crop_production_details <- data.frame(
-#   id = 1:300,
-#   farm_id = rep(c(1:100),3),
-#   primary_crop_name = sample(c("maize", "cotton", "wheat", "millet", "rice", "sorghum"), size = 300, replace = TRUE),
-#   primary_crop_area_ha = sample(1:5, size = 300, replace = TRUE)
-# )
-# 
-# data <- data.frame(
-#   id = 1:100,
-#   crop_count = sample(3:10, size = 100, replace = TRUE),
-#   crop_area_ha = sample(1:8, size = 100, replace = TRUE)
-# )
 
 tmp1 <- data%>%
   select(id, crop_count, crop_area_ha)%>%
@@ -194,6 +197,18 @@ performance_indicators <- performance_indicators%>%
 ################################################################################
 # CLIMATE MITIGATION (KPI 8)
 ################################################################################
+
+tmp <- agroecological_practices%>%
+  left_join(ref_cli_mitigation%>%
+              select(practice_number, score_overall), by = "practice_number")%>%
+  group_by(farm_id)%>%
+  mutate(total_area = sum(practice_area_ha),
+         practice_share = practice_area_ha/total_area,
+         weighted_cc_score = score_overall * practice_share)%>%
+  summarise(kpi8_climate_mitigation = mean(weighted_cc_score, na.rm = TRUE))
+  
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select(farm_id, kpi8_climate_mitigation), by = c("id" = "farm_id"))
 
 ################################################################################
 # WATER USE (KPI 9)
@@ -260,8 +275,8 @@ performance_indicators <- performance_indicators%>%
 tmp <- data%>%
   #left_join(ref_values%>%filter(section == "income"))%>%
   group_by(team_id)%>%
-  mutate(mean_income = mean(income_sum, na.rm = TRUE))%>%
-  mutate(kpi11a_income_ratio = income_sum / coalesce(ref_value, mean_income))
+  mutate(median_income = median(income_sum, na.rm = TRUE))%>%
+  mutate(kpi11a_income_ratio = income_sum / median_income)
 
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(id, kpi11a_income_ratio))
@@ -287,31 +302,90 @@ performance_indicators <- performance_indicators%>%
 # YIELD GAP (KPI 12)
 ################################################################################
 
+#based on medians
+tmp <- crops%>%
+  left_join(data%>%
+              select(team_id, id, by = c("farm_id" = "id")))%>%
+  group_by(team_id, primary_crop_id)%>%
+  mutate(median_yield_kg_ha = median(yield_kg_ha, na.rm = TRUE))%>%
+  ungroup()%>%
+  mutate(yield_ratio = yield_kg_ha/median_yield_kg_ha)%>%
+  mutate(yield_gap = ifelse(
+    yield_ratio > 1, 0,
+    ifelse(
+      yield_ratio == 0, NA,
+      (1 - yield_ratio)*100
+    )
+  ))%>%
+  group_by(farm_id)%>%
+  summarise(kpi12_yield_gap = mean(yield_gap, na.rm = TRUE))
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select("id" = farm_id, kpi12_yield_gap))
+
 ################################################################################
 # LABOUR PRODUCTIVITY (KPI 13)
 ################################################################################
 
+tmp_permanent <- permanent_labour%>%
+  mutate(
+    hh_hours_per_year = ifelse(labour_type == "household",
+                               perm_labour_group_n_workers * perm_labour_hours * 365,0),
+    hired_hours_per_year = ifelse(labour_type == "hired",
+                                  perm_labourer_numbers * perm_labourer_hours * 365, 0)
+  )%>%
+  group_by(farm_id)%>%
+  summarise(
+    total_hh_hours_per_year = sum(hh_hours_per_year,na.rm = TRUE),
+    total_hired_hours_per_year = sum(hired_hours_per_year, na.rm = TRUE)
+  )
+  
+tmp_seasonal <- seasonal_labour%>%
+  mutate(
+    hh_hours_per_season = ifelse(labour_type == "household",
+                                 seasonal_labour_n_working *
+                                   seasonal_labour_hours *
+                                   seasonal_labour_months_count * 30,0),
+    hired_hours_per_season = ifelse(labour_type == "hired",
+                                    seasonal_labourer_n_working *
+                                      seasonal_labourer_hours *
+                                      seasonal_labourer_months_count * 30,0)
+  )%>%
+  group_by(farm_id)%>%
+  summarise(
+    total_hh_seasonal_hours_per_year = sum(hh_hours_per_season, na.rm = TRUE),
+    total_hired_seasonal_hours_per_year = sum(hired_hours_per_season, na.rm = TRUE)
+  ) 
+
+tmp_land <- data%>%
+  select(id, total_crop_area_ha, livestock_land_own_ha, livestock_land_share_ha, fish_area_ha)%>%
+  rowwise()%>%
+  mutate(total_agricultural_land_ha = sum(c_across(total_crop_area_ha:fish_area_ha), 
+                                          na.rm = TRUE))
+
+tmp_income <- data%>%
+  select(id, income_crops, income_livestock, income_fish)%>%
+  rowwise()%>%
+  mutate(total_agricultural_income = sum(c_across(income_crops:income_fish)))
+  
+tmp <- tmp_permanent%>%
+  left_join(tmp_seasonal)%>%
+  left_join(tmp_land, by = c("farm_id" = "id"))%>%
+  left_join(tmp_income, by = c("farm_id" = "id"))%>%
+  rowwise()%>%
+  mutate(total_labour_hours_per_year = sum(c_across(total_hh_hours_per_year:total_hired_seasonal_hours_per_year),
+                                             na.rm = TRUE))%>%
+  mutate(kpi13a_labour_input = total_labour_hours_per_year/total_agricultural_land_ha)%>%
+  mutate(kpi13b_labour_productivity = total_agricultural_income/total_labour_hours_per_year)
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select(id, kpi13a_labour_input,kpi13b_labour_productivity))
+  
 ################################################################################
 # CLIMATE RESILIENCE (KPI 14)
 ################################################################################
 
 ## ABS Pillar
-
-# data <- data.frame(
-#   id = 1:100,
-#   distanceunit_farmland = sample(c("km", "minutes"),size = 100, replace = TRUE),
-#   transportation_farmland = sample(c("walking", "cycling", "motorbike", "car", "horse", "donkey"), size = 100, replace = TRUE),
-#   distance_farmland = sample(0:25, size = 100, replace = TRUE),
-#   distanceunit_freshwater = sample(c("km", "minutes"),size = 100, replace = TRUE),
-#   transportation_freshwater = sample(c("walking", "cycling", "motorbike", "car", "horse", "donkey"), size = 100, replace = TRUE),
-#   distance_freshwater = sample(0:25, size = 100, replace = TRUE),
-#   piped_drinking_water = sample(0:1, size = 100, replace = TRUE), 
-#   piped_toilet = sample(0:1, size = 100, replace = TRUE), 
-#   electricity = sample(0:1, size = 100, replace = TRUE), 
-#   waste_collection = sample(0:1, size = 100, replace = TRUE), 
-#   phone_reception = sample(0:1, size = 100, replace = TRUE), 
-#   internet = sample(0:1, size = 100, replace = TRUE)
-# )
 
 abs1 <- data%>%
   select(id, starts_with("distanceunit"), starts_with("transportation_"), starts_with("distance"))%>%
@@ -356,23 +430,6 @@ abs <- full_join(abs1, abs2)%>%
 
 ## ASSET PILLAR
 
-# data <- data.frame(
-#   id = 1:100,
-#   cars = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   motorbikes = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   bicycles = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   gas_cookers = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   electric_cookers = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   mobile_phones = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   smartphones = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   ox_plough = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   tractors = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   seed_drills = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   plows = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   crop_facilities = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1)),
-#   asset_other_count = sample(0:5, size = 100, replace = TRUE, prob = c(10,1,1,1,1,1))
-# )
-
 ast <- data%>%
   select(id, cars:crop_facilities,asset_other_count)%>%
   mutate_at(vars(cars:asset_other_count), function(x) ifelse(x>0,1,0))%>%
@@ -386,16 +443,6 @@ ast <- data%>%
   select(id, AST_score)
 
 ## SOCIAL SECURITY PILLAR
-
-# data <- data.frame(
-#   id = 1:100,
-#   free_school_meals = sample(1:5, size = 100, replace = TRUE),
-#   support_banks = sample(c(0,1,999), size = 100, replace = TRUE),
-#   support_community_leaders = sample(c(0,1,999), size = 100, replace = TRUE),
-#   support_other_community = sample(c(0,1,999), size = 100, replace = TRUE),
-#   support_my_community = sample(c(0,1,999), size = 100, replace = TRUE),
-#   support_farmer_coops = sample(c(0,1,999), size = 100, replace = TRUE)
-# )
 
 ssn <- data%>%
   select(id, "SSN_school_meals" = free_school_meals, starts_with("support"))%>%
@@ -443,7 +490,7 @@ ac <- data%>%
       income_count == 0 ~ 0
     ),
     AC_food_expenditure = case_when(
-      food_expenditure_percent %in% ("0", "1_25") ~ 5 #CHECK ON 0,
+      food_expenditure_percent %in% ("0", "1_25") ~ 5
       food_expenditure_percent == "26_50" ~ 3.33,
       food_expenditure_percent == "51_75" ~ 1.66,
       food_expenditure_percent == "76_100" ~ 0
@@ -476,11 +523,6 @@ ac <- data%>%
   mutate(AC_score = mean(c_across(starts_with("AC_")), na.rm = TRUE))
 
 ## RIMA
-
-# ac <- data.frame(
-#   id = 1:100,
-#   AC_score = sample(0:5, size = 100, replace = TRUE)
-# )
 
 RIMA <- abs%>%
   select(id, ABS_score)%>%
@@ -548,8 +590,9 @@ performance_indicators <- performance_indicators%>%
 tmp <- data%>%
   mutate(
     vulnerable_share = area_at_threat_ha/total_land_ha,
+    secure_share = 1 - vulnerable_share,
     land_owned_share = (area_owned_ha/total_land_ha)*100,
-    kpi17a_land_security_perception = land_security_perception + (1-vulnerable_share),
+    kpi17a_land_security_perception = (land_security_perception * vulnerable_share) + (5 * secure_share),
     kpi17b_land_tenure = land_owned_share
   )
 
@@ -560,16 +603,102 @@ performance_indicators <- performance_indicators%>%
 # HUMAN WELLBEING (KPI 18)
 ################################################################################
 
-## MEAN OR MEDIAN _ ASK HOLPA??
-
 tmp <- data%>%
   mutate_at(
     vars(wellbeing1:wellbeing12),
     function(x) na_if(x,999)
   )%>%
   rowwise()%>%
-  mutate(kpi18_human_wellbeing = mean(c_across(wellbeing1:wellbeing12), na.rm = TRUE))
+  mutate(kpi18_human_wellbeing = median(c_across(wellbeing1:wellbeing12), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(id, kpi18_human_wellbeing))
+
+################################################################################
+# SCALING ALL INDICATORS TO 0 - 100
+################################################################################
+
+indicator_scale_set <- function(min, max, var){
+  
+  scaled_scores <- performance_indicators%>%
+    select({{var}})%>%
+    mutate({{var}} := case_when(
+      {{var}} < min ~ min,
+      {{var}} > max ~ max,
+      .default = {{var}}))%>%
+    mutate({{var}} := ({{var}} - min)/(max-min)*100)
+  
+  return(scaled_scores[[1]])
+  
+}
+
+indicator_scale_data <- function(var){
+  
+  scaled_scores <- performance_indicators%>%
+    group_by(team_id)%>%
+    select(team_id, {{var}})%>%
+    mutate(max_score = max({{var}}, na.rm = TRUE),
+           min_score = min({{var}}, na.rm = TRUE))%>%
+    mutate(
+      score_scaled = ({{var}} - min_score)/(max_score-min_score)*100
+    )
+  
+  return(scaled_scores$score_scaled)
+  
+}
+
+indicator_scale_data_rev <- function(var){
+  
+  scaled_scores <- performance_indicators%>%
+    group_by(team_id)%>%
+    select(team_id, {{var}})%>%
+    mutate(max_score = max({{var}}, na.rm = TRUE),
+           min_score = min({{var}}, na.rm = TRUE))%>%
+    mutate(
+      score_scaled = 100 - ({{var}} - min_score)/(max_score-min_score)*100
+    )
+  
+  return(scaled_scores$score_scaled)
+  
+}
+
+performance_indicators <- performance_indicators%>%
+  mutate(
+    kpi1a_crop_health_scaled = kpi1a_crop_health,
+    kpi1b_crop_health_fieldwork_scaled = indicator_scale_set(1,5,kpi1b_crop_health_fieldwork),
+    kpi2_animal_health_scaled = indicator_scale_set(1,5,kpi2_animal_health),
+    kpi2b_fish_health_scaled = indicator_scale_set(1,5,kpi2b_fish_health),
+    kpi3_soil_health_scaled = indicator_scale_set(1,5,kpi3_soil_health),
+    kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use),
+    kpi5a_animal_diversity_scaled = indicator_scale_set(1,5,kpi5a_animal_diversity),
+    kpi5b_tree_diversity_scaled = indicator_scale_set(1,5,kpi5b_tree_diversity),
+    kpi6a_crop_richness_index_scaled = kpi6a_crop_richness_index,
+    kpi6b_variety_richness_scaled = indicator_scale_set(1,5,kpi6b_variety_richness),
+    kpi7_landscape_complexity_scaled = indicator_scale_set(1,5,kpi7_landscape_complexity),
+    kpi8_climate_mitigation_scaled = indicator_scale_set(1,5,kpi8_climate_mitigation),
+    kpi9_water_stress_scaled = kpi9_water_stress,
+    kpi10_energy_use_scaled = indicator_scale_set(1,5,kpi10_energy_use),
+    kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),
+    kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),
+    kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),
+    kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),
+    kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),
+    kpi13a_labour_input_scaled = indicator_scale_data(kpi13a_labour_input),
+    kpi13b_labour_productivity_scaled  = indicator_scale_data_rev(kpi13b_labour_productivity),
+    kpi14a_climate_resilience_scaled = indicator_scale_set(0,20,kpi14a_climate_resilience),
+    kpi14b_climate_resilience_scaled = indicator_scale_set(1,5,kpi14b_climate_resilience),
+    kpi15_diet_diversity_scaled = indicator_scale_set(0,10,kpi15_diet_diversity),
+    kpi16_farmer_agency_scaled = indicator_scale_set(1,5,kpi16_farmer_agency),
+    kpi17a_land_security_perception_scaled = indicator_scale_set(1,5,kpi17a_land_security_perception),
+    kpi17b_land_tenure = kpi17b_land_tenure,
+    kpi18_human_wellbeing = indicator_scale_set(1,5,kpi18_human_wellbeing)
+  )
+
+################################################################################
+# WRITE TABLE TO DATABSE
+################################################################################
+
+dbWriteTable(con,"performance_indicators",performance_indicators,overwrite=TRUE)
+
+dbDisconnect(con)
   
