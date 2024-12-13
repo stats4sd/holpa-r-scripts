@@ -27,17 +27,42 @@ get_db <- function() {
 
 con <- get_db()
 
-main_surveys <- dbGetQuery(con,"SELECT * FROM main_surveys")
-products <- dbGetQuery(con,"SELECT * FROM products")
-permanent_workers <- dbGetQuery(con,"SELECT * FROM permanent_workers")
-seasonal_workers <- dbGetQuery(con,"SELECT * FROM seasonal_workers")
+get_dataset <- function(table){
+
+  datadesc_query <- paste0("describe ", table)
+  getdata_query <- paste0("from ", table)
+  
+  data_desc <- setDT(dbGetQuery(con,datadesc_query)) #get rest of data
+  other_cols <- data_desc[Type!="json",Field] #remove JSONS
+  data <- dbGetQuery(con,paste("select",paste(other_cols,collapse = ", "),getdata_query))
+  
+  getquery <- paste0("select id, cast(properties as CHAR) from ", table)
+  
+  booleans <- dbGetQuery(con,getquery)
+  colnames(booleans)[2] <- "json"
+  booleans <- booleans %>%
+  as_tibble() %>%
+  filter(!is.na(json))%>%
+  mutate(j = purrr::map(json, jsonlite::fromJSON)) %>%
+  tidyr::unnest_wider(j)
+
+data <- left_join(data, select(booleans, -json))
+
+return(data)
+
+}
+
+main_survey <- get_dataset("main_surveys")
+products <- get_dataset("products")
+permanent_workers <- get_dataset("permanent_workers")
+seasonal_workers <- get_dataset("seasonal_workers")
 ecological_practices <- dbGetQuery(con,"SELECT * FROM ecological_practices")
-crops <- dbGetQuery(con,"SELECT * FROM crops")
-livestock <- dbGetQuery(con,"SELECT * FROM livestock")
-livestock_uses <- dbGetQuery(con,"SELECT * FROM livestock_uses")
-fish <- dbGetQuery(con,"SELECT * FROM fish")
-fish_uses <- dbGetQuery(con,"SELECT * FROM fish_uses")
-fieldwork_sites <- dbGetQuery(con,"SELECT * FROM sites")
+crops <- get_dataset("crops")
+livestock <- get_dataset("livestock")
+livestock_uses <- get_dataset("livestock_uses")
+fish <- get_dataset("fish")
+fish_uses <- get_dataset("fish_uses")
+fieldwork_sites <- get_dataset("fieldwork_sites")
 
 na_99 <- function(data){
   
@@ -189,4 +214,7 @@ crops <- crops%>%
          yield_weight_area = ifelse(is.na(total_yield) | is.na(primary_crop_area_ha),NA, yield_weight_area),
          yield_kg_ha = ifelse(is.na(total_yield) | is.na(primary_crop_area_ha),NA, yield_kg))
 
-#ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation")
+# ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation")
+# ref_income <- dbGetQuery(con,"SELECT * FROM ref_income")
+# ref_yield <- dbGetQuery(con,"SELECT * FROM ref_yield")
+# ref_fertiliser <- dbGetQuery(con,"SELECT * FROM ref_fertiliser")

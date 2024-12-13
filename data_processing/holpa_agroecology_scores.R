@@ -4,12 +4,12 @@ library(httr)
 library(main_surveys.table)
 
 ################################################################################
-# IMPORT main_surveys FROM main_surveysBASE
+# IMPORT main_surveys FROM DATABASE
 ################################################################################ 
 
 source("data_processing//get_db_connection.R")
 
-agroecology_scores <- main_surveys%>%select(id)
+agroecology_scores <- main_surveys%>%select(team_id, id)
 
 ################################################################################
 # RECYCLING
@@ -101,10 +101,10 @@ input_reduction_scores <- function(){
       input_reduction_1_score = case_when(
           sf_methods == 3 ~ 5,
           sf_methods == 2 |
-            (sf_methods.2 == 1 & sf_methods.3 == 1 & sf_methods.1 == 0) ~ 4,
-          (sf_methods.2 == 1 & sf_methods.3 == 1 & sf_methods.1 == 1) |
-            (sf_methods.2 == 0 & sf_methods.3 == 1 & sf_methods.1 == 1) ~ 3,
-          sf_methods.2 == 1 & sf_methods.3 == 0 & sf_methods.1 == 1 ~ 2,
+            (sf_methods_2 == 1 & sf_methods_3 == 1 & sf_methods_1 == 0) ~ 4,
+          (sf_methods_2 == 1 & sf_methods_3 == 1 & sf_methods_1 == 1) |
+            (sf_methods_2 == 0 & sf_methods_3 == 1 & sf_methods_1 == 1) ~ 3,
+          sf_methods_2 == 1 & sf_methods_3 == 0 & sf_methods_1 == 1 ~ 2,
           sf_methods == 1 ~ 1,
           sf_methods == 0 ~ 5
       ),
@@ -119,10 +119,10 @@ input_reduction_scores <- function(){
       input_reduction_2_score = case_when(
         pest_methods == 3 ~ 5,
         pest_methods == 2 |
-          (pest_methods.2 == 1 & pest_methods.3 == 1 & pest_methods.1 == 0) ~ 4,
-        (pest_methods.2 == 1 & pest_methods.3 == 1 & pest_methods.1 == 1) |
-          (pest_methods.2 == 0 & pest_methods.3 == 1 & pest_methods.1 == 1) ~ 3,
-        pest_methods.2 == 1 & pest_methods.3 == 0 & pest_methods.1 == 1 ~ 2,
+          (pest_methods_2 == 1 & pest_methods_3 == 1 & pest_methods_1 == 0) ~ 4,
+        (pest_methods_2 == 1 & pest_methods_3 == 1 & pest_methods_1 == 1) |
+          (pest_methods_2 == 0 & pest_methods_3 == 1 & pest_methods_1 == 1) ~ 3,
+        pest_methods_2 == 1 & pest_methods_3 == 0 & pest_methods_1 == 1 ~ 2,
         pest_methods == 1 ~ 1,
         pest_methods == 0 ~ 5
       ),
@@ -147,10 +147,10 @@ input_reduction_scores <- function(){
       input_reduction_4_score = case_when(
         fish_feed_type == 1 ~ 5,
         fish_feed_type == 2 |
-          (fish_feed_type.1 == 1 & fish_feed_type.2 == 1 & fish_feed_type.3 == 0) ~ 4,
-        (fish_feed_type.1 == 1 & fish_feed_type.2 == 1 & fish_feed_type.3 == 1) ~ 3,
-        (fish_feed_type.1 == 0 & fish_feed_type.2 == 1 & fish_feed_type.3 == 1) |
-          (fish_feed_type.1 == 1 & fish_feed_type.2 == 0 & fish_feed_type.3 == 1)~ 2, #CHECK WITH HOLPA ON THE COMBINATION OF NATURAL AND CHEMICAL
+          (fish_feed_type_1 == 1 & fish_feed_type_2 == 1 & fish_feed_type_3 == 0) ~ 4,
+        (fish_feed_type_1 == 1 & fish_feed_type_2 == 1 & fish_feed_type_3 == 1) ~ 3,
+        (fish_feed_type_1 == 0 & fish_feed_type_2 == 1 & fish_feed_type_3 == 1) |
+          (fish_feed_type_1 == 1 & fish_feed_type_2 == 0 & fish_feed_type_3 == 1)~ 2, #CHECK WITH HOLPA ON THE COMBINATION OF NATURAL AND CHEMICAL
         fish_feed_type ==3 ~ 1
       ),
       input_reduction_4_label = case_when(
@@ -164,40 +164,40 @@ input_reduction_scores <- function(){
         # =0
          disease_management == 0 ~ 5,
          # 5 or 6
-         (disease_management.5 == 1 | disease_management.6 == 1) &
-           (disease_management.1 == 0 & disease_management.2 == 0 & 
-              disease_management.3 == 0 & disease_management.4 == 0) ~ 5,
+         (disease_management_5 == 1 | disease_management_6 == 1) &
+           (disease_management_1 == 0 & disease_management_2 == 0 & 
+              disease_management_3 == 0 & disease_management_4 == 0) ~ 5,
         #  3 or 4 & 5 or 6
-         ((disease_management.1 == 0 & disease_management.2 == 0) &
-           ((disease_management.3 == 1 | disease_management.4 == 1) &
-              (disease_management.5 == 1 | disease_management.6 == 1))) ~ 4,
+         ((disease_management_1 == 0 & disease_management_2 == 0) &
+           ((disease_management_3 == 1 | disease_management_4 == 1) &
+              (disease_management_5 == 1 | disease_management_6 == 1))) ~ 4,
          # 3 or 4
-         (disease_management.3 == 1 | disease_management.4 == 1) &
-           (disease_management.1 == 0 & disease_management.2 == 0 & 
-              disease_management.5 == 0 & disease_management.6 == 0) ~ 4,
+         (disease_management_3 == 1 | disease_management_4 == 1) &
+           (disease_management_1 == 0 & disease_management_2 == 0 & 
+              disease_management_5 == 0 & disease_management_6 == 0) ~ 4,
         #  1 or 2 & 5 or 6
-         ((disease_management.3 == 0 & disease_management.4 == 0) &
-            ((disease_management.1 == 1 | disease_management.2 == 1) &
-               (disease_management.5 == 1 | disease_management.6 == 1))) ~ 3,
+         ((disease_management_3 == 0 & disease_management_4 == 0) &
+            ((disease_management_1 == 1 | disease_management_2 == 1) &
+               (disease_management_5 == 1 | disease_management_6 == 1))) ~ 3,
         # 1 or 2 & 3 or 4 & 5 or 6
-        (disease_management.5 == 1 | disease_management.6 == 1) &
-          (disease_management.3 == 1 | disease_management.4 == 1) &
-            (disease_management.1 == 1 | disease_management.2 == 1) ~ 3,
+        (disease_management_5 == 1 | disease_management_6 == 1) &
+          (disease_management_3 == 1 | disease_management_4 == 1) &
+            (disease_management_1 == 1 | disease_management_2 == 1) ~ 3,
         # 1 or 2 & 3 or 4
-        disease_management.5 == 0 & disease_management.6 == 0 & 
-          ((disease_management.1 == 1 | disease_management.2 == 1) &
-             (disease_management.3 == 1 | disease_management.4 == 1)) ~ 2,
+        disease_management_5 == 0 & disease_management_6 == 0 & 
+          ((disease_management_1 == 1 | disease_management_2 == 1) &
+             (disease_management_3 == 1 | disease_management_4 == 1)) ~ 2,
         #  1 or 2
-         (disease_management.1 == 1 | disease_management.2 == 1) &
-           (disease_management.5 == 0 & disease_management.6 == 0 &
-              disease_management.3 == 0 & disease_management.4 == 0) ~ 1
+         (disease_management_1 == 1 | disease_management_2 == 1) &
+           (disease_management_5 == 0 & disease_management_6 == 0 &
+              disease_management_3 == 0 & disease_management_4 == 0) ~ 1
       ),
       input_reduction_5_label = case_when(
         disease_management == 0 ~ "No action taken",
 
-        (disease_management.5 == 1 | disease_management.6 == 1) &
-          (disease_management.1 == 0 & disease_management.2 == 0 &
-             disease_management.3 == 0 & disease_management.4 == 0) ~ "Only ecological practices/treatments",
+        (disease_management_5 == 1 | disease_management_6 == 1) &
+          (disease_management_1 == 0 & disease_management_2 == 0 &
+             disease_management_3 == 0 & disease_management_4 == 0) ~ "Only ecological practices/treatments",
 
         input_reduction_5_score == 4 ~ "Combination of ecological practices/treatments and organic inputs.OR only organic inputs",
         input_reduction_5_score == 3 ~ "Combination of ecological practices/treatments, and chemical and/or organic inputs",
@@ -208,40 +208,40 @@ input_reduction_scores <- function(){
         # =0
         fish_disease_management == 0 ~ 5,
         # 5 or 6
-        (fish_disease_management.5 == 1 | fish_disease_management.6 == 1) &
-          (fish_disease_management.1 == 0 & fish_disease_management.2 == 0 & 
-             fish_disease_management.3 == 0 & fish_disease_management.4 == 0) ~ 5,
+        (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
+          (fish_disease_management_1 == 0 & fish_disease_management_2 == 0 & 
+             fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ 5,
         #  3 or 4 & 5 or 6
-        ((fish_disease_management.1 == 0 & fish_disease_management.2 == 0) &
-           ((fish_disease_management.3 == 1 | fish_disease_management.4 == 1) &
-              (fish_disease_management.5 == 1 | fish_disease_management.6 == 1))) ~ 4,
+        ((fish_disease_management_1 == 0 & fish_disease_management_2 == 0) &
+           ((fish_disease_management_3 == 1 | fish_disease_management_4 == 1) &
+              (fish_disease_management_5 == 1 | fish_disease_management_6 == 1))) ~ 4,
         # 3 or 4
-        (fish_disease_management.3 == 1 | fish_disease_management.4 == 1) &
-          (fish_disease_management.1 == 0 & fish_disease_management.2 == 0 & 
-             fish_disease_management.5 == 0 & fish_disease_management.6 == 0) ~ 4,
+        (fish_disease_management_3 == 1 | fish_disease_management_4 == 1) &
+          (fish_disease_management_1 == 0 & fish_disease_management_2 == 0 & 
+             fish_disease_management_5 == 0 & fish_disease_management_6 == 0) ~ 4,
         #  1 or 2 & 5 or 6
-        ((fish_disease_management.3 == 0 & fish_disease_management.4 == 0) &
-           ((fish_disease_management.1 == 1 | fish_disease_management.2 == 1) &
-              (fish_disease_management.5 == 1 | fish_disease_management.6 == 1))) ~ 3,
+        ((fish_disease_management_3 == 0 & fish_disease_management_4 == 0) &
+           ((fish_disease_management_1 == 1 | fish_disease_management_2 == 1) &
+              (fish_disease_management_5 == 1 | fish_disease_management_6 == 1))) ~ 3,
         # 1 or 2 & 3 or 4 & 5 or 6
-        (fish_disease_management.5 == 1 | fish_disease_management.6 == 1) &
-          (fish_disease_management.3 == 1 | fish_disease_management.4 == 1) &
-          (fish_disease_management.1 == 1 | fish_disease_management.2 == 1) ~ 3,
+        (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
+          (fish_disease_management_3 == 1 | fish_disease_management_4 == 1) &
+          (fish_disease_management_1 == 1 | fish_disease_management_2 == 1) ~ 3,
         # 1 or 2 & 3 or 4
-        fish_disease_management.5 == 0 & fish_disease_management.6 == 0 & 
-          ((fish_disease_management.1 == 1 | fish_disease_management.2 == 1) &
-             (fish_disease_management.3 == 1 | fish_disease_management.4 == 1)) ~ 2,
+        fish_disease_management_5 == 0 & fish_disease_management_6 == 0 & 
+          ((fish_disease_management_1 == 1 | fish_disease_management_2 == 1) &
+             (fish_disease_management_3 == 1 | fish_disease_management_4 == 1)) ~ 2,
         #  1 or 2
-        (fish_disease_management.1 == 1 | fish_disease_management.2 == 1) &
-          (fish_disease_management.5 == 0 & fish_disease_management.6 == 0 &
-             fish_disease_management.3 == 0 & fish_disease_management.4 == 0) ~ 1
+        (fish_disease_management_1 == 1 | fish_disease_management_2 == 1) &
+          (fish_disease_management_5 == 0 & fish_disease_management_6 == 0 &
+             fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ 1
       ),
       input_reduction_6_label = case_when(
         fish_disease_management == 0 ~ "No action taken",
         
-        (fish_disease_management.5 == 1 | fish_disease_management.6 == 1) &
-          (fish_disease_management.1 == 0 & fish_disease_management.2 == 0 &
-             fish_disease_management.3 == 0 & fish_disease_management.4 == 0) ~ "Only ecological practices/treatments",
+        (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
+          (fish_disease_management_1 == 0 & fish_disease_management_2 == 0 &
+             fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ "Only ecological practices/treatments",
         
         input_reduction_6_score == 4 ~ "Combination of ecological practices/treatments and organic inputs.OR only organic inputs",
         input_reduction_6_score == 3 ~ "Combination of ecological practices/treatments, and chemical and/or organic inputs",
@@ -689,58 +689,60 @@ diet_scores <- function(){
 # FAIRNESS
 ################################################################################
 
-fairness_labels <- function(var){
-  
-  labels <- main_surveys%>%
-    select({{var}})%>%
-    mutate(
-      {{var}} := 
-        case_when(
-          {{var}} == 5 ~ "Always get a fair price",
-          {{var}} == 4 ~ "Usually get a fair price, depending on the product",
-          {{var}} == 3 ~ "Occasionally get a fair price, depending on the product",
-          {{var}} == 2 ~ "Rarely get a fair price",
-          {{var}} == 1 ~ "Never get a fair price./I don't know"
-        )
-    )
-  
-  return(labels[[1]])
-}
+# WILL NEED TO EDIT FOR NEW PRODUCTS DATATABLE
 
-fairness_scores <- function(){
-  
-  other_prods <- products%>%
-    group_by(farm_id)%>%
-    summarise(fairness_6_score = round(mean(other_prod_fair_price, na.rm = TRUE),0))%>%
-    mutate(fariness_6_label = case_when(
-      fairness_6_score == 5 ~ "Always get a fair price",
-      fairness_6_score == 4 ~ "Usually get a fair price, depending on the product",
-      fairness_6_score == 3 ~ "Occasionally get a fair price, depending on the product",
-      fairness_6_score == 2 ~ "Rarely get a fair price",
-      fairness_6_score == 1 ~ "Never get a fair price./I don't know"
-    ))
-  
-  main_surveys <- main_surveys%>%
-    left_join(other_prods, by = c("id" = "farm_id"))%>%
-    mutate(
-      fairness_1_score = crop_fair_price,
-      fariness_1_label = fairness_labels(crop_fair_price),
-      fairness_2_score = livestock_fair_price,
-      fariness_2_label = fairness_labels(livestock_fair_price),
-      fairness_3_score = fish_fair_price,
-      fariness_3_label = fairness_labels(fish_fair_price),
-      fairness_4_score = trees_fair_price,
-      fariness_4_label = fairness_labels(trees_fair_price),
-      fairness_5_score = honey_fair_price,
-      fariness_5_label = fairness_labels(honey_fair_price)
-    )%>%
-    select(id, starts_with("fairness_"))
-  
-  agroecology_scores <- left_join(agroecology_scores,
-                                  main_surveys)
-  
-  return(agroecology_scores)
-}
+# fairness_labels <- function(var){
+#   
+#   labels <- main_surveys%>%
+#     select({{var}})%>%
+#     mutate(
+#       {{var}} := 
+#         case_when(
+#           {{var}} == 5 ~ "Always get a fair price",
+#           {{var}} == 4 ~ "Usually get a fair price, depending on the product",
+#           {{var}} == 3 ~ "Occasionally get a fair price, depending on the product",
+#           {{var}} == 2 ~ "Rarely get a fair price",
+#           {{var}} == 1 ~ "Never get a fair price./I don't know"
+#         )
+#     )
+#   
+#   return(labels[[1]])
+# }
+# 
+# fairness_scores <- function(){
+#   
+#   other_prods <- products%>%
+#     group_by(farm_id)%>%
+#     summarise(fairness_6_score = round(mean(other_prod_fair_price, na.rm = TRUE),0))%>%
+#     mutate(fariness_6_label = case_when(
+#       fairness_6_score == 5 ~ "Always get a fair price",
+#       fairness_6_score == 4 ~ "Usually get a fair price, depending on the product",
+#       fairness_6_score == 3 ~ "Occasionally get a fair price, depending on the product",
+#       fairness_6_score == 2 ~ "Rarely get a fair price",
+#       fairness_6_score == 1 ~ "Never get a fair price./I don't know"
+#     ))
+#   
+#   main_surveys <- main_surveys%>%
+#     left_join(other_prods, by = c("id" = "farm_id"))%>%
+#     mutate(
+#       fairness_1_score = crop_fair_price,
+#       fariness_1_label = fairness_labels(crop_fair_price),
+#       fairness_2_score = livestock_fair_price,
+#       fariness_2_label = fairness_labels(livestock_fair_price),
+#       fairness_3_score = fish_fair_price,
+#       fariness_3_label = fairness_labels(fish_fair_price),
+#       fairness_4_score = trees_fair_price,
+#       fariness_4_label = fairness_labels(trees_fair_price),
+#       fairness_5_score = honey_fair_price,
+#       fariness_5_label = fairness_labels(honey_fair_price)
+#     )%>%
+#     select(id, starts_with("fairness_"))
+#   
+#   agroecology_scores <- left_join(agroecology_scores,
+#                                   main_surveys)
+#   
+#   return(agroecology_scores)
+# }
 
 ################################################################################
 # CONNECTIVITY
@@ -748,109 +750,109 @@ fairness_scores <- function(){
 
 #CHECK DEFINITION FOR OTHERS
 
-connectivity_scores <- function(){
-  
-  main_surveys <- main_surveys%>%
-    mutate(
-      connectivity_1_score = case_when(
-        crop_buyer.direct_to_consumer == 1 ~ 5,
-        crop_buyer.trader_or_supermarket == 1 | crop_buyer.cooperative == 1 ~ 4,
-        crop_buyer.retailers == 1 ~ 3,
-        crop_buyer.middle_man_aggregator == 1 ~ 2,
-        crop_sales == 0 ~ 1,
-        crop_buyer.other == 1 ~ 4
-      ),
-      connectivity_1_label = case_when(
-        connectivity_1_score == 5 ~ "Directly to consumers",
-        connectivity_1_score == 4 ~ "To farmers organistion/cooperative",
-        connectivity_1_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_1_score == 2 ~ "To a middle man/aggregator",
-        connectivity_1_score == 1 ~ "Does not sell its products"
-      ),
-      connectivity_2_score = case_when(
-        livestock_buyer.direct_to_consumer == 1 ~ 5,
-        livestock_buyer.trader_or_supermarket == 1 | livestock_buyer.cooperative == 1 ~ 4,
-        livestock_buyer.retailers == 1 ~ 3,
-        livestock_buyer.middle_man_aggregator == 1 ~ 2,
-        livestock_sales == 0 ~ 1,
-        livestock_buyer.other == 1 ~ 4
-      ),
-      connectivity_2_label = case_when(
-        connectivity_2_score == 5 ~ "Directly to consumers",
-        connectivity_2_score == 4 ~ "To farmers organistion/cooperative",
-        connectivity_2_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_2_score == 2 ~ "To a middle man/aggregator",
-        connectivity_2_score == 1 ~ "Does not sell its products"
-      ),
-      connectivity_3_score = case_when(
-        fish_buyer.direct_to_consumer == 1 ~ 5,
-        fish_buyer.trader_or_supermarket == 1 | fish_buyer.cooperative == 1 ~ 4,
-        fish_buyer.retailers == 1 ~ 3,
-        fish_buyer.middle_man_aggregator == 1 ~ 2,
-        fish_sales == 0 ~ 1,
-        fish_buyer.other == 1 ~ 4
-      ),
-      connectivity_3_label = case_when(
-        connectivity_3_score == 5 ~ "Directly to consumers",
-        connectivity_3_score == 4 ~ "To farmers organistion/cooperative",
-        connectivity_3_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_3_score == 2 ~ "To a middle man/aggregator",
-        connectivity_3_score == 1 ~ "Does not sell its products"
-      ),
-      connectivity_4_score = case_when(
-        trees_buyer.direct_to_consumer == 1 ~ 5,
-        trees_buyer.trader_or_supermarket == 1 | trees_buyer.cooperative == 1 ~ 4,
-        trees_buyer.retailers == 1 ~ 3,
-        trees_buyer.middle_man_aggregator == 1 ~ 2,
-        trees_sales == 0 ~ 1,
-        trees_buyer.other == 1 ~ 4
-      ),
-      connectivity_4_label = case_when(
-        connectivity_4_score == 5 ~ "Directly to consumers",
-        connectivity_4_score == 4 ~ "To farmers organistion/cooperative",
-        connectivity_4_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_4_score == 2 ~ "To a middle man/aggregator",
-        connectivity_4_score == 1 ~ "Does not sell its products"
-      ),
-      connectivity_5_score = case_when(
-        honey_buyer.direct_to_consumer == 1 ~ 5,
-        honey_buyer.trader_or_supermarket == 1 | honey_buyer.cooperative == 1 ~ 4,
-        honey_buyer.retailers == 1 ~ 3,
-        honey_buyer.middle_man_aggregator == 1 ~ 2,
-        honey_sales == 0 ~ 1,
-        honey_buyer.other == 1 ~ 4
-      ),
-      connectivity_5_label = case_when(
-        connectivity_5_score == 5 ~ "Directly to consumers",
-        connectivity_5_score == 4 ~ "To farmers organistion/cooperative",
-        connectivity_5_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_5_score == 2 ~ "To a middle man/aggregator",
-        connectivity_5_score == 1 ~ "Does not sell its products"
-      ),
-      connectivity_6_score = case_when(
-        other_prod_buyer.direct_to_consumer == 1 ~ 5,
-        other_prod_buyer.trader_or_supermarket == 1 | other_prod_buyer.cooperative == 1 ~ 4,
-        other_prod_buyer.retailers == 1 ~ 3,
-        other_prod_buyer.middle_man_aggregator == 1 ~ 2,
-        other_prod_sales == 0 ~ 1,
-        other_prod_buyer.other == 1 ~ 4
-      ),
-      connectivity_6_label = case_when(
-        connectivity_6_score == 5 ~ "Directly to consumers",
-        connectivity_6_score == 4 ~ "To farmers organistion/cooperative",
-        connectivity_6_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_6_score == 2 ~ "To a middle man/aggregator",
-        connectivity_6_score == 1 ~ "Does not sell its products"
-      )
-    )%>%
-    select(id, starts_with("connectivity"))
-  
-  agroecology_scores <- left_join(agroecology_scores,
-                                  main_surveys)
-  
-  return(agroecology_scores)
-  
-}
+# connectivity_scores <- function(){
+#   
+#   main_surveys <- main_surveys%>%
+#     mutate(
+#       connectivity_1_score = case_when(
+#         crop_buyer_direct_to_consumer == 1 ~ 5,
+#         crop_buyer_trader_or_supermarket == 1 | crop_buyer_cooperative == 1 ~ 4,
+#         crop_buyer_retailers == 1 ~ 3,
+#         crop_buyer_middle_man_aggregator == 1 ~ 2,
+#         crop_sales == 0 ~ 1,
+#         crop_buyer_other == 1 ~ 4
+#       ),
+#       connectivity_1_label = case_when(
+#         connectivity_1_score == 5 ~ "Directly to consumers",
+#         connectivity_1_score == 4 ~ "To farmers organisation/cooperative",
+#         connectivity_1_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
+#         connectivity_1_score == 2 ~ "To a middle man/aggregator",
+#         connectivity_1_score == 1 ~ "Does not sell its products"
+#       ),
+#       connectivity_2_score = case_when(
+#         livestock_buyer_direct_to_consumer == 1 ~ 5,
+#         livestock_buyer_trader_or_supermarket == 1 | livestock_buyer_cooperative == 1 ~ 4,
+#         livestock_buyer_retailers == 1 ~ 3,
+#         livestock_buyer_middle_man_aggregator == 1 ~ 2,
+#         livestock_sales == 0 ~ 1,
+#         livestock_buyer_other == 1 ~ 4
+#       ),
+#       connectivity_2_label = case_when(
+#         connectivity_2_score == 5 ~ "Directly to consumers",
+#         connectivity_2_score == 4 ~ "To farmers organisation/cooperative",
+#         connectivity_2_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
+#         connectivity_2_score == 2 ~ "To a middle man/aggregator",
+#         connectivity_2_score == 1 ~ "Does not sell its products"
+#       ),
+#       connectivity_3_score = case_when(
+#         fish_buyer_direct_to_consumer == 1 ~ 5,
+#         fish_buyer_trader_or_supermarket == 1 | fish_buyer_cooperative == 1 ~ 4,
+#         fish_buyer_retailers == 1 ~ 3,
+#         fish_buyer_middle_man_aggregator == 1 ~ 2,
+#         fish_sales == 0 ~ 1,
+#         fish_buyer_other == 1 ~ 4
+#       ),
+#       connectivity_3_label = case_when(
+#         connectivity_3_score == 5 ~ "Directly to consumers",
+#         connectivity_3_score == 4 ~ "To farmers organisation/cooperative",
+#         connectivity_3_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
+#         connectivity_3_score == 2 ~ "To a middle man/aggregator",
+#         connectivity_3_score == 1 ~ "Does not sell its products"
+#       ),
+#       connectivity_4_score = case_when(
+#         trees_buyer_direct_to_consumer == 1 ~ 5,
+#         trees_buyer_trader_or_supermarket == 1 | trees_buyer_cooperative == 1 ~ 4,
+#         trees_buyer_retailers == 1 ~ 3,
+#         trees_buyer_middle_man_aggregator == 1 ~ 2,
+#         trees_sales == 0 ~ 1,
+#         trees_buyer_other == 1 ~ 4
+#       ),
+#       connectivity_4_label = case_when(
+#         connectivity_4_score == 5 ~ "Directly to consumers",
+#         connectivity_4_score == 4 ~ "To farmers organisation/cooperative",
+#         connectivity_4_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
+#         connectivity_4_score == 2 ~ "To a middle man/aggregator",
+#         connectivity_4_score == 1 ~ "Does not sell its products"
+#       ),
+#       connectivity_5_score = case_when(
+#         honey_buyer_direct_to_consumer == 1 ~ 5,
+#         honey_buyer_trader_or_supermarket == 1 | honey_buyer_cooperative == 1 ~ 4,
+#         honey_buyer_retailers == 1 ~ 3,
+#         honey_buyer_middle_man_aggregator == 1 ~ 2,
+#         honey_sales == 0 ~ 1,
+#         honey_buyer_other == 1 ~ 4
+#       ),
+#       connectivity_5_label = case_when(
+#         connectivity_5_score == 5 ~ "Directly to consumers",
+#         connectivity_5_score == 4 ~ "To farmers organisation/cooperative",
+#         connectivity_5_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
+#         connectivity_5_score == 2 ~ "To a middle man/aggregator",
+#         connectivity_5_score == 1 ~ "Does not sell its products"
+#       )#,
+#       # connectivity_6_score = case_when(
+#       #   other_prod_buyer_direct_to_consumer == 1 ~ 5,
+#       #   other_prod_buyer_trader_or_supermarket == 1 | other_prod_buyer_cooperative == 1 ~ 4,
+#       #   other_prod_buyer_retailers == 1 ~ 3,
+#       #   other_prod_buyer_middle_man_aggregator == 1 ~ 2,
+#       #   other_prod_sales == 0 ~ 1,
+#       #   other_prod_buyer_other == 1 ~ 4
+#       # ),
+#       # connectivity_6_label = case_when(
+#       #   connectivity_6_score == 5 ~ "Directly to consumers",
+#       #   connectivity_6_score == 4 ~ "To farmers organisation/cooperative",
+#       #   connectivity_6_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
+#       #   connectivity_6_score == 2 ~ "To a middle man/aggregator",
+#       #   connectivity_6_score == 1 ~ "Does not sell its products"
+#       # )
+#     )%>%
+#     select(id, starts_with("connectivity"))
+#   
+#   agroecology_scores <- left_join(agroecology_scores,
+#                                   main_surveys)
+#   
+#   return(agroecology_scores)
+#   
+# }
 
 ################################################################################
 # LAND AND NATURAL RESOURCE GOVERNANCE
