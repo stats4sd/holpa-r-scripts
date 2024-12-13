@@ -5,12 +5,13 @@ library(tidyverse)
 library(jsonlite)
 library(dotenv)
 
-source("data_processing/db_functions.R")
-
 env_path <- paste(getwd(), ".env", sep = '/')
 
-
 dotenv::load_dot_env(env_path)
+
+################################################################################
+# GET DATA TABLES
+################################################################################
 
 get_db <- function() {
   return(dbConnect(RMariaDB::MariaDB(),
@@ -63,6 +64,10 @@ livestock_uses <- get_dataset("livestock_uses")
 fish <- get_dataset("fish")
 fish_uses <- get_dataset("fish_uses")
 fieldwork_sites <- get_dataset("fieldwork_sites")
+
+################################################################################
+# REFORMAT POSSIBLE MISSING CODED DATA
+################################################################################
 
 na_99 <- function(data){
   
@@ -213,6 +218,10 @@ crops <- crops%>%
          primary_crop_area_ha = ifelse(is.na(primary_crop_area),NA, primary_crop_area_ha),
          yield_weight_area = ifelse(is.na(total_yield) | is.na(primary_crop_area_ha),NA, yield_weight_area),
          yield_kg_ha = ifelse(is.na(total_yield) | is.na(primary_crop_area_ha),NA, yield_kg))
+
+################################################################################
+# GET REFERNCE DATASETS
+################################################################################
 
 # ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation")
 # ref_income <- dbGetQuery(con,"SELECT * FROM ref_income")

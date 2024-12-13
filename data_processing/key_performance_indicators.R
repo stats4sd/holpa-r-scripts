@@ -4,7 +4,7 @@ library(httr)
 library(main_surveys.table)
 
 ################################################################################
-# IMPORT main_surveys FROM main_surveysBASE
+# IMPORT main_surveys FROM DATABASE
 ################################################################################ 
 
 source("data_processing//get_db_connection.R")
@@ -698,7 +698,7 @@ performance_indicators <- performance_indicators%>%
   )
 
 ################################################################################
-# WRITE TABLE TO main_surveysBSE
+# WRITE TABLE TO DATABASE
 ################################################################################
 
 dbWriteTable(con,"performance_indicators",performance_indicators,overwrite=TRUE)

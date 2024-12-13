@@ -943,7 +943,7 @@ participation_scores <- function(){
 }
 
 ################################################################################
-# CREATE AGROECOLOGY SCORE main_surveysTABLE
+# CREATE AGROECOLOGY SCORE DATBASE TABLE
 ################################################################################
 
 agroecology_scores <- recylcing_scores()
@@ -961,7 +961,7 @@ agroecology_scores <- governance_scores()
 agroecology_scores <- participation_scores()
 
 ################################################################################
-# WRITE TABLE TO main_surveysBSE
+# WRITE TABLE TO DATBASE
 ################################################################################
 
 dbWriteTable(con,"agroecology_scores",agroecology_scores,overwrite=TRUE)
