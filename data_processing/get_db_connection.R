@@ -4,6 +4,7 @@ library(sys)
 library(tidyverse)
 library(jsonlite)
 library(dotenv)
+library(data.table)
 
 env_path <- paste(getwd(), ".env", sep = '/')
 

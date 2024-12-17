@@ -50,7 +50,7 @@ tmp <- main_surveys%>%
   ))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, kpi2_animal_health))
+  left_join(tmp%>%select(id, kpi2a_animal_health))
 
 ## fish health
 tmp <- main_surveys%>%
@@ -592,7 +592,7 @@ performance_indicators <- performance_indicators%>%
 
 tmp <- main_surveys%>%
   mutate(
-    vulnerable_share = area_at_threat_ha/total_land_ha,
+    vulnerable_share = ifelse(land_security_perception == 5, 0, area_at_threat_ha/total_land_ha),
     secure_share = 1 - vulnerable_share,
     land_owned_share = (area_owned_ha/total_land_ha)*100,
     kpi17a_land_security_perception = (land_security_perception * vulnerable_share) + (5 * secure_share),
@@ -658,7 +658,7 @@ indicator_scale_main_surveys_rev <- function(var){
     mutate(max_score = max({{var}}, na.rm = TRUE),
            min_score = min({{var}}, na.rm = TRUE))%>%
     mutate(
-      score_scaled = 100 - ({{var}} - min_score)/(max_score-min_score)*100
+      score_scaled = 100 - (({{var}} - min_score)/(max_score-min_score)*100)
     )
   
   return(scaled_scores$score_scaled)
@@ -669,7 +669,7 @@ performance_indicators <- performance_indicators%>%
   mutate(
     kpi1a_crop_health_scaled = kpi1a_crop_health,
     kpi1b_crop_health_fieldwork_scaled = indicator_scale_set(1,5,kpi1b_crop_health_fieldwork),
-    kpi2_animal_health_scaled = indicator_scale_set(1,5,kpi2_animal_health),
+    kpi2a_animal_health = indicator_scale_set(1,5,kpi2a_animal_health),
     kpi2b_fish_health_scaled = indicator_scale_set(1,5,kpi2b_fish_health),
     kpi3_soil_health_scaled = indicator_scale_set(1,5,kpi3_soil_health),
     kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use),

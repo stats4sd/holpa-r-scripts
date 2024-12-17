@@ -1,7 +1,7 @@
 library(tidyverse)
 library(openxlsx)
 
-source("data_processing/get_db_connection.R")
+#source("data_processing/get_db_connection.R")
 
 ag_scores <- read.xlsx("metadata/agroecology_indicators.xlsx")
 
@@ -42,6 +42,7 @@ data_dictionary <- data_dictionary%>%
   select(-principle_no,
          -principle_name, 
          -score_label)%>%
+  rename("theme" = principle)%>%
   relocate(variable, .after = indicator_no)
 
 dbWriteTable(con,"agroecology_scores_data_dictionary",data_dictionary,overwrite=TRUE)
