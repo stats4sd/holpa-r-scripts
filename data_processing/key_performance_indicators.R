@@ -95,6 +95,15 @@ performance_indicators <- performance_indicators%>%
 #first choice should be to use reference values here but could be difficult to effectively implement, 
 # and most existing implementations do not have sufficient main_surveys
 
+# nut_ref <- ref_fertiliser%>%
+#   group_by(team_id)%>%
+#   filter(!is.na(value))%>%
+#   summarise(
+#     n = n(),
+#     ref_val = median(value)
+#   )%>%
+#   filter(n >= 10) # ASK HOLPA WHAT IS DEEMED TO BE SUFFICENT INFORMATION
+
 tmp <- main_surveys%>%
   rowwise()%>%
   mutate(total_fertiliser_input = sum(c_across(chem_fert_kg_ha,
@@ -102,6 +111,9 @@ tmp <- main_surveys%>%
                                                bought_organic_fert_kg_ha), 
                                       na.rm = TRUE))%>%
   mutate(median_input = median(total_fertiliser_input, na.rm = TRUE))%>%
+  #left_join(nut_ref, by = "team_id")%>%
+  #mutate(ref_value_col = coalesce(ref_val, median_input))%>%
+  #mutate(kpi4_nutrient_use = total_fertiliser_input/ref_value_col)%>%
   mutate(kpi4_nutrient_use = total_fertiliser_input/median_input)%>%
   mutate(kpi4_nutrient_use = ifelse(is.infinite(kpi4_nutrient_use) | 
                                       is.nan(kpi4_nutrient_use),NA,
@@ -305,13 +317,14 @@ performance_indicators <- performance_indicators%>%
 ################################################################################
 
 #based on medians
-#BRING IN POSSIBLE REFERNCE VALUE OPTION!!
+
 tmp <- crops%>%
-  left_join(main_surveys%>%
-              select(team_id, id, by = c("farm_id" = "id")))%>%
+  #left_join(ref_yield%>%select(team_id, crop_id, ref_yield), by = c("team_id", "crop_id"))%>%
   group_by(team_id, primary_crop_id)%>%
   mutate(median_yield_kg_ha = median(yield_kg_ha, na.rm = TRUE))%>%
+  #mutate(ref_yield  = coalesce(ref_yield, median_yield_kg_ha))%>%
   ungroup()%>%
+  #mutate(yield_ratio = yield_kg_ha/ref_yield)%>%
   mutate(yield_ratio = yield_kg_ha/median_yield_kg_ha)%>%
   mutate(yield_gap = ifelse(
     yield_ratio > 1, 0,
