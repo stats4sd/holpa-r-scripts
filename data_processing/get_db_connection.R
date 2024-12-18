@@ -6,6 +6,8 @@ library(jsonlite)
 library(dotenv)
 library(data.table)
 
+'%!in%' <- function(x,y)!('%in%'(x,y))
+
 env_path <- paste(getwd(), ".env", sep = '/')
 
 dotenv::load_dot_env(env_path)
@@ -29,14 +31,14 @@ get_db <- function() {
 
 con <- get_db()
 
+table <- "farm_survey_data"
+
+a <- paste(other_cols,collapse = ", ")
+
 get_dataset <- function(table){
 
-  datadesc_query <- paste0("describe ", table)
-  getdata_query <- paste0("from ", table)
-  
-  data_desc <- setDT(dbGetQuery(con,datadesc_query)) #get rest of data
-  other_cols <- data_desc[Type!="json",Field] #remove JSONS
-  data <- dbGetQuery(con,paste("select",paste(other_cols,collapse = ", "),getdata_query))
+  data <- dbGetQuery(con,paste("SELECT * FROM ",table))%>%
+    select(-properties)
   
   getquery <- paste0("select id, cast(properties as CHAR) from ", table)
   
@@ -54,15 +56,15 @@ return(data)
 
 }
 
-main_survey <- get_dataset("main_surveys")
-products <- get_dataset("products")
+main_surveys <- get_dataset("farm_survey_data")
+products <- get_dataset("products") 
 permanent_workers <- get_dataset("permanent_workers")
-seasonal_workers <- get_dataset("seasonal_workers")
+seasonal_workers <- get_dataset("seasonal_worker_seasons")
 ecological_practices <- dbGetQuery(con,"SELECT * FROM ecological_practices")
 crops <- get_dataset("crops")
-livestock <- get_dataset("livestock")
+livestock <- get_dataset("livestocks")
 livestock_uses <- get_dataset("livestock_uses")
-fish <- get_dataset("fish")
+fish <- get_dataset("fishes")
 fish_uses <- get_dataset("fish_uses")
 fieldwork_sites <- get_dataset("fieldwork_sites")
 
@@ -82,7 +84,7 @@ na_99 <- function(data){
 missing_codes <- c(99,999,9999,99999, 888, 8888, 8888, 555, 5555, 55555, 777, 7777, 77777)
 
 main_surveys <- na_99(main_surveys)
-products <- na_99(products)
+#products <- na_99(products)
 permanent_workers <- na_99(permanent_workers)
 seasonal_workers <- na_99(seasonal_workers)
 ecological_practices <- na_99(ecological_practices)
@@ -168,10 +170,10 @@ missing_vars_main <- c(
   "area_at_threat_ha"
 )
 
-main <- main%>%
+main_surveys <- main_surveys%>%
   mutate_at(all_of(missing_vars_main), function(x) ifelse(x %in% missing_codes, NA, x))
 
-main%>%
+main_surveys <- main_surveys%>%
   mutate(
     chem_fert_applied_kg = ifelse(is.na(chem_fert_applied),NA, chem_fert_applied_kg),
     chem_fert_area_ha = ifelse(is.na(chem_fert_area),NA, chem_fert_area_ha),
@@ -205,14 +207,14 @@ main%>%
     area_at_threat_ha = ifelse(is.na(area_at_threat), NA, area_at_threat_ha)
     )
 
-permanent_workers <- permanent_workers%>%
-  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_code, NA, perm_labourer_numbers))
+#permanent_workers <- permanent_workers%>%
+#  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_codes, NA, perm_labourer_numbers))
 
 seasonal_workers <- seasonal_workers%>%
-  mutate(seasonal_labourer_n_working = ifelse(seasonal_labourer_n_working %in% missing_code, NA, seasonal_labourer_n_working))
+  mutate(seasonal_labour_n_working = ifelse(seasonal_labour_n_working %in% missing_codes, NA, seasonal_labour_n_working))
 
 ecological_practices <- ecological_practices%>%
-  mutate(practice_area_ha = ifelse(is.na(practice_area),NA, chem_fert_applied_kg))
+  mutate(practice_area_ha = ifelse(is.na(practice_area),NA, practice_area_ha))
 
 crops <- crops%>%
   mutate(yield_kg = ifelse(is.na(total_yield),NA, yield_kg),
@@ -223,8 +225,9 @@ crops <- crops%>%
 ################################################################################
 # GET REFERNCE DATASETS
 ################################################################################
-
+#ref_cli_mitigation <- read.csv("reference data/climate_mitigation.csv")
 # ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation")
+#ref_income <- read.csv("reference data/income.csv")
 # ref_income <- dbGetQuery(con,"SELECT * FROM ref_income")
 # ref_yield <- dbGetQuery(con,"SELECT * FROM ref_yield")
 # ref_fertiliser <- dbGetQuery(con,"SELECT * FROM ref_fertiliser")

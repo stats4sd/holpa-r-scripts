@@ -1,20 +1,20 @@
 ﻿region,practice_group,practice_name,practice_number,score_overall
-Sub-Saharan Africa,Cropping systems,Monocultures annual,1,2.666666667
-Sub-Saharan Africa,Cropping systems,Monocultures perennial,2,3.833333333
+Sub-Saharan Africa,Cropping systems,Monoculture with annual crops,1,2.666666667
+Sub-Saharan Africa,Cropping systems,Monoculture with perennial crops,2,3.833333333
 Sub-Saharan Africa,Cropping systems,Agroforestry,3,4.66
-Sub-Saharan Africa,Cropping systems,Vegetation clearance,4,1.666666667
-Sub-Saharan Africa,Cropping systems,Green manure,5,3
+Sub-Saharan Africa,Cropping systems,Burning crop residues,4,1.666666667
+Sub-Saharan Africa,Cropping systems,Cover crops,5,3
 Sub-Saharan Africa,Cropping systems,Crop rotation,6,3
-Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - fallow,7,4.33
-Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - hedgerows,8,4.33
+Sub-Saharan Africa,Cropping systems,Fallow (leave land unproductive),7,4.33
+Sub-Saharan Africa,Cropping systems,Hedgerows/Live fences,8,4.33
 Sub-Saharan Africa,Cropping systems,Homegarden,9,4.66
 Sub-Saharan Africa,Cropping systems,Intercropping,10,4.33
-Sub-Saharan Africa,Cropping systems,Vegetation clearance,11,1.666666667
+Sub-Saharan Africa,Cropping systems,Land clearing for agriculture,11,1.666666667
 Sub-Saharan Africa,Cropping systems,Mulching,12,3.33
-Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - natural strips/vegetation,13,4.33
-Sub-Saharan Africa,Cropping systems,Embedded natural (hedgerows) - pollinator strips,14,4.33
-Sub-Saharan Africa,Cropping systems,Push-Pull,15,4.33
-Sub-Saharan Africa,Cropping systems,Other,other,3.630888889
+Sub-Saharan Africa,Cropping systems,Natural strips/vegetation,13,4.33
+Sub-Saharan Africa,Cropping systems,Pollinator/Flower strips,14,4.33
+Sub-Saharan Africa,Cropping systems,Pull-push,15,4.33
+Sub-Saharan Africa,Cropping systems,Other (please specify),other,3.630888889
 Sub-Saharan Africa,Cropping systems,Biochar,,2.66
 Sub-Saharan Africa,Cropping systems,Drip irrigation,,2.66
 Sub-Saharan Africa,Cropping systems,Microdosing,,2.66
