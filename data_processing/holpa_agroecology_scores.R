@@ -1,13 +1,12 @@
 library(tidyverse)
 library(jsonlite)
 library(httr)
-library(main_surveys.table)
 
 ################################################################################
 # IMPORT main_surveys FROM DATABASE
 ################################################################################ 
 
-#source("data_processing/get_db_connection.R")
+source("data_processing/get_db_connection.R")
 
 #main_surveys$team_id <- 1
 
@@ -518,8 +517,8 @@ synergy_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      #synergy_1_score = syn_score(ecological_practices_count), 
-      #synergy_1_label = syn_labels(ecological_practices_count),
+      synergy_1_score = syn_score(ecological_practices_count), 
+      synergy_1_label = syn_labels(ecological_practices_count),
       synergy_2_score = syn_score(sf_practices_count),  
       synergy_2_label = syn_labels(sf_practices_count),
       synergy_3_score = syn_score(pd_practices_count), 

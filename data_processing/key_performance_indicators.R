@@ -1,15 +1,14 @@
 library(tidyverse)
 library(jsonlite)
 library(httr)
-library(main_surveys.table)
 
 ################################################################################
 # IMPORT main_surveys FROM DATABASE
 ################################################################################ 
 
-#source("data_processing/get_db_connection.R")
+source("data_processing/get_db_connection.R")
 
-#main_surveys$team_id <- 1
+main_surveys$team_id <- 1
 
 performance_indicators <- main_surveys%>%select(team_id, id, submission_id)
 
@@ -104,12 +103,12 @@ performance_indicators <- performance_indicators%>%
 #first choice should be to use reference values here but could be difficult to effectively implement, 
 # and most existing implementations do not have sufficient main_surveys
 
-# nut_ref <- ref_fertiliser%>%
+# nut_ref <- ref_crops%>%
 #   group_by(team_id)%>%
-#   filter(!is.na(value))%>%
+#   filter(!is.na(recommended_fert_use))%>%
 #   summarise(
 #     n = n(),
-#     ref_val = median(value)
+#     ref_val = median(recommended_fert_use)
 #   )%>%
 #   filter(n >= 10) # ASK HOLPA WHAT IS DEEMED TO BE SUFFICENT INFORMATION
 
@@ -233,16 +232,14 @@ performance_indicators <- performance_indicators%>%
 tmp <- ecological_practices%>%
   left_join(ref_cli_mitigation%>%
               select(practice_name, score_overall), by = "practice_name")%>% #change to number when possible
-  #group_by(farm_survey_data_id)%>%
-  group_by(submission_id)%>%
+  group_by(farm_survey_data_id)%>%
   mutate(total_area = sum(practice_area_ha),
          practice_share = practice_area_ha/total_area,
          weighted_cc_score = score_overall * practice_share)%>%
   summarise(kpi8_climate_mitigation = mean(weighted_cc_score, na.rm = TRUE))
   
 performance_indicators <- performance_indicators%>%
-  #left_join(tmp%>%select(farm_survey_data_id, kpi8_climate_mitigation))
-  left_join(tmp%>%select(submission_id, kpi8_climate_mitigation))
+  left_join(tmp%>%select("id" = farm_survey_data_id, kpi8_climate_mitigation))
 
 ################################################################################
 # WATER USE (KPI 9)
@@ -255,7 +252,7 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, "farm_survey_data_id" = id, submission_id, kpi9_water_stress))
+  left_join(tmp%>%select(team_id, id, submission_id, kpi9_water_stress))
 
 
 ################################################################################
@@ -305,17 +302,20 @@ performance_indicators <- performance_indicators%>%
 ################################################################################
 
 tmp <- main_surveys%>%
-  left_join(ref_income%>%select(team_id, ref_income), by = "team_id")%>%
+  #left_join(ref_income%>%select(team_id, ref_income), by = "team_id")%>%
   group_by(team_id)%>%
   mutate(median_income = median(income_sum, na.rm = TRUE))%>% #HOLPA script used mean - median more suitable 
-  mutate(kpi11a_income_ratio = income_sum / coalesce(ref_income, median_income))
+  #mutate(kpi11a_income_ratio = income_sum / coalesce(ref_income, median_income))%>%
+  mutate(kpi11a_income_ratio = income_sum / median_income)
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, "farm_survey_data_id" = id, submission_id, kpi11a_income_ratio))
+  left_join(tmp%>%select(team_id, id, submission_id, kpi11a_income_ratio))
 
 # Income stability
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, "farm_survey_data_id" = id, submission_id, "kpi11b_income_stability" = income_stability))
+  left_join(tmp%>%
+              mutate(income_stability = as.numeric(income_stability))%>%
+              select(team_id, id, submission_id, "kpi11b_income_stability" = income_stability))
 
 # Income vs expenditures
 tmp <- main_surveys%>%
@@ -324,11 +324,13 @@ tmp <- main_surveys%>%
   mutate(farm_loss = 1-farm_loss)
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, "farm_survey_data_id" = id, submission_id, "kpi11c_income_v_expenditures" = farm_loss))
+  left_join(tmp%>%select(team_id, id, submission_id, "kpi11c_income_v_expenditures" = farm_loss))
 
 # Income sufficiency
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, "kpi11d_income_sufficiency" = suffcient_income)) #typo in variable name
+  left_join(tmp%>%
+              mutate(suffcient_income = as.numeric(suffcient_income))%>%
+              select(id, "kpi11d_income_sufficiency" = suffcient_income)) #typo in variable name
 
 
 ################################################################################
@@ -336,13 +338,12 @@ performance_indicators <- performance_indicators%>%
 ################################################################################
 
 #based on medians
-
 tmp <- crops%>%
-  #left_join(ref_yield%>%select(team_id, crop_id, ref_yield), by = c("team_id", "crop_id"))%>%
+  #left_join(ref_yield%>%select(team_id, choice_list_entry_id, expected_yield), by = c("team_id", "crop_id" = "choice_list_entry_id))%>%
   mutate(team_id = 1)%>%
   group_by(team_id, primary_crop_id)%>%
   mutate(median_yield_kg_ha = median(as.numeric(total_yield), na.rm = TRUE))%>%
-  #mutate(ref_yield  = coalesce(ref_yield, median_yield_kg_ha))%>%
+  #mutate(ref_yield  = coalesce(expected_yield, median_yield_kg_ha))%>%
   ungroup()%>%
   #mutate(yield_ratio = yield_kg_ha/ref_yield)%>%
   mutate(yield_ratio = as.numeric(total_yield)/median_yield_kg_ha)%>%
@@ -353,34 +354,25 @@ tmp <- crops%>%
       (1 - yield_ratio)*100
     )
   ))%>%
-  #group_by(farm_survey_data_id)%>%
-  group_by(submission_id)%>%
+  group_by(farm_survey_data_id)%>%
   summarise(kpi12_yield_gap = mean(yield_gap, na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  #left_join(tmp%>%select(farm_survey_data_id, kpi12_yield_gap))
-  left_join(tmp%>%select(submission_id, kpi12_yield_gap))
+  left_join(tmp%>%select("id" = farm_survey_data_id, kpi12_yield_gap))
 
 ################################################################################
 # LABOUR PRODUCTIVITY (KPI 13)
 ################################################################################
 
 tmp_permanent <- permanent_workers%>%
-  mutate(
-    hours_per_year = perm_labour_group_n_workers * perm_labour_hours * 365
-  )%>%
+  mutate(hours_per_year = perm_labour_group_n_workers * perm_labour_hours * 365)%>%
   group_by(farm_survey_data_id)%>%
-  summarise(
-    total_perm_hours_per_year = sum(hours_per_year,na.rm = TRUE)
-  )
+  summarise(total_perm_hours_per_year = sum(hours_per_year,na.rm = TRUE))
   
 tmp_seasonal <- seasonal_workers%>%
-  #mutate(seasonal_labour_months_count = sample(1:12, size = nrow(.), replace = TRUE))%>%
   mutate(hours_per_season = seasonal_labour_n_working * seasonal_labour_hours * seasonal_labour_months_count * 30)%>%
   group_by(farm_survey_data_id)%>%
-  summarise(
-    total_seasonal_hours_per_year = sum(hours_per_season, na.rm = TRUE)
-  ) 
+  summarise(total_seasonal_hours_per_year = sum(hours_per_season, na.rm = TRUE)) 
 
 tmp_land <- main_surveys%>%
   select(id, total_crop_area_ha, livestock_land_own_ha, livestock_land_share_ha, fish_area_ha)%>%
@@ -568,7 +560,8 @@ RIMA <- abs%>%
 
 performance_indicators <- performance_indicators%>%
   left_join(RIMA%>%select(id, kpi14a_climate_resilience))%>%
-  left_join(main_surveys%>%select(team_id,id, "kpi14b_climate_resilience" = as.numeric(capacity_to_recover)))
+  left_join(main_surveys%>%mutate(kpi14b_climate_resilience = as.numeric(capacity_to_recover))%>%
+              select(team_id,id, kpi14b_climate_resilience))
 
 
 ################################################################################
@@ -719,15 +712,15 @@ performance_indicators <- performance_indicators%>%
     kpi8_climate_mitigation_scaled = indicator_scale_set(1,5,kpi8_climate_mitigation),
     kpi9_water_stress_scaled = kpi9_water_stress,
     kpi10_energy_use_scaled = indicator_scale_set(1,5,kpi10_energy_use),
-    #kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),
+    kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),
     #kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),
-    #kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),
+    kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),
     #kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),
     kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),
     #kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),
     #kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),
     kpi14a_climate_resilience_scaled = indicator_scale_set(0,20,kpi14a_climate_resilience),
-    #kpi14b_climate_resilience_scaled = indicator_scale_set(1,5,kpi14b_climate_resilience),
+    kpi14b_climate_resilience_scaled = indicator_scale_set(1,5,kpi14b_climate_resilience),
     kpi15_diet_diversity_scaled = indicator_scale_set(0,10,kpi15_diet_diversity),
     kpi16_farmer_agency_scaled = indicator_scale_set(1,5,kpi16_farmer_agency),
     kpi17a_land_security_perception_scaled = indicator_scale_set(1,5,kpi17a_land_security_perception),

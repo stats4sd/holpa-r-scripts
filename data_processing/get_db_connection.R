@@ -31,10 +31,6 @@ get_db <- function() {
 
 con <- get_db()
 
-table <- "farm_survey_data"
-
-a <- paste(other_cols,collapse = ", ")
-
 get_dataset <- function(table){
 
   data <- dbGetQuery(con,paste("SELECT * FROM ",table))%>%
@@ -56,6 +52,7 @@ return(data)
 
 }
 
+farms <- dbGetQuery(con, "SELECT * FROM farms")
 main_surveys <- get_dataset("farm_survey_data")
 products <- get_dataset("products") 
 permanent_workers <- get_dataset("permanent_workers")
@@ -67,6 +64,9 @@ livestock_uses <- get_dataset("livestock_uses")
 fish <- get_dataset("fishes")
 fish_uses <- get_dataset("fish_uses")
 fieldwork_sites <- get_dataset("fieldwork_sites")
+
+# main_surveys <- main_surveys%>%
+#   left_join(farms%>%select(id, "team_id" = team_code))
 
 ################################################################################
 # REFORMAT POSSIBLE MISSING CODED DATA
@@ -84,7 +84,7 @@ na_99 <- function(data){
 missing_codes <- c(99,999,9999,99999, 888, 8888, 8888, 555, 5555, 55555, 777, 7777, 77777)
 
 main_surveys <- na_99(main_surveys)
-#products <- na_99(products)
+products <- na_99(products)
 permanent_workers <- na_99(permanent_workers)
 seasonal_workers <- na_99(seasonal_workers)
 ecological_practices <- na_99(ecological_practices)
@@ -226,8 +226,7 @@ crops <- crops%>%
 # GET REFERNCE DATASETS
 ################################################################################
 #ref_cli_mitigation <- read.csv("reference data/climate_mitigation.csv")
-# ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation")
+ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM climate_mitigation_scores")
 #ref_income <- read.csv("reference data/income.csv")
-# ref_income <- dbGetQuery(con,"SELECT * FROM ref_income")
-# ref_yield <- dbGetQuery(con,"SELECT * FROM ref_yield")
-# ref_fertiliser <- dbGetQuery(con,"SELECT * FROM ref_fertiliser")
+ref_income <- dbGetQuery(con,"SELECT * FROM gni_entries")
+ref_crops <- dbGetQuery(con,"SELECT * FROM crop_list_entries")
