@@ -231,11 +231,11 @@ performance_indicators <- performance_indicators%>%
 
 tmp <- ecological_practices%>%
   left_join(ref_cli_mitigation%>%
-              select(practice_name, score_overall), by = "practice_name")%>% #change to number when possible
+              select(ag_practice_id, score), by = c("practice_number" = "ag_practice_id"))%>% #change to number when possible
   group_by(farm_survey_data_id)%>%
   mutate(total_area = sum(practice_area_ha),
          practice_share = practice_area_ha/total_area,
-         weighted_cc_score = score_overall * practice_share)%>%
+         weighted_cc_score = score * practice_share)%>%
   summarise(kpi8_climate_mitigation = mean(weighted_cc_score, na.rm = TRUE))
   
 performance_indicators <- performance_indicators%>%
@@ -713,9 +713,9 @@ performance_indicators <- performance_indicators%>%
     kpi9_water_stress_scaled = kpi9_water_stress,
     kpi10_energy_use_scaled = indicator_scale_set(1,5,kpi10_energy_use),
     kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),
-    #kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),
+    kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),
     kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),
-    #kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),
+    kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),
     kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),
     #kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),
     #kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),
