@@ -231,4 +231,4 @@ ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation_scores")
 ref_income <- dbGetQuery(con,"SELECT * FROM ref_income_scores")
 
 # TODO: get data from choice list entries table
-ref_crops <- dbGetQuery(con,"SELECT * FROM ref_crops")
+# ref_crops <- dbGetQuery(con,"SELECT * FROM ref_crops")
