@@ -63,12 +63,11 @@ get_db <- function() {
                    password = Sys.getenv("DB_PASSWORD"),
                    bigint = "numeric",
                    int = "numeric"
-                   
+
   ))
 }
 
 con <- get_db()
-
 
 entity_values <- dbGetQuery(con, "SELECT * FROM entity_values")
 entities <- dbGetQuery(con, "SELECT * FROM entities")
@@ -337,17 +336,17 @@ main_surveys <- main_surveys%>%
     chem_fert_area_ha = ifelse(is.na(chem_fert_area),NA, chem_fert_area_ha),
     chem_fert_applied_per_area = ifelse(is.na(chem_fert_applied) | is.na(chem_fert_area),NA, chem_fert_applied_per_area),
     chem_fert_kg_ha = ifelse(is.na(chem_fert_applied)  | is.na(chem_fert_area),NA, chem_fert_kg_ha),
-    
+
     own_organic_fert_applied_kg = ifelse(is.na(own_organic_fert_applied),NA, own_organic_fert_applied_kg),
     own_organic_fert_area_ha = ifelse(is.na(own_organic_fert_area),NA, own_organic_fert_area_ha),
     own_organic_fert_applied_per_area = ifelse(is.na(own_organic_fert_applied) | is.na(own_organic_fert_area),NA, own_organic_fert_applied_per_area),
     own_organic_fert_kg_ha = ifelse(is.na(own_organic_fert_applied)  | is.na(own_organic_fert_area),NA, own_organic_fert_kg_ha),
-    
+
     bought_organic_fert_applied_kg = ifelse(is.na(bought_organic_fert_applied),NA, bought_organic_fert_applied_kg),
     bought_organic_fert_area_ha = ifelse(is.na(bought_organic_fert_area),NA, bought_organic_fert_area_ha),
     bought_organic_fert_applied_per_area = ifelse(is.na(bought_organic_fert_applied) | is.na(bought_organic_fert_area),NA, bought_organic_fert_applied_per_area),
     bought_organic_fert_kg_ha = ifelse(is.na(bought_organic_fert_applied)  | is.na(bought_organic_fert_area),NA, bought_organic_fert_kg_ha),
-    
+
     chemical_applied_kg = ifelse(is.na(chemical_applied),NA, chemical_applied_kg),
     chemical_area_ha = ifelse(is.na(chemical_area),NA, chemical_area_ha),
     chemical_applied_per_area = ifelse(is.na(chemical_applied) | is.na(chemical_area),NA, chemical_applied_per_area),
@@ -357,7 +356,7 @@ main_surveys <- main_surveys%>%
     # non_chemical_area_ha = ifelse(is.na(non_chemical_area),NA, non_chemical_area_ha),
     # non_chemical_applied_per_area = ifelse(is.na(non_chemical_applied) | is.na(non_chemical_area),NA, non_chemical_applied_per_area),
     # non_chemical_kg_ha = ifelse(is.na(non_chemical_applied)  | is.na(non_chemical_area),NA, non_chemical_kg_ha),
-    
+
     total_crop_area_ha = ifelse(is.na(total_crop_area), NA, total_crop_area),
     livestock_land_own_ha = ifelse(is.na(livestock_land_own), NA, livestock_land_own_ha),
     livestock_land_share_ha = ifelse(is.na(livestock_land_share), NA, livestock_land_share_ha),
@@ -384,7 +383,7 @@ crops <- crops%>%
 # GET REFERNCE DATASETS
 ################################################################################
 #ref_cli_mitigation <- read.csv("reference data/climate_mitigation.csv")
-ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM climate_mitigation_scores")
+ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM ref_cli_mitigation_scores")
 #ref_income <- read.csv("reference data/income.csv")
 ref_income <- dbGetQuery(con,"SELECT * FROM gni_entries")
 ref_crops <- dbGetQuery(con,"SELECT * FROM crop_list_entries")
