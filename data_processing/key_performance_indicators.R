@@ -698,34 +698,34 @@ indicator_scale_main_surveys_rev <- function(var){
 
 performance_indicators <- performance_indicators%>%
   mutate(
-    kpi1a_crop_health_scaled = kpi1a_crop_health,
-    kpi1b_crop_health_fieldwork_scaled = indicator_scale_set(1,5,kpi1b_crop_health_fieldwork),
-    kpi2a_animal_health = indicator_scale_set(1,5,kpi2a_animal_health),
-    kpi2b_fish_health_scaled = indicator_scale_set(1,5,kpi2b_fish_health),
-    kpi3_soil_health_scaled = indicator_scale_set(1,5,kpi3_soil_health),
-    #kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use),
-    kpi5a_animal_diversity_scaled = indicator_scale_set(1,5,kpi5a_animal_diversity),
-    kpi5b_tree_diversity_scaled = indicator_scale_set(1,5,kpi5b_tree_diversity),
-    kpi6a_crop_richness_index_scaled = kpi6a_crop_richness_index,
-    kpi6b_variety_richness_scaled = indicator_scale_set(1,5,kpi6b_variety_richness),
-    kpi7_landscape_complexity_scaled = indicator_scale_set(1,5,kpi7_landscape_complexity),
-    kpi8_climate_mitigation_scaled = indicator_scale_set(1,5,kpi8_climate_mitigation),
-    kpi9_water_stress_scaled = kpi9_water_stress,
-    kpi10_energy_use_scaled = indicator_scale_set(1,5,kpi10_energy_use),
-    kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),
-    kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),
-    kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),
-    kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),
-    kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),
-    #kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),
-    #kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),
-    kpi14a_climate_resilience_scaled = indicator_scale_set(0,20,kpi14a_climate_resilience),
-    kpi14b_climate_resilience_scaled = indicator_scale_set(1,5,kpi14b_climate_resilience),
-    kpi15_diet_diversity_scaled = indicator_scale_set(0,10,kpi15_diet_diversity),
-    kpi16_farmer_agency_scaled = indicator_scale_set(1,5,kpi16_farmer_agency),
-    kpi17a_land_security_perception_scaled = indicator_scale_set(1,5,kpi17a_land_security_perception),
-    kpi17b_land_tenure = kpi17b_land_tenure,
-    kpi18_human_wellbeing = indicator_scale_set(1,5,kpi18_human_wellbeing)
+    kpi1a_crop_health_scaled = kpi1a_crop_health,#1
+    kpi1b_crop_health_fieldwork_scaled = indicator_scale_set(1,5,kpi1b_crop_health_fieldwork),#2
+    kpi2a_animal_health = indicator_scale_set(1,5,kpi2a_animal_health),#3
+    kpi2b_fish_health_scaled = indicator_scale_set(1,5,kpi2b_fish_health), #4
+    kpi3_soil_health_scaled = indicator_scale_set(1,5,kpi3_soil_health), #5
+    #kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use), #6
+    kpi5a_animal_diversity_scaled = indicator_scale_set(1,5,kpi5a_animal_diversity), #7
+    kpi5b_tree_diversity_scaled = indicator_scale_set(1,5,kpi5b_tree_diversity), #8
+    kpi6a_crop_richness_index_scaled = kpi6a_crop_richness_index, #9
+    kpi6b_variety_richness_scaled = indicator_scale_set(1,5,kpi6b_variety_richness), #10
+    kpi7_landscape_complexity_scaled = indicator_scale_set(1,5,kpi7_landscape_complexity), #11
+    kpi8_climate_mitigation_scaled = indicator_scale_set(1,5,kpi8_climate_mitigation),#12
+    kpi9_water_stress_scaled = kpi9_water_stress,#13
+    kpi10_energy_use_scaled = indicator_scale_set(1,5,kpi10_energy_use),#14
+    kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),#15
+    kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),#16
+    kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),#17
+    kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),#18
+    kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),#19
+    #kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),#20
+    #kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),#21
+    kpi14a_climate_resilience_scaled = indicator_scale_set(0,20,kpi14a_climate_resilience),#22
+    kpi14b_climate_resilience_scaled = indicator_scale_set(1,5,kpi14b_climate_resilience),#23
+    kpi15_diet_diversity_scaled = indicator_scale_set(0,10,kpi15_diet_diversity),#24
+    kpi16_farmer_agency_scaled = indicator_scale_set(1,5,kpi16_farmer_agency),#25
+    kpi17a_land_security_perception_scaled = indicator_scale_set(1,5,kpi17a_land_security_perception),#26
+    kpi17b_land_tenure = kpi17b_land_tenure,#27
+    kpi18_human_wellbeing = indicator_scale_set(1,5,kpi18_human_wellbeing)#28
   )
 
 ################################################################################

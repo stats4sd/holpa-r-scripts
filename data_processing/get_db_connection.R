@@ -12,6 +12,44 @@ env_path <- paste(getwd(), ".env", sep = '/')
 
 dotenv::load_dot_env(env_path)
 
+can.be.numeric <- function(x) {
+  stopifnot(is.atomic(x) || is.list(x)) # check if x is a vector
+  numNAs <- sum(is.na(x))
+  numNAs_new <- suppressWarnings(sum(is.na(as.numeric(x))))
+  return(numNAs_new == numNAs)
+}
+
+na_99 <- function(data){
+  
+  data <- data%>%
+    mutate_if(is.numeric, function(x) ifelse(x < 0, NA, x))
+  
+  return(data)
+  
+}
+
+#Convert back to numbers as variables are otherwise presented as characters
+number_fix <- function(data){
+  
+  #convert "NA" or "NaN" to NA proper
+  data <- data%>%
+    mutate_all(function(x) ifelse(x == "NA", NA, x))%>%
+    mutate_all(function(x) ifelse(x == "NaN", NA, x))
+  
+  data <- as.data.frame(lapply(data, function(col) {
+    if (can.be.numeric(col)) {
+      as.numeric(col)
+    } else {
+      col
+    }
+  }))
+  
+  data <- na_99(data)
+  
+  return(data)
+  
+}
+
 ################################################################################
 # GET DATA TABLES
 ################################################################################
@@ -31,69 +69,183 @@ get_db <- function() {
 
 con <- get_db()
 
-get_dataset <- function(table){
 
-  data <- dbGetQuery(con,paste("SELECT * FROM ",table))%>%
-    select(-properties)
-  
-  getquery <- paste0("select id, cast(properties as CHAR) from ", table)
-  
-  booleans <- dbGetQuery(con,getquery)
-  colnames(booleans)[2] <- "json"
-  booleans <- booleans %>%
-  as_tibble() %>%
-  filter(!is.na(json))%>%
-  mutate(j = purrr::map(json, jsonlite::fromJSON)) %>%
-  tidyr::unnest_wider(j)
+entity_values <- dbGetQuery(con, "SELECT * FROM entity_values")
+entities <- dbGetQuery(con, "SELECT * FROM entities")
 
-data <- left_join(data, select(booleans, -json))
+# FARM SURVEY DATA
 
-return(data)
+farm_survey_ids <- entities$id[entities$dataset_id==1]
 
-}
+fieldwork_ids <- entities$id[entities$dataset_id == 16]
 
-farms <- dbGetQuery(con, "SELECT * FROM farms")
-main_surveys <- get_dataset("farm_survey_data")
-products <- get_dataset("products") 
-permanent_workers <- get_dataset("permanent_workers")
-seasonal_workers <- get_dataset("seasonal_worker_seasons")
-ecological_practices <- dbGetQuery(con,"SELECT * FROM ecological_practices")
-crops <- get_dataset("crops")
-livestock <- get_dataset("livestocks")
-livestock_uses <- get_dataset("livestock_uses")
-fish <- get_dataset("fishes")
-fish_uses <- get_dataset("fish_uses")
-fieldwork_sites <- get_dataset("fieldwork_sites")
+farm_ids <- entity_values%>%
+  filter((entity_id %!in% farm_survey_ids & entity_id %!in% fieldwork_ids) | dataset_variable_name=="farm_id")%>%
+  group_by(entity_id)%>%
+  slice(1)%>%
+  left_join(entities%>%select(id, submission_id), by = c("entity_id" = "id"))%>%
+  group_by(submission_id)%>%
+  mutate(farm_id = value[dataset_variable_name=="farm_id"])%>%
+  filter(dataset_variable_name!="farm_id")%>%
+  select(entity_id, submission_id, farm_id)%>%
+  ungroup()
 
-# main_surveys <- main_surveys%>%
-#   left_join(farms%>%select(id, "team_id" = team_code))
+main_surveys <- entity_values%>%
+  filter(entity_id %in% farm_survey_ids)%>%
+  group_by(entity_id)%>%
+  mutate(farm_id = value[dataset_variable_name=="farm_id"])%>%
+  filter(dataset_variable_name!="farm_id")%>%
+  relocate(farm_id, .before = id)%>%
+  select(-id)%>%
+  ungroup()%>%
+  pivot_wider(id_cols = farm_id, names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
 
-################################################################################
-# REFORMAT POSSIBLE MISSING CODED DATA
-################################################################################
+# CROPS
 
-na_99 <- function(data){
-  
-  data <- data%>%
-  mutate_if(is.numeric, function(x) ifelse(x < 0, NA, x))
-  
-  return(data)
-  
-}
+crop_data_ids <- entities$id[entities$dataset_id==2]
+
+crops <- entity_values%>%
+  filter(entity_id %in% crop_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(primary_crop_number = value[dataset_variable_name=="primary_crop_number"])%>%
+  filter(dataset_variable_name!="primary_crop_number")%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, primary_crop_number), names_from = dataset_variable_name, values_from = value)
+
+# Ecological practices
+
+eco_data_ids <- entities$id[entities$dataset_id==3]
+
+ecological_practices <- entity_values%>%
+  filter(entity_id %in% eco_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(practice_number = value[dataset_variable_name=="practice_number"])%>%
+  filter(dataset_variable_name!="practice_number")%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, practice_number), names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
+
+# FISH
+
+fish_data_ids <- entities$id[entities$dataset_id==6]
+
+fish <- entity_values%>%
+  filter(entity_id %in% fish_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(fish_id = value[dataset_variable_name=="fish_id"])%>%
+  filter(dataset_variable_name!="fish_id")%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, fish_id), names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
+
+
+# FISH
+
+fish_use_data_ids <- entities$id[entities$dataset_id==7]
+
+fish_uses <- entity_values%>%
+  filter(entity_id %in% fish_use_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(fish_use_name = value[dataset_variable_name=="fish_use_name"])%>%
+  filter(dataset_variable_name!="fish_use_name")%>%
+  left_join(entities%>%select(id, parent_id), by = c("entity_id" = "id"))%>%
+  left_join(entity_values%>%filter(dataset_variable_name=="fish_id")%>%select(entity_id,"fish_id" = value),
+            by = c("parent_id" = "entity_id"))%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id,fish_id,fish_use_name), names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
+
+
+# livestock
+
+livestock_data_ids <- entities$id[entities$dataset_id==8]
+
+livestock <- entity_values%>%
+  filter(entity_id %in% livestock_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(livestock_id = value[dataset_variable_name=="livestock_id"])%>%
+  filter(dataset_variable_name!="livestock_id")%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, livestock_id), names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
+
+
+# livestock
+
+livestock_use_data_ids <- entities$id[entities$dataset_id==9]
+
+livestock_uses <- entity_values%>%
+  filter(entity_id %in% livestock_use_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(livestock_use_name = value[dataset_variable_name=="livestock_use_name"])%>%
+  filter(dataset_variable_name!="livestock_use_name")%>%
+  left_join(entities%>%select(id, parent_id), by = c("entity_id" = "id"))%>%
+  left_join(entity_values%>%filter(dataset_variable_name=="livestock_id")%>%select(entity_id,"livestock_id" = value),
+            by = c("parent_id" = "entity_id"))%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id,livestock_id,livestock_use_name), names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
+
+# Permanent workers
+
+perm_worker_data_ids <- entities$id[entities$dataset_id==11]
+
+permanent_workers <- entity_values%>%
+  filter(entity_id %in% perm_worker_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, entity_id), names_from = dataset_variable_name, values_from = value)%>%
+  ungroup()
+
+# # Products
+# 
+# products_data_ids <- entities$id[entities$dataset_id==12]
+# 
+# products <- entity_values%>%
+#   filter(entity_id %in% products_data_ids)%>%
+#   left_join(farm_ids)%>%
+#   group_by(entity_id)%>%
+#   mutate(products_id = value[dataset_variable_name=="products_id"])%>%
+#   filter(dataset_variable_name!="products_id")%>%
+#   select(-id)%>%
+#   pivot_wider(id_cols = c(farm_id, products_id), names_from = dataset_variable_name, values_from = value)
+
+# # Seasonal workers
+# 
+# seasonal_worker_data_ids <- entities$id[entities$dataset_id==13]
+# 
+# seasonal_workers <- entity_values%>%
+#   filter(entity_id %in% seasonal_worker_data_ids)%>%
+#   left_join(farm_ids)%>%
+#   group_by(entity_id)%>%
+#   select(-id)%>%
+#   pivot_wider(id_cols = c(farm_id, entity_id), names_from = dataset_variable_name, values_from = value)
+
+
+#################################################################################
+# FIX TO NUMERIC
+#################################################################################
+
+main_surveys <- number_fix(main_surveys)
+crops <- number_fix(crops)
+ecological_practices <- number_fix(ecological_practices)
+fish <- number_fix(fish)
+fish_uses <- number_fix(fish_uses)
+livestock <- number_fix(livestock)
+livestock_uses <- number_fix(livestock_uses)
+permanent_workers <- number_fix(permanent_workers)
+# seasonal_workers <- number_fix(seasonal_workers)
+# products <- number_fix(products)
 
 missing_codes <- c(99,999,9999,99999, 888, 8888, 8888, 555, 5555, 55555, 777, 7777, 77777)
-
-main_surveys <- na_99(main_surveys)
-products <- na_99(products)
-permanent_workers <- na_99(permanent_workers)
-seasonal_workers <- na_99(seasonal_workers)
-ecological_practices <- na_99(ecological_practices)
-crops <- na_99(crops)
-livestock <- na_99(livestock)
-livestock_uses <- na_99(livestock_uses)
-fish <- na_99(fish)
-fish_uses <- na_99(fish_uses)
-fieldwork_sites <- na_99(fieldwork_sites)
 
 missing_vars_main <- c(
   "chem_fert_applied",
@@ -170,8 +322,14 @@ missing_vars_main <- c(
   "area_at_threat_ha"
 )
 
+missing_vars_main <- missing_vars_main[missing_vars_main%in%colnames(main_surveys)]
+
 main_surveys <- main_surveys%>%
   mutate_at(all_of(missing_vars_main), function(x) ifelse(x %in% missing_codes, NA, x))
+
+# possibly repeat for all tables
+
+# TRY TO AUTOMATE SECTION BELOW
 
 main_surveys <- main_surveys%>%
   mutate(
@@ -195,23 +353,23 @@ main_surveys <- main_surveys%>%
     chemical_applied_per_area = ifelse(is.na(chemical_applied) | is.na(chemical_area),NA, chemical_applied_per_area),
     chemical_kg_ha = ifelse(is.na(chemical_applied)  | is.na(chemical_area),NA, chemical_kg_ha),
     
-    non_chemical_applied_kg = ifelse(is.na(non_chemical_applied),NA, non_chemical_applied_kg),
-    non_chemical_area_ha = ifelse(is.na(non_chemical_area),NA, non_chemical_area_ha),
-    non_chemical_applied_per_area = ifelse(is.na(non_chemical_applied) | is.na(non_chemical_area),NA, non_chemical_applied_per_area),
-    non_chemical_kg_ha = ifelse(is.na(non_chemical_applied)  | is.na(non_chemical_area),NA, non_chemical_kg_ha),
+    # non_chemical_applied_kg = ifelse(is.na(non_chemical_applied),NA, non_chemical_applied_kg),
+    # non_chemical_area_ha = ifelse(is.na(non_chemical_area),NA, non_chemical_area_ha),
+    # non_chemical_applied_per_area = ifelse(is.na(non_chemical_applied) | is.na(non_chemical_area),NA, non_chemical_applied_per_area),
+    # non_chemical_kg_ha = ifelse(is.na(non_chemical_applied)  | is.na(non_chemical_area),NA, non_chemical_kg_ha),
     
     total_crop_area_ha = ifelse(is.na(total_crop_area), NA, total_crop_area),
     livestock_land_own_ha = ifelse(is.na(livestock_land_own), NA, livestock_land_own_ha),
     livestock_land_share_ha = ifelse(is.na(livestock_land_share), NA, livestock_land_share_ha),
     fish_area_ha = ifelse(is.na(fish_area), NA, fish_area_ha),
     area_at_threat_ha = ifelse(is.na(area_at_threat), NA, area_at_threat_ha)
-    )
+  )
 
-#permanent_workers <- permanent_workers%>%
-#  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_codes, NA, perm_labourer_numbers))
-
-seasonal_workers <- seasonal_workers%>%
-  mutate(seasonal_labour_n_working = ifelse(seasonal_labour_n_working %in% missing_codes, NA, seasonal_labour_n_working))
+# #permanent_workers <- permanent_workers%>%
+# #  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_codes, NA, perm_labourer_numbers))
+# 
+# seasonal_workers <- seasonal_workers%>%
+#   mutate(seasonal_labour_n_working = ifelse(seasonal_labour_n_working %in% missing_codes, NA, seasonal_labour_n_working))
 
 ecological_practices <- ecological_practices%>%
   mutate(practice_area_ha = ifelse(is.na(practice_area),NA, practice_area_ha))

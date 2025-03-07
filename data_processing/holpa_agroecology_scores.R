@@ -21,8 +21,8 @@ recylcing_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      recycling_1_score = seed_source,
-      recycling_1_label = factor(
+      recycling_1_score = seed_source,#1
+      recycling_1_label = factor(#2
         seed_source,
         levels = c(1:5),
         labels = c(
@@ -33,8 +33,8 @@ recylcing_scores <- function(){
           "All seeds are self-produced, exchanged with other farmers or managed collectively"
         )
       ),
-      recycling_2_score = organic_fert_source,
-      recycling_2_label = factor(
+      recycling_2_score = organic_fert_source,#3
+      recycling_2_label = factor(#4
         organic_fert_source,
         levels = c(1:5),
         labels = c(
@@ -45,8 +45,8 @@ recylcing_scores <- function(){
           "All manure and compost are self-produced, exchanged with other farmers or managed collectively"
         )
       ),
-      recycling_3_score = livestock_source,
-      recycling_3_label = factor(
+      recycling_3_score = livestock_source,#5
+      recycling_3_label = factor(#6
         livestock_source,
         levels = c(1:5),
         labels = c(
@@ -57,8 +57,8 @@ recylcing_scores <- function(){
           "All animal genetic resources are self-produced, exchanged with other farmers or managed collectively"
         )
       ),
-      recycling_4_score = spawn_source,
-      recycling_4_label = factor(
+      recycling_4_score = spawn_source,#7
+      recycling_4_label = factor(#8
         spawn_source,
         levels = c(1:5),
         labels = c(
@@ -69,8 +69,8 @@ recylcing_scores <- function(){
           "All fish genetic resources are self-produced, exchanged with other farmers or managed collectively"
         )
       ),
-      recycling_5_score = energy_source,
-      recycling_5_label = factor(
+      recycling_5_score = energy_source,#9
+      recycling_5_label = factor(#10
         energy_source,
         levels = c(1:5),
         labels = c(
@@ -99,7 +99,7 @@ input_reduction_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      input_reduction_1_score = case_when(
+      input_reduction_1_score = case_when(#11
           sf_methods == 3 ~ 5,
           sf_methods == 2 |
             (sf_methods_2 == 1 & sf_methods_3 == 1 & sf_methods_1 == 0) ~ 4,
@@ -109,7 +109,7 @@ input_reduction_scores <- function(){
           sf_methods == 1 ~ 1,
           sf_methods == 0 ~ 5
       ),
-      input_reduction_1_label = case_when(
+      input_reduction_1_label = case_when(#12
         sf_methods == 0 ~ "No ecological practices, chemical or organic fertilizer were applied",
         sf_methods == 3 ~ "Only ecological practices are applied",
         input_reduction_1_score == 4 ~ "Combination of ecological practices and organic fertilizers or manure are applied/ Only organic fertilizers or manure are applied",
@@ -117,7 +117,7 @@ input_reduction_scores <- function(){
         input_reduction_1_score == 2 ~ "Combination of chemical fertilizers and organic fertilizers or manure are applied",
         input_reduction_1_score == 1 ~ "Only chemical fertilizers applied"
       ),
-      input_reduction_2_score = case_when(
+      input_reduction_2_score = case_when(#13
         pest_methods == 3 ~ 5,
         pest_methods == 2 |
           (pest_methods_2 == 1 & pest_methods_3 == 1 & pest_methods_1 == 0) ~ 4,
@@ -127,7 +127,7 @@ input_reduction_scores <- function(){
         pest_methods == 1 ~ 1,
         pest_methods == 0 ~ 5
       ),
-      input_reduction_2_label = case_when(
+      input_reduction_2_label = case_when(#14
         sf_methods == 0 ~ "No ecological practices, chemical or non-chemical pestices were applied",
         sf_methods == 3 ~ "Only ecological practices are applied",
         input_reduction_2_score == 4 ~ "Combination of ecological practices and non-chemical fungicides/pesticides/herbicides /  Only non-chemical fungicides/pesticides/herbicides area applied",
@@ -135,8 +135,8 @@ input_reduction_scores <- function(){
         input_reduction_2_score == 2 ~ "Combination of chemical and non-chemical fungicides/pesticides/herbicides",
         input_reduction_2_score == 1 ~ "Only chemical fungicides/pesticides/herbicides are applied"
       ),
-      input_reduction_3_score = dry_feed,
-      inptu_reduction_3_label = factor(
+      input_reduction_3_score = dry_feed,#15
+      inptu_reduction_3_label = factor(#16
         dry_feed,
         levels = c(1:5),
         labels = c("All the time",
@@ -145,7 +145,7 @@ input_reduction_scores <- function(){
                    "Rarely",
                    "Never")
       ),
-      input_reduction_4_score = case_when(
+      input_reduction_4_score = case_when(#17
         fish_feed_type == 1 ~ 5,
         fish_feed_type == 2 |
           (fish_feed_type_1 == 1 & fish_feed_type_2 == 1 & fish_feed_type_3 == 0) ~ 4,
@@ -154,14 +154,14 @@ input_reduction_scores <- function(){
           (fish_feed_type_1 == 1 & fish_feed_type_2 == 0 & fish_feed_type_3 == 1)~ 2, #CHECK WITH HOLPA ON THE COMBINATION OF NATURAL AND CHEMICAL
         fish_feed_type ==3 ~ 1
       ),
-      input_reduction_4_label = case_when(
+      input_reduction_4_label = case_when(#18
         input_reduction_4_score == 5 ~ "Only natural feeds used",
         input_reduction_4_score == 4 ~ "Combination of natural and prepared organic feed used. Or only organic",
         input_reduction_4_score == 3 ~ "Combination of natural, preprepared organic feeds and prepared chemical feeds used",
         input_reduction_4_score == 2 ~ "Combination of prepared organic and chemical feeds used",
         input_reduction_4_score == 1 ~ "Only chemical feeds used"
       ),
-      input_reduction_5_score = case_when(
+      input_reduction_5_score = case_when(#19
         # =0
          disease_management == 0 ~ 5,
          # 5 or 6
@@ -193,7 +193,7 @@ input_reduction_scores <- function(){
            (disease_management_5 == 0 & disease_management_6 == 0 &
               disease_management_3 == 0 & disease_management_4 == 0) ~ 1
       ),
-      input_reduction_5_label = case_when(
+      input_reduction_5_label = case_when(#20
         disease_management == 0 ~ "No action taken",
 
         (disease_management_5 == 1 | disease_management_6 == 1) &
@@ -205,7 +205,7 @@ input_reduction_scores <- function(){
         input_reduction_5_score == 2 ~ "Combination of chemical and organic inputs",
         input_reduction_5_score == 1 ~ "Only chemical inputs"
       ),
-      input_reduction_6_score = case_when(
+      input_reduction_6_score = case_when(#21
         # =0
         fish_disease_management == 0 ~ 5,
         # 5 or 6
@@ -237,7 +237,7 @@ input_reduction_scores <- function(){
           (fish_disease_management_5 == 0 & fish_disease_management_6 == 0 &
              fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ 1
       ),
-      input_reduction_6_label = case_when(
+      input_reduction_6_label = case_when(#22
         fish_disease_management == 0 ~ "No action taken",
         
         (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
@@ -268,14 +268,14 @@ soil_health_score <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      soil_health_score = case_when(
+      soil_health_score = case_when(#23
         sf_practices_count >= 4 ~ 5,
         sf_practices_count == 3 ~ 4,
         sf_practices_count == 2 ~ 3,
         sf_practices_count == 1 ~ 2,
         sf_practices_count == 0 ~ 1,
       ),
-      soil_health_label = case_when(
+      soil_health_label = case_when(#24
         soil_health_score == 5 ~ "Implementing 4 or more practices",
         soil_health_score == 4 ~ "Implementing 3 practices",
         soil_health_score == 3 ~ "Implementing 2 practices",
@@ -286,7 +286,7 @@ soil_health_score <- function(){
     select(team_id, id, submission_id, soil_health_score, soil_health_label)
   
   agroecology_scores <- left_join(agroecology_scores,
-                                  tmp)
+                                  tmp)anima
   
   return(agroecology_scores)
 
@@ -300,8 +300,8 @@ animal_health_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      animal_health_1_score = animal_health,
-      animal_health_1_label = factor(
+      animal_health_1_score = animal_health,#25
+      animal_health_1_label = factor(#26
         animal_health,
         levels = c(1:5),
         labels = c(
@@ -312,28 +312,28 @@ animal_health_scores <- function(){
           "Animals do not suffer from stress, hunger, thirst, pain, or diseases, and are slaughtered in a way to avoid unnecessary pain"
         )
       ),
-      animal_health_2_score = case_when(
+      animal_health_2_score = case_when(#27
         animal_health_management_count >= 4 ~ 5,
         animal_health_management_count == 3 ~ 4,
         animal_health_management_count == 2 ~ 3,
         animal_health_management_count == 1 ~ 2,
         animal_health_management_count == 0 ~ 1,
       ),
-      animal_health_2_label = case_when(
+      animal_health_2_label = case_when(#28
         animal_health_2_score == 5 ~ "Implementing 4 or more practices",
         animal_health_2_score == 4 ~ "Implementing 3 practices",
         animal_health_2_score == 3 ~ "Implementing 2 practices",
         animal_health_2_score == 2 ~ "Implementing 1 practice",
         animal_health_2_score == 1 ~ "Not implementing any practice"
       ),
-      animal_health_3_score = case_when(
+      animal_health_3_score = case_when(#29
         fish_land_practice_count >= 4 ~ 5,
         fish_land_practice_count == 3 ~ 4,
         fish_land_practice_count == 2 ~ 3,
         fish_land_practice_count == 1 ~ 2,
         fish_land_practice_count == 0 ~ 1,
       ),
-      animal_health_3_label = case_when(
+      animal_health_3_label = case_when(#30
         animal_health_3_score == 5 ~ "Implementing 4 or more practices",
         animal_health_3_score == 4 ~ "Implementing 3 practices",
         animal_health_3_score == 3 ~ "Implementing 2 practices",
@@ -392,14 +392,14 @@ biodiversity_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      biodiversity_1_score = case_when(
+      biodiversity_1_score = case_when(#31
         crops_count <= quantile(crops_count, 0.2, na.rm = TRUE) ~ 1,
         crops_count <= quantile(crops_count, 0.4, na.rm = TRUE) ~ 2,
         crops_count <= quantile(crops_count, 0.6, na.rm = TRUE) ~ 3,
         crops_count <= quantile(crops_count, 0.8, na.rm = TRUE) ~ 4,
         crops_count  > quantile(crops_count, 0.8, na.rm = TRUE) ~ 5
       ), 
-      biodiversity_1_label = factor(
+      biodiversity_1_label = factor(#32
         biodiversity_1_score,
         levels = c(1:5),
         labels = c(
@@ -410,14 +410,14 @@ biodiversity_scores <- function(){
           "81st - 100th percentile (high diversity)"
         )
       ),
-      biodiversity_2_score = case_when(
+      biodiversity_2_score = case_when(#33
         livestock_count <= quantile(livestock_count, 0.2, na.rm = TRUE) ~ 1,
         livestock_count <= quantile(livestock_count, 0.4, na.rm = TRUE) ~ 2,
         livestock_count <= quantile(livestock_count, 0.6, na.rm = TRUE) ~ 3,
         livestock_count <= quantile(livestock_count, 0.8, na.rm = TRUE) ~ 4,
         livestock_count  > quantile(livestock_count, 0.8, na.rm = TRUE) ~ 5
       ),
-      biodiversity_2_label = factor(
+      biodiversity_2_label = factor(#34
         biodiversity_2_score,
         levels = c(1:5),
         labels = c(
@@ -428,14 +428,14 @@ biodiversity_scores <- function(){
           "81st - 100th percentile (high diversity)"
         )
       ),
-      biodiversity_3_score = case_when(
+      biodiversity_3_score = case_when(#35
         fish_count <= quantile(fish_count, 0.2, na.rm = TRUE) ~ 1,
         fish_count <= quantile(fish_count, 0.4, na.rm = TRUE) ~ 2,
         fish_count <= quantile(fish_count, 0.6, na.rm = TRUE) ~ 3,
         fish_count <= quantile(fish_count, 0.8, na.rm = TRUE) ~ 4,
         fish_count  > quantile(fish_count, 0.8, na.rm = TRUE) ~ 5
       ),
-      biodiversity_3_label = factor(
+      biodiversity_3_label = factor(#36
         biodiversity_3_score,
         levels = c(1:5),
         labels = c(
@@ -446,22 +446,22 @@ biodiversity_scores <- function(){
           "81st - 100th percentile (high diversity)"
         )
       ),
-      biodiversity_4_score = div_score(tree_diversity),
-      biodiversity_4_label = div_labels(tree_diversity),
-      biodiversity_5_score = div_score(bushland_diversity),
-      biodiversity_5_label = div_labels(bushland_diversity),
-      biodiversity_6_score = div_score(fallow_land_diversity),
-      biodiversity_6_label = div_labels(fallow_land_diversity),
-      biodiversity_7_score = div_score(hedgerows_diversity),
-      biodiversity_7_label = div_labels(hedgerows_diversity),
-      biodiversity_8_score = div_score(grassland_diversity),
-      biodiversity_8_label = div_labels(grassland_diversity),
-      biodiversity_9_score = div_score(forest_patches_diversity),
-      biodiversity_9_label = div_labels(forest_patches_diversity),
-      biodiversity_10_score = div_score(wetlands_diversity),
-      biodiversity_10_label = div_labels(wetlands_diversity),
-      biodiversity_11_score = div_score(woodlots_diversity),
-      biodiversity_11_label = div_labels(woodlots_diversity)
+      biodiversity_4_score = div_score(tree_diversity),#37
+      biodiversity_4_label = div_labels(tree_diversity),#38
+      biodiversity_5_score = div_score(bushland_diversity),#39
+      biodiversity_5_label = div_labels(bushland_diversity),#40
+      biodiversity_6_score = div_score(fallow_land_diversity),#41
+      biodiversity_6_label = div_labels(fallow_land_diversity),#42
+      biodiversity_7_score = div_score(hedgerows_diversity),#43
+      biodiversity_7_label = div_labels(hedgerows_diversity),#44
+      biodiversity_8_score = div_score(grassland_diversity),#45
+      biodiversity_8_label = div_labels(grassland_diversity),#46
+      biodiversity_9_score = div_score(forest_patches_diversity),#47
+      biodiversity_9_label = div_labels(forest_patches_diversity),#48
+      biodiversity_10_score = div_score(wetlands_diversity),#49
+      biodiversity_10_label = div_labels(wetlands_diversity),#50
+      biodiversity_11_score = div_score(woodlots_diversity),#51
+      biodiversity_11_label = div_labels(woodlots_diversity)#52
     )%>%
     select(team_id, id, submission_id, starts_with("biodiversity"))
   
@@ -517,18 +517,18 @@ synergy_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      synergy_1_score = syn_score(ecological_practices_count), 
-      synergy_1_label = syn_labels(ecological_practices_count),
-      synergy_2_score = syn_score(sf_practices_count),  
-      synergy_2_label = syn_labels(sf_practices_count),
-      synergy_3_score = syn_score(pd_practices_count), 
-      synergy_3_label = syn_labels(pd_practices_count),
-      synergy_4_score = syn_score(grazing_practice_count), 
-      synergy_4_label = syn_labels(grazing_practice_count),
-      synergy_5_score = syn_score(fish_land_practice_count),  
-      synergy_5_label = syn_labels(fish_land_practice_count),
-      synergy_6_score = syn_score(relationship_actions_count),
-      synergy_6_label = syn_labels(relationship_actions_count)
+      synergy_1_score = syn_score(ecological_practices_count), #53
+      synergy_1_label = syn_labels(ecological_practices_count),#54
+      synergy_2_score = syn_score(sf_practices_count),  #55
+      synergy_2_label = syn_labels(sf_practices_count),#56
+      synergy_3_score = syn_score(pd_practices_count), #57
+      synergy_3_label = syn_labels(pd_practices_count),#58
+      synergy_4_score = syn_score(grazing_practice_count),#59 
+      synergy_4_label = syn_labels(grazing_practice_count),#60
+      synergy_5_score = syn_score(fish_land_practice_count),  #61
+      synergy_5_label = syn_labels(fish_land_practice_count), #62
+      synergy_6_score = syn_score(relationship_actions_count), #63
+      synergy_6_label = syn_labels(relationship_actions_count) #64
     )%>%
     select(team_id, id, submission_id, starts_with("synergy_"))
   
@@ -547,7 +547,7 @@ economic_div_score <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      economic_diversification_score =
+      economic_diversification_score = #65
         case_when(
           income_count >= 5 ~ 5,
           income_count == 4 ~ 4,
@@ -555,7 +555,7 @@ economic_div_score <- function(){
           income_count == 2 ~ 2,
           income_count == 1 ~ 1
         ),
-      economic_diversification_label =
+      economic_diversification_label = #66
         case_when(
           income_count >= 5 ~ "Five or more methods of income generation",
           income_count == 4 ~ "Four methods of income generation",
@@ -618,20 +618,20 @@ cc_knowledge_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      co_creation_knowledge_1_score = cck_score(share_extension_workers),
-      co_creation_knowledge_1_label = cck_labels(share_extension_workers),
-      co_creation_knowledge_2_score = cck_score(share_consumers),
-      co_creation_knowledge_2_label = cck_labels(share_consumers),
-      co_creation_knowledge_3_score = cck_score(share_traders),
-      co_creation_knowledge_3_label = cck_labels(share_traders),
-      co_creation_knowledge_4_score = cck_score(share_govt),
-      co_creation_knowledge_4_label = cck_labels(share_govt),
-      co_creation_knowledge_5_score = cck_score(share_ngos),
-      co_creation_knowledge_5_label = cck_labels(share_ngos),
-      co_creation_knowledge_6_score = cck_score(share_farmers),
-      co_creation_knowledge_6_label = cck_labels(share_farmers),
-      co_creation_knowledge_7_score = cck_score(share_researchers),
-      co_creation_knowledge_7_label = cck_labels(share_researchers)
+      co_creation_knowledge_1_score = cck_score(share_extension_workers), #67
+      co_creation_knowledge_1_label = cck_labels(share_extension_workers), #68
+      co_creation_knowledge_2_score = cck_score(share_consumers), #69
+      co_creation_knowledge_2_label = cck_labels(share_consumers), #70
+      co_creation_knowledge_3_score = cck_score(share_traders), #71
+      co_creation_knowledge_3_label = cck_labels(share_traders), #72
+      co_creation_knowledge_4_score = cck_score(share_govt), #73
+      co_creation_knowledge_4_label = cck_labels(share_govt), #74
+      co_creation_knowledge_5_score = cck_score(share_ngos), #75
+      co_creation_knowledge_5_label = cck_labels(share_ngos), #76
+      co_creation_knowledge_6_score = cck_score(share_farmers), #77
+      co_creation_knowledge_6_label = cck_labels(share_farmers), #78
+      co_creation_knowledge_7_score = cck_score(share_researchers), #79
+      co_creation_knowledge_7_label = cck_labels(share_researchers) #80
     )%>%
     select(team_id, id, submission_id, starts_with("co_creation_knowledge"))
   
@@ -668,14 +668,14 @@ diet_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      social_values_diet_1_score = access_healthy_food,
-      social_values_diet_1_label = diet_labels(access_healthy_food),
-      social_values_diet_2_score = access_diverse_food,
-      social_values_diet_2_label = diet_labels(access_diverse_food),
-      social_values_diet_3_score = access_seasonal_food,
-      social_values_diet_3_label = diet_labels(access_seasonal_food),
-      social_values_diet_4_score = access_traditional_food,
-      social_values_diet_5_label = diet_labels(access_traditional_food)
+      social_values_diet_1_score = access_healthy_food, #81
+      social_values_diet_1_label = diet_labels(access_healthy_food), #82
+      social_values_diet_2_score = access_diverse_food, #83
+      social_values_diet_2_label = diet_labels(access_diverse_food), #84
+      social_values_diet_3_score = access_seasonal_food, #85
+      social_values_diet_3_label = diet_labels(access_seasonal_food), #86
+      social_values_diet_4_score = access_traditional_food, #87
+      social_values_diet_5_label = diet_labels(access_traditional_food) #88
     )%>%
     select(team_id, id, submission_id, starts_with("social_values_diet"))
   
@@ -706,11 +706,11 @@ tmp_a <- products%>%
   )%>%
   mutate(
     name_prefix = case_when(
-      product_id == "crops" ~ "fairness_1_",
-      product_id == "livestock" ~ "fairness_2_",
-      product_id == "fish" ~ "fairness_3_",
-      product_id == "trees" ~ "fairness_4_",
-      product_id == "honey" ~ "fairness_5_"
+      product_id == "crops" ~ "fairness_1_", #90
+      product_id == "livestock" ~ "fairness_2_", #92
+      product_id == "fish" ~ "fairness_3_", #94
+      product_id == "trees" ~ "fairness_4_", #96
+      product_id == "honey" ~ "fairness_5_" #98
     )
   )%>%
   arrange(name_prefix)%>%
@@ -725,8 +725,8 @@ tmp_a <- products%>%
 tmp_b <- products%>%
   filter(is.na(product_id))%>%
   group_by(farm_survey_data_id)%>%
-  summarise(fairness_6_score = round(mean(as.numeric(fair_price), na.rm = TRUE),0))%>%
-  mutate(fairness_6_label = case_when(
+  summarise(fairness_6_score = round(mean(as.numeric(fair_price), na.rm = TRUE),0))%>% #99
+  mutate(fairness_6_label = case_when( #100
           fairness_6_score == 5 ~ "Always get a fair price",
           fairness_6_score == 4 ~ "Usually get a fair price, depending on the product",
           fairness_6_score == 3 ~ "Occasionally get a fair price, depending on the product",
@@ -772,11 +772,11 @@ tmp_a <- products%>%
   )%>%
   mutate(
     name_prefix = case_when(
-      product_id == "crops" ~ "connectivity_1_",
-      product_id == "livestock" ~ "connectivity_2_",
-      product_id == "fish" ~ "connectivity_3_",
-      product_id == "trees" ~ "connectivity_4_",
-      product_id == "honey" ~ "connectivity_5_"
+      product_id == "crops" ~ "connectivity_1_", #102
+      product_id == "livestock" ~ "connectivity_2_", #104
+      product_id == "fish" ~ "connectivity_3_", #106
+      product_id == "trees" ~ "connectivity_4_", #108
+      product_id == "honey" ~ "connectivity_5_" #110
     )
   )%>%
   arrange(name_prefix)%>%
@@ -801,9 +801,9 @@ tmp_b <- products%>%
       buyer_other == 1 ~ 4
     )
   )%>%
-  summarise(connectivity_6_score = round(mean(score, na.rm = TRUE),0))%>%
+  summarise(connectivity_6_score = round(mean(score, na.rm = TRUE),0))%>% #111
   mutate(
-    connectivity_6_label = case_when(
+    connectivity_6_label = case_when( #112
       connectivity_6_score == 5 ~ "Directly to consumers",
       connectivity_6_score == 4 ~ "To farmers organisation/cooperative",
       connectivity_6_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
@@ -829,8 +829,8 @@ governance_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      governance_1_score = activities_land_management,
-      governance_1_label = factor(
+      governance_1_score = activities_land_management, #113
+      governance_1_label = factor( #114
         activities_land_management,
         levels = c(1:5),
         labels = c(
@@ -841,8 +841,8 @@ governance_scores <- function(){
           "Always participates"
         )
       ),
-      governance_2_score = influence_land_management,
-      governance_2_label = factor(
+      governance_2_score = influence_land_management, #115
+      governance_2_label = factor( ##116
         influence_land_management,
         levels = c(1:5),
         labels = c(
@@ -853,8 +853,8 @@ governance_scores <- function(){
           "Contribute to all the decisions"
         )
       ),
-      governance_3_score = land_management_view,
-      governance_3_label = factor(
+      governance_3_score = land_management_view, #117
+      governance_3_label = factor( #118
         land_management_view,
         levels = c(1:5),
         labels = c(
@@ -883,10 +883,10 @@ participation_scores <- function(){
   
   tmp <- main_surveys%>%
     mutate(
-      participation_score = ifelse(
+      participation_score = ifelse( #119
         association_effectiveness == 999, 1, association_effectiveness
       ),
-      participation_label = case_when(
+      participation_label = case_when( #120
         association_effectiveness == 5 ~ "Associations/organizations demonstrate exceptional effectiveness in supporting farmers' business ventures,
         offering comprehensive assistance, fostering growth, and ensuring long-term success",
         association_effectiveness == 4 ~ "Associations/organizations play a significant role in supporting farmers' businesses,
