@@ -8,9 +8,7 @@ library(httr)
 
 source("data_processing/get_db_connection.R")
 
-main_surveys$team_id <- 1
-
-agroecology_scores <- main_surveys%>%select(team_id, id, submission_id)
+agroecology_scores <- main_surveys%>%select(farm_id, owner_id, submission_id)
 
 ################################################################################
 # RECYCLING
@@ -18,6 +16,20 @@ agroecology_scores <- main_surveys%>%select(team_id, id, submission_id)
 
 
 recylcing_scores <- function(){
+  
+  required_vars <- c("seed_source", "organic_fert_source", "livestock_source",
+                     "spawn_source", "energy_source")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -82,7 +94,7 @@ recylcing_scores <- function(){
         )
       )
     )%>%
-    select(team_id, id, submission_id, starts_with("recycling_"))
+    select(farm_id, owner_id, submission_id,  starts_with("recycling_"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -96,6 +108,31 @@ recylcing_scores <- function(){
 ################################################################################
 
 input_reduction_scores <- function(){
+  
+  required_vars <- c("sf_methods", "sf_methods_2", "sf_methods_3",
+                     "sf_methods_1",
+                     "pest_methods", "pest_methods_2", "pest_methods_3",
+                     "pest_methods_1",
+                     "dry_feed",
+                     "fish_feed_type", "fish_feed_type_2", "fish_feed_type_3",
+                     "fish_feed_type_1",
+                     "disease_management", "disease_management_1", "disease_management_2",
+                     "disease_management_3", "disease_management_4", "disease_management_5",
+                     "disease_management_6",
+                     "fish_disease_management", "fish_disease_management_1", "fish_disease_management_2",
+                     "fish_disease_management_3", "fish_disease_management_4", "fish_disease_management_5",
+                     "fish_disease_management_6")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -250,7 +287,7 @@ input_reduction_scores <- function(){
         input_reduction_6_score == 1 ~ "Only chemical inputs"
       )
     )%>%
-     select(team_id, id, submission_id, starts_with("input_reduction"))
+     select(farm_id, owner_id, submission_id,  starts_with("input_reduction"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -265,6 +302,19 @@ input_reduction_scores <- function(){
 ################################################################################
 
 soil_health_score <- function(){
+  
+  required_vars <- c("sf_practices_count")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -283,10 +333,10 @@ soil_health_score <- function(){
         soil_health_score == 1 ~ "Not implementing any practice"
       )
     )%>%
-    select(team_id, id, submission_id, soil_health_score, soil_health_label)
+    select(farm_id, owner_id, submission_id,  soil_health_score, soil_health_label)
   
   agroecology_scores <- left_join(agroecology_scores,
-                                  tmp)anima
+                                  tmp)
   
   return(agroecology_scores)
 
@@ -297,6 +347,19 @@ soil_health_score <- function(){
 ################################################################################
 
 animal_health_scores <- function(){
+  
+  required_vars <- c("animal_health", "animal_health_management_count", "fish_land_practice_count")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -341,7 +404,7 @@ animal_health_scores <- function(){
         animal_health_3_score == 1 ~ "Not implementing any practice"
       )
     )%>%
-    select(team_id, id, submission_id, animal_health_1_score:animal_health_3_label)
+    select(farm_id, owner_id, submission_id,  animal_health_1_score:animal_health_3_label)
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -354,6 +417,23 @@ animal_health_scores <- function(){
 ################################################################################
 
 div_score <- function(var){
+  
+  required_vars <- c("crops_count", "livestock_count", "fish_count",
+                     "tree_diversity", "bushland_diversity", "fallow_land_diversity",
+                     "hedgerows_diversity", "grassland_diversity","forest_patches_diversity",
+                     "wetlands_diversity", "woodlots_diversity")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
  
   scores <- main_surveys%>%
     select({{var}})%>%
@@ -373,6 +453,23 @@ div_score <- function(var){
 
 div_labels <- function(var){
   
+  required_vars <- c("crops_count", "livestock_count", "fish_count",
+                     "tree_diversity", "bushland_diversity", "fallow_land_diversity",
+                     "hedgerows_diversity", "grassland_diversity","forest_patches_diversity",
+                     "wetlands_diversity", "woodlots_diversity")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
+  
   labels <- main_surveys%>%
     select({{var}})%>%
     mutate(
@@ -389,6 +486,22 @@ div_labels <- function(var){
 }
 
 biodiversity_scores <- function(){
+  
+  required_vars <- c("crops_count", "livestock_count", "fish_count",
+                     "tree_diversity", "bushland_diversity", "fallow_land_diversity",
+                     "hedgerows_diversity", "grassland_diversity","forest_patches_diversity",
+                     "wetlands_diversity", "woodlots_diversity")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -463,7 +576,7 @@ biodiversity_scores <- function(){
       biodiversity_11_score = div_score(woodlots_diversity),#51
       biodiversity_11_label = div_labels(woodlots_diversity)#52
     )%>%
-    select(team_id, id, submission_id, starts_with("biodiversity"))
+    select(farm_id, owner_id, submission_id,  starts_with("biodiversity"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -477,6 +590,20 @@ biodiversity_scores <- function(){
 ################################################################################
 
 syn_score <- function(var){
+  
+  required_vars <- c("ecological_practices_count", "sf_practices_count", "pd_practices_count",
+                     "grazing_practice_count", "fish_land_practice_count", "relationship_actions_count")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   scores <- main_surveys%>%
     select({{var}})%>%
@@ -497,6 +624,20 @@ syn_score <- function(var){
 
 syn_labels <- function(var){
   
+  required_vars <- c("ecological_practices_count", "sf_practices_count", "pd_practices_count",
+                     "grazing_practice_count", "fish_land_practice_count", "relationship_actions_count")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
   labels <- main_surveys%>%
     select({{var}})%>%
     mutate(
@@ -515,6 +656,20 @@ syn_labels <- function(var){
 
 synergy_scores <- function(){
   
+  required_vars <- c("ecological_practices_count", "sf_practices_count", "pd_practices_count",
+                     "grazing_practice_count", "fish_land_practice_count", "relationship_actions_count")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
   tmp <- main_surveys%>%
     mutate(
       synergy_1_score = syn_score(ecological_practices_count), #53
@@ -530,7 +685,7 @@ synergy_scores <- function(){
       synergy_6_score = syn_score(relationship_actions_count), #63
       synergy_6_label = syn_labels(relationship_actions_count) #64
     )%>%
-    select(team_id, id, submission_id, starts_with("synergy_"))
+    select(farm_id, owner_id, submission_id,  starts_with("synergy_"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -544,6 +699,19 @@ synergy_scores <- function(){
 ################################################################################
 
 economic_div_score <- function(){
+  
+  required_vars <- c("income_count")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -564,7 +732,7 @@ economic_div_score <- function(){
           income_count == 1 ~ "One method of income generation"
         )
     )%>%
-    select(team_id, id, submission_id, starts_with("economic_diversification"))
+    select(farm_id, owner_id, submission_id,  starts_with("economic_diversification"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -578,6 +746,20 @@ economic_div_score <- function(){
 ################################################################################
 
 cck_score <- function(var){
+  
+  required_vars <- c("share_extension_workers", "share_consumers", "share_traders",
+                     "share_govt", "share_ngos", "share_farmers", "share_researchers")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   scores <- main_surveys%>%
     select({{var}})%>%
@@ -598,6 +780,20 @@ cck_score <- function(var){
 
 cck_labels <- function(var){
   
+  required_vars <- c("share_extension_workers", "share_consumers", "share_traders",
+                     "share_govt", "share_ngos", "share_farmers", "share_researchers")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
   labels <- main_surveys%>%
     select({{var}})%>%
     mutate(
@@ -616,6 +812,20 @@ cck_labels <- function(var){
 
 cc_knowledge_scores <- function(){
   
+  required_vars <- c("share_extension_workers", "share_consumers", "share_traders",
+                     "share_govt", "share_ngos", "share_farmers", "share_researchers")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
   tmp <- main_surveys%>%
     mutate(
       co_creation_knowledge_1_score = cck_score(share_extension_workers), #67
@@ -633,7 +843,7 @@ cc_knowledge_scores <- function(){
       co_creation_knowledge_7_score = cck_score(share_researchers), #79
       co_creation_knowledge_7_label = cck_labels(share_researchers) #80
     )%>%
-    select(team_id, id, submission_id, starts_with("co_creation_knowledge"))
+    select(farm_id, owner_id, submission_id,  starts_with("co_creation_knowledge"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -647,6 +857,20 @@ cc_knowledge_scores <- function(){
 ################################################################################
 
 diet_labels <- function(var){
+  
+  required_vars <- c("access_healthy_food", "access_diverse_food", 
+                     "access_seasonal_food","access_traditional_food")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   labels <- main_surveys%>%
     select({{var}})%>%
@@ -666,6 +890,20 @@ diet_labels <- function(var){
 
 diet_scores <- function(){
   
+  required_vars <- c("access_healthy_food", "access_diverse_food", 
+                     "access_seasonal_food","access_traditional_food")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
+  
   tmp <- main_surveys%>%
     mutate(
       social_values_diet_1_score = access_healthy_food, #81
@@ -677,7 +915,7 @@ diet_scores <- function(){
       social_values_diet_4_score = access_traditional_food, #87
       social_values_diet_5_label = diet_labels(access_traditional_food) #88
     )%>%
-    select(team_id, id, submission_id, starts_with("social_values_diet"))
+    select(farm_id, owner_id, submission_id,  starts_with("social_values_diet"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -735,8 +973,8 @@ tmp_b <- products%>%
         ))
 
 agroecology_scores <- agroecology_scores%>%
-  left_join(tmp_a, by = c("id" = "farm_survey_data_id"))%>%
-  left_join(tmp_b, by = c("id" = "farm_survey_data_id"))
+  left_join(tmp_a, by = c("farm_id" = "farm_survey_data_id"))%>%
+  left_join(tmp_b, by = c("farm_id" = "farm_survey_data_id"))
 
 return(agroecology_scores)
 
@@ -813,8 +1051,8 @@ tmp_b <- products%>%
   )
 
 agroecology_scores <- agroecology_scores%>%
-  left_join(tmp_a, by = c("id" = "farm_survey_data_id"))%>%
-  left_join(tmp_b, by = c("id" = "farm_survey_data_id"))
+  left_join(tmp_a, by = c("farm_id" = "farm_survey_data_id"))%>%
+  left_join(tmp_b, by = c("farm_id" = "farm_survey_data_id"))
 
 return(agroecology_scores)
 
@@ -826,6 +1064,20 @@ return(agroecology_scores)
 ################################################################################
 
 governance_scores <- function(){
+  
+  required_vars <- c("activities_land_management", "influence_land_management", 
+                     "land_management_view")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -866,7 +1118,7 @@ governance_scores <- function(){
         )
       )
     )%>%
-    select(team_id,id, submission_id, starts_with("governance_"))
+    select(farm_id, owner_id, submission_id,starts_with("governance_"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -880,6 +1132,19 @@ governance_scores <- function(){
 ################################################################################
 
 participation_scores <- function(){
+  
+  required_vars <- c("association_effectiveness")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(main_surveys)){
+      
+      main_surveys <- main_surveys%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
   
   tmp <- main_surveys%>%
     mutate(
@@ -900,7 +1165,7 @@ participation_scores <- function(){
         
       )
     )%>%
-    select(team_id, "farm_survey_data_id" = id, submission_id, starts_with("participation_"))
+    select(farm_id, owner_id, submission_id,  starts_with("participation_"))
   
   agroecology_scores <- left_join(agroecology_scores,
                                   tmp)
@@ -914,7 +1179,7 @@ participation_scores <- function(){
 ################################################################################
 
 agroecology_scores <- recylcing_scores()
-#agroecology_scores <- input_reduction_scores()
+agroecology_scores <- input_reduction_scores()
 agroecology_scores <- soil_health_score()
 agroecology_scores <- animal_health_scores()
 agroecology_scores <- biodiversity_scores()
@@ -922,14 +1187,26 @@ agroecology_scores <- synergy_scores()
 agroecology_scores <- economic_div_score()
 agroecology_scores <- cc_knowledge_scores()
 agroecology_scores <- diet_scores()
-agroecology_scores <- fairness_scores()
-agroecology_scores <- connectivity_scores()
+#agroecology_scores <- fairness_scores()
+#agroecology_scores <- connectivity_scores()
 agroecology_scores <- governance_scores()
 agroecology_scores <- participation_scores()
 
 ################################################################################
 # WRITE TABLE TO DATBASE
 ################################################################################
+
+agroecology_scores <- agroecology_scores%>%
+    mutate(id = row_number())%>%
+    mutate_at(vars(recycling_1_score:participation_label), as.character)%>%
+    pivot_longer(cols = -c(id,farm_id, owner_id, submission_id))%>%
+    group_by(id,farm_id,owner_id,submission_id)%>%
+    mutate(value = replace_na(value, "NA"))%>%
+    summarise(properties = jsonlite::toJSON(data.table::transpose(cur_data(),make.names = TRUE)))%>%
+    mutate(properties = str_remove_all(properties, "\\["))
+
+agroecology_scores <- agroecology_scores%>%
+    mutate(properties = str_remove_all(properties, "\\]"))
 
 dbWriteTable(con,"agroecology_scores",agroecology_scores,overwrite=TRUE)
 
