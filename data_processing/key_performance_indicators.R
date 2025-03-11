@@ -8,45 +8,71 @@ library(httr)
 
 source("data_processing/get_db_connection.R")
 
-main_surveys$team_id <- 1
-
-performance_indicators <- main_surveys%>%select(team_id, id, submission_id)
+performance_indicators <- main_surveys%>%select(farm_id, owner_id, submission_id)
 
 ################################################################################
 # CROP HEALTH (KPI 1)
 ################################################################################
 
+required_vars <- c("crop_loss_perc")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 #Household
 performance_indicators <- performance_indicators%>%
   left_join(main_surveys%>%
-              select(team_id, id,submission_id, "kpi1a_crop_health" = crop_loss_perc)%>%
+              select(farm_id, owner_id, submission_id, "kpi1a_crop_health" = crop_loss_perc)%>%
               mutate(kpi1a_crop_health = 100 - kpi1a_crop_health)) # reverse to reflect percentage of crop retained (NOT lost)
 
-#Fieldwork
-tmp <- fieldwork_sites%>%
-  mutate_at(
-    vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-         weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
-    function(x) as.numeric(x)
-  )%>%
-  mutate_at(
-    vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-         weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
-    function(x) na_if(x, 99)
-  )%>%
-  rowwise()%>%
-  mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:magagement), na.rm = TRUE))%>%
-  group_by(submission_id)%>%
-  #group_by(farm_survey_data_id)%>%
-  summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))
-
-performance_indicators <- performance_indicators%>%
-  #left_join(tmp%>%select(farm_survey_data_id, kpi1b_crop_health_fieldwork))
-  left_join(tmp%>%select(submission_id, kpi1b_crop_health_fieldwork))
+# #Fieldwork
+# tmp <- fieldwork_sites%>%
+#   mutate_at(
+#     vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
+#          weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
+#     function(x) as.numeric(x)
+#   )%>%
+#   mutate_at(
+#     vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
+#          weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
+#     function(x) na_if(x, 99)
+#   )%>%
+#   rowwise()%>%
+#   mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:magagement), na.rm = TRUE))%>%
+#   group_by(submission_id)%>%
+#   #group_by(farm_survey_data_id)%>%
+#   summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))
+# 
+# performance_indicators <- performance_indicators%>%
+#   #left_join(tmp%>%select(farm_survey_data_id, kpi1b_crop_health_fieldwork))
+#   left_join(tmp%>%select(submission_id, kpi1b_crop_health_fieldwork))
 
 ################################################################################
 # ANIMAL HEALTH (KPI 2)
 ################################################################################
+
+required_vars <- c("disease_injury", "fish_disease")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 ## livestock health
 tmp <- main_surveys%>%
@@ -58,7 +84,7 @@ tmp <- main_surveys%>%
   ))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi2a_animal_health))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi2a_animal_health))
 
 ## fish health
 tmp <- main_surveys%>%
@@ -70,11 +96,25 @@ tmp <- main_surveys%>%
   ))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi2b_fish_health))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi2b_fish_health))
 
 ################################################################################
 # SOIL HELATH (KPI 3)
 ################################################################################
+
+required_vars <- c("soil_fertility", "erosion")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 tmp <- main_surveys%>%
   mutate(
@@ -94,11 +134,26 @@ tmp <- main_surveys%>%
   mutate(kpi3_soil_health = median(c_across(c(fert_score, erosion_score)), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi3_soil_health))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi3_soil_health))
 
 ################################################################################
 # NUTRIENT USE (KPI 4)
 ################################################################################
+
+required_vars <- c("chem_fert_kg_ha", "own_organic_fert_kg_ha", "bought_organic_fert_kg_ha")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 
 #first choice should be to use reference values here but could be difficult to effectively implement, 
 # and most existing implementations do not have sufficient main_surveys
@@ -129,11 +184,27 @@ tmp <- main_surveys%>%
                                     ))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi4_nutrient_use))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi4_nutrient_use))
 
 ################################################################################
 # BIODIVERSITY - DESCRIPTIVE (KPI 5)
 ################################################################################
+
+required_vars <- c("pollinator_diversity", "pest_diversity", "pest_enemy_diversity",
+                   "mammal_diversity", "tree_cover", "tree_diversity")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 
 tmp <- main_surveys%>%
   mutate_at(
@@ -156,16 +227,30 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi5a_animal_diversity, kpi5b_tree_diversity))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi5a_animal_diversity, kpi5b_tree_diversity))
 
 ################################################################################
 # BIODIVERSITY - RICHNESS (KPI 6)
 ################################################################################
 
+required_vars <- c("crops_count", "seed_type", "exotic_local")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 ## CROP RICHNESS
 
 tmp1 <- main_surveys%>%
-  select(team_id, id, submission_id, crops_count)%>%
+  select(farm_id, owner_id, submission_id, crops_count)%>%
   mutate(
     crop_richness_min = min(crops_count, na.rm = TRUE),
     crop_richness_max = max(crops_count, na.rm = TRUE)
@@ -174,7 +259,7 @@ tmp1 <- main_surveys%>%
            (crops_count - crop_richness_min)/(crop_richness_max-crop_richness_min)*100)
 
 tmp2 <- main_surveys%>%
-  select(team_id, id, submission_id, seed_type, exotic_local)%>%
+  select(farm_id, owner_id, submission_id, seed_type, exotic_local)%>%
   mutate_at(vars(seed_type:exotic_local), as.numeric)%>%
   mutate(
     exotic_local = ifelse(exotic_local == 6 | exotic_local == 7, NA, exotic_local),
@@ -183,12 +268,31 @@ tmp2 <- main_surveys%>%
   mutate(kpi6b_variety_richness = median(c_across(seed_type:exotic_local), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp1%>%select(team_id, id, submission_id, kpi6a_crop_richness_index))%>%
-  left_join(tmp2%>%select(team_id, id, submission_id, kpi6b_variety_richness))
+  left_join(tmp1%>%select(farm_id, owner_id, submission_id, kpi6a_crop_richness_index))%>%
+  left_join(tmp2%>%select(farm_id, owner_id, submission_id, kpi6b_variety_richness))
 
 ################################################################################
 # BIODIVERSITY - LANDSCAPE COMPLEXITY (KPI 7)
 ################################################################################
+
+required_vars <- c("natural_vegetation", "bushland", "fallow_land", "hedgerows",
+                   "grassland", "ponds","forest_patches", "wetlands", "woodlots",
+                   "other_land_covering",
+                   "bushland_diversity", "fallow_land_diversity", "hedgerows_diversity",
+                   "grassland_diversity", "forest_patches_diversity", "wetlands_diversity",
+                   "woodlots_diversity")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 tmp <- main_surveys%>%
   mutate_at(
@@ -223,27 +327,55 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi7_landscape_complexity))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi7_landscape_complexity))
 
 ################################################################################
 # CLIMATE MITIGATION (KPI 8)
 ################################################################################
 
+required_vars <- c("practice_number", "practice_area_ha")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(ecological_practices)){
+    
+    ecological_practices <- ecological_practices%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 tmp <- ecological_practices%>%
   left_join(ref_cli_mitigation%>%
               select(ag_practice_id, score), by = c("practice_number" = "ag_practice_id"))%>% #change to number when possible
-  group_by(farm_survey_data_id)%>%
+  group_by(farm_id, owner_id, submission_id)%>%
   mutate(total_area = sum(practice_area_ha),
          practice_share = practice_area_ha/total_area,
          weighted_cc_score = score * practice_share)%>%
   summarise(kpi8_climate_mitigation = mean(weighted_cc_score, na.rm = TRUE))
   
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select("id" = farm_survey_data_id, kpi8_climate_mitigation))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi8_climate_mitigation))
 
 ################################################################################
 # WATER USE (KPI 9)
 ################################################################################
+
+required_vars <- c("months_with_stress")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 tmp <- main_surveys%>%
   mutate(
@@ -252,12 +384,26 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi9_water_stress))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi9_water_stress))
 
 
 ################################################################################
 # ENERGY USE (KPI 10)
 ################################################################################
+
+required_vars <- c("irrigation_energy_types", "tillage_energy_types", "cooking_energy_types", "food_energy_types")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 tmp <- main_surveys%>%
   mutate(
@@ -295,27 +441,41 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi10_energy_use))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi10_energy_use))
 
 ################################################################################
 # INCOME (KPI 11)
 ################################################################################
 
+required_vars <- c("income_sum", "income_stability", "farm_loss", "suffcient_income")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 tmp <- main_surveys%>%
   #left_join(ref_income%>%select(team_id, ref_income), by = "team_id")%>%
-  group_by(team_id)%>%
+  group_by(owner_id)%>%
   mutate(median_income = median(income_sum, na.rm = TRUE))%>% #HOLPA script used mean - median more suitable 
   #mutate(kpi11a_income_ratio = income_sum / coalesce(ref_income, median_income))%>%
   mutate(kpi11a_income_ratio = income_sum / median_income)
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, kpi11a_income_ratio))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi11a_income_ratio))
 
 # Income stability
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%
               mutate(income_stability = as.numeric(income_stability))%>%
-              select(team_id, id, submission_id, "kpi11b_income_stability" = income_stability))
+              select(farm_id, owner_id, submission_id, "kpi11b_income_stability" = income_stability))
 
 # Income vs expenditures
 tmp <- main_surveys%>%
@@ -324,29 +484,42 @@ tmp <- main_surveys%>%
   mutate(farm_loss = 1-farm_loss)
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(team_id, id, submission_id, "kpi11c_income_v_expenditures" = farm_loss))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, "kpi11c_income_v_expenditures" = farm_loss))
 
 # Income sufficiency
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%
               mutate(suffcient_income = as.numeric(suffcient_income))%>%
-              select(id, "kpi11d_income_sufficiency" = suffcient_income)) #typo in variable name
+              select(farm_id, owner_id, submission_id, "kpi11d_income_sufficiency" = suffcient_income)) #typo in variable name
 
 
 ################################################################################
 # YIELD GAP (KPI 12)
 ################################################################################
 
+required_vars <- c("primary_crop_id", "yield_kg")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(crops)){
+    
+    crops <- crops%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 #based on medians
 tmp <- crops%>%
   #left_join(ref_yield%>%select(team_id, choice_list_entry_id, expected_yield), by = c("team_id", "crop_id" = "choice_list_entry_id))%>%
-  mutate(team_id = 1)%>%
-  group_by(team_id, primary_crop_id)%>%
-  mutate(median_yield_kg_ha = median(as.numeric(total_yield), na.rm = TRUE))%>%
+  group_by(owner_id, primary_crop_id)%>%
+  mutate(median_yield_kg_ha = median(as.numeric(yield_kg), na.rm = TRUE))%>%
   #mutate(ref_yield  = coalesce(expected_yield, median_yield_kg_ha))%>%
   ungroup()%>%
   #mutate(yield_ratio = yield_kg_ha/ref_yield)%>%
-  mutate(yield_ratio = as.numeric(total_yield)/median_yield_kg_ha)%>%
+  mutate(yield_ratio = as.numeric(yield_kg)/median_yield_kg_ha)%>%
   mutate(yield_gap = ifelse(
     yield_ratio > 1, 0,
     ifelse(
@@ -354,58 +527,114 @@ tmp <- crops%>%
       (1 - yield_ratio)*100
     )
   ))%>%
-  group_by(farm_survey_data_id)%>%
+  group_by(farm_id, owner_id, submission_id)%>%
   summarise(kpi12_yield_gap = mean(yield_gap, na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select("id" = farm_survey_data_id, kpi12_yield_gap))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi12_yield_gap))
 
 ################################################################################
 # LABOUR PRODUCTIVITY (KPI 13)
 ################################################################################
 
-tmp_permanent <- permanent_workers%>%
-  mutate(hours_per_year = perm_labour_group_n_workers * perm_labour_hours * 365)%>%
-  group_by(farm_survey_data_id)%>%
-  summarise(total_perm_hours_per_year = sum(hours_per_year,na.rm = TRUE))
+required_vars <- c("perm_labour_group_n_workers", "perm_labour_hours")
+
+for(i in required_vars){
   
-tmp_seasonal <- seasonal_workers%>%
-  mutate(hours_per_season = seasonal_labour_n_working * seasonal_labour_hours * seasonal_labour_months_count * 30)%>%
-  group_by(farm_survey_data_id)%>%
-  summarise(total_seasonal_hours_per_year = sum(hours_per_season, na.rm = TRUE)) 
-
-tmp_land <- main_surveys%>%
-  select(id, total_crop_area_ha, livestock_land_own_ha, livestock_land_share_ha, fish_area_ha)%>%
-  rowwise()%>%
-  mutate(total_agricultural_land_ha = sum(c_across(total_crop_area_ha:fish_area_ha), 
-                                          na.rm = TRUE))
-
-tmp_income <- main_surveys%>%
-  select(id, income_crops, income_livestock, income_fish)%>%
-  rowwise()%>%
-  mutate(total_agricultural_income = sum(c_across(income_crops:income_fish)))
+  if(i %!in% colnames(permanent_workers)){
+    
+    permanent_workers <- permanent_workers%>%
+      mutate(!!i := NA)
+    
+  }
   
-tmp <- tmp_permanent%>%
-  left_join(tmp_seasonal)%>%
-  left_join(tmp_land, by = c("farm_survey_data_id" = "id"))%>%
-  left_join(tmp_income, by = c("farm_survey_data_id" = "id"))%>%
-  rowwise()%>%
-  mutate(total_labour_hours_per_year = sum(c_across(total_perm_hours_per_year:total_seasonal_hours_per_year),
-                                             na.rm = TRUE))%>%
-  mutate(kpi13a_labour_input = total_labour_hours_per_year/total_agricultural_land_ha)%>%
-  mutate(kpi13b_labour_productivity = total_agricultural_income/total_labour_hours_per_year)
+}
 
-performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select("farm_survey_data_id" = id, kpi13a_labour_input,kpi13b_labour_productivity))
+
+required_vars <- c("seasonal_labour_n_working", "seasonal_labour_hours", "seasonal_labour_months_count")
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(seasonal_workers)){
+    
+    seasonal_workers <- seasonal_workers%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
+required_vars <- c("total_crop_area_ha", "livestock_land_own_ha", "livestock_land_share_ha", "fish_area_ha",
+                   "income_crops", "income_livestock", "income_fish")
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
+# tmp_permanent <- permanent_workers%>%
+#   mutate(hours_per_year = perm_labour_group_n_workers * perm_labour_hours * 365)%>%
+#   group_by(farm_survey_data_id)%>%
+#   summarise(total_perm_hours_per_year = sum(hours_per_year,na.rm = TRUE))
+#   
+# tmp_seasonal <- seasonal_workers%>%
+#   mutate(hours_per_season = seasonal_labour_n_working * seasonal_labour_hours * seasonal_labour_months_count * 30)%>%
+#   group_by(farm_survey_data_id)%>%
+#   summarise(total_seasonal_hours_per_year = sum(hours_per_season, na.rm = TRUE)) 
+# 
+# tmp_land <- main_surveys%>%
+#   select(id, total_crop_area_ha, livestock_land_own_ha, livestock_land_share_ha, fish_area_ha)%>%
+#   rowwise()%>%
+#   mutate(total_agricultural_land_ha = sum(c_across(total_crop_area_ha:fish_area_ha), 
+#                                           na.rm = TRUE))
+# 
+# tmp_income <- main_surveys%>%
+#   select(id, income_crops, income_livestock, income_fish)%>%
+#   rowwise()%>%
+#   mutate(total_agricultural_income = sum(c_across(income_crops:income_fish)))
+#   
+# tmp <- tmp_permanent%>%
+#   left_join(tmp_seasonal)%>%
+#   left_join(tmp_land)%>%
+#   left_join(tmp_income)%>%
+#   rowwise()%>%
+#   mutate(total_labour_hours_per_year = sum(c_across(total_perm_hours_per_year:total_seasonal_hours_per_year),
+#                                              na.rm = TRUE))%>%
+#   mutate(kpi13a_labour_input = total_labour_hours_per_year/total_agricultural_land_ha)%>%
+#   mutate(kpi13b_labour_productivity = total_agricultural_income/total_labour_hours_per_year)
+# 
+# performance_indicators <- performance_indicators%>%
+#   left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi13a_labour_input,kpi13b_labour_productivity))
   
 ################################################################################
 # CLIMATE RESILIENCE (KPI 14)
 ################################################################################
 
+required_vars <- c("highest_education_male", "highest_education_female", "asset_other_count",
+                   "debt_repayment", "debt")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
+
 ## ABS Pillar
 
 abs1 <- main_surveys%>%
-  select(id, starts_with("distanceunit"), starts_with("transportation_"), starts_with("distance"))%>%
+  select(farm_id, owner_id, submission_id, starts_with("distanceunit"), starts_with("transportation_"), starts_with("distance"))%>%
   pivot_longer(
     cols = distanceunit_farmland:distance_freshwater,
     names_to = c(".value", "place"),
@@ -427,11 +656,11 @@ abs1 <- main_surveys%>%
       walking_time >= 20 ~ 0
     )
   )%>%
-  group_by(id)%>%
+  group_by(farm_id, owner_id, submission_id)%>%
   summarise(ABS_service_access = mean(walking_time_score, na.rm = TRUE))
 
 abs2 <- main_surveys%>%
-  select(id, piped_drinking_water, piped_toilet, electricity, waste_collection, phone_reception, internet)%>%
+  select(farm_id, owner_id, submission_id, piped_drinking_water, piped_toilet, electricity, waste_collection, phone_reception, internet)%>%
   mutate_at(vars(piped_drinking_water:internet), as.numeric)%>%
   rowwise()%>%
   mutate(ABS_utilities = sum(c_across(piped_drinking_water:internet), na.rm = TRUE))%>%
@@ -440,7 +669,7 @@ abs2 <- main_surveys%>%
     ABS_utilities > 0 ~ 2.5,
     ABS_utilities == 0 ~ 0
   ))%>%
-  select(id, ABS_utilities)
+  select(farm_id, owner_id, submission_id, ABS_utilities)
 
 abs <- full_join(abs1, abs2)%>%
   rowwise()%>%
@@ -449,7 +678,7 @@ abs <- full_join(abs1, abs2)%>%
 ## ASSET PILLAR
 
 ast <- main_surveys%>%
-  select(id, cars:crop_facilities,asset_other_count)%>%
+  select(farm_id, owner_id, submission_id, cars:crop_facilities,asset_other_count)%>%
   mutate_at(vars(cars:asset_other_count), as.numeric)%>%
   mutate_at(vars(cars:asset_other_count), function(x) ifelse(x>0,1,0))%>%
   rowwise()%>%
@@ -459,12 +688,12 @@ ast <- main_surveys%>%
     asset_sum > 0 ~ 2.5,
     asset_sum == 0 ~ 0
   ))%>%
-  select(id, AST_score)
+  select(farm_id, owner_id, submission_id, AST_score)
 
 ## SOCIAL SECURITY PILLAR
 
 ssn <- main_surveys%>%
-  select(id, "SSN_school_meals" = free_school_meals, starts_with("support_"))%>%
+  select(farm_id, owner_id, submission_id, "SSN_school_meals" = free_school_meals, starts_with("support_"))%>%
   mutate_at(vars(starts_with("support_")), as.numeric)%>%
   mutate_at(vars(starts_with("support_")), function(x) na_if(x, 999))%>%
   mutate(SSN_school_meals = as.numeric(SSN_school_meals))%>%
@@ -480,7 +709,7 @@ ssn <- main_surveys%>%
 ## ADAPTIVE CAPACITY PILLAR
 
 ac <- main_surveys%>%
-  select(id, read_write, highest_education_male, highest_education_female,
+  select(farm_id, owner_id, submission_id, read_write, highest_education_male, highest_education_female,
          agricultural_training, business_training, other_training_yn,
          income_count, food_expenditure_percent, credit_access,
          debt_repayment, debt, agricultural_loss_insurance, subsidies)%>%
@@ -550,18 +779,18 @@ ac <- main_surveys%>%
 ## RIMA
 
 RIMA <- abs%>%
-  select(id, ABS_score)%>%
-  left_join(ast%>%select(id, AST_score))%>%
-  left_join(ssn%>%select(id, SSN_score))%>%
-  left_join(ac%>%select(id, AC_score))%>%
+  select(farm_id, owner_id, submission_id, ABS_score)%>%
+  left_join(ast%>%select(farm_id, owner_id, submission_id, AST_score))%>%
+  left_join(ssn%>%select(farm_id, owner_id, submission_id, SSN_score))%>%
+  left_join(ac%>%select(farm_id, owner_id, submission_id, AC_score))%>%
   rowwise()%>%
   mutate(kpi14a_climate_resilience = sum(c_across(ends_with("_score")), na.rm = TRUE))
 
 
 performance_indicators <- performance_indicators%>%
-  left_join(RIMA%>%select(id, kpi14a_climate_resilience))%>%
+  left_join(RIMA%>%select(farm_id, owner_id, submission_id, kpi14a_climate_resilience))%>%
   left_join(main_surveys%>%mutate(kpi14b_climate_resilience = as.numeric(capacity_to_recover))%>%
-              select(team_id,id, kpi14b_climate_resilience))
+              select(farm_id, owner_id, submission_id, kpi14b_climate_resilience))
 
 
 ################################################################################
@@ -589,11 +818,25 @@ tmp <- main_surveys%>%
                                              vitA, veg, fruit)), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, kpi15_diet_diversity))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi15_diet_diversity))
 
 ################################################################################
 # FARMER AGENCY (KPI 16)
 ################################################################################
+
+required_vars <- c("hhwomen_agency_step_now", "hhmen_agency_step_now")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 tmp <- main_surveys%>%
   mutate(
@@ -611,11 +854,25 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, kpi16_farmer_agency))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi16_farmer_agency))
 
 ################################################################################
 # LAND TENURE AND SECURITY (KPI 17)
 ################################################################################
+
+required_vars <- c("land_security_perception", "area_at_threat_ha", "total_land_ha", "area_owned_ha")
+
+
+for(i in required_vars){
+  
+  if(i %!in% colnames(main_surveys)){
+    
+    main_surveys <- main_surveys%>%
+      mutate(!!i := NA)
+    
+  }
+  
+}
 
 tmp <- main_surveys%>%
   mutate(
@@ -627,7 +884,7 @@ tmp <- main_surveys%>%
   )
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, kpi17a_land_security_perception, kpi17b_land_tenure))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi17a_land_security_perception, kpi17b_land_tenure))
 
 ################################################################################
 # HUMAN WELLBEING (KPI 18)
@@ -646,7 +903,7 @@ tmp <- main_surveys%>%
   mutate(kpi18_human_wellbeing = median(c_across(wellbeing1:wellbeing12), na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(id, kpi18_human_wellbeing))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi18_human_wellbeing))
 
 ################################################################################
 # SCALING ALL INDICATORS TO 0 - 100

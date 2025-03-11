@@ -114,7 +114,7 @@ crops <- entity_values%>%
   mutate(primary_crop_number = value[dataset_variable_name=="primary_crop_number"])%>%
   filter(dataset_variable_name!="primary_crop_number")%>%
   select(-id)%>%
-  pivot_wider(id_cols = c(farm_id, primary_crop_number), names_from = dataset_variable_name, values_from = value)
+  pivot_wider(id_cols = c(farm_id, submission_id, owner_id, primary_crop_number), names_from = dataset_variable_name, values_from = value)
 
 # Ecological practices
 
