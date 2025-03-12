@@ -34,27 +34,25 @@ performance_indicators <- performance_indicators%>%
               select(farm_id, owner_id, submission_id, "kpi1a_crop_health" = crop_loss_perc)%>%
               mutate(kpi1a_crop_health = 100 - kpi1a_crop_health)) # reverse to reflect percentage of crop retained (NOT lost)
 
-# #Fieldwork
-# tmp <- fieldwork_sites%>%
-#   mutate_at(
-#     vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-#          weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
-#     function(x) as.numeric(x)
-#   )%>%
-#   mutate_at(
-#     vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-#          weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
-#     function(x) na_if(x, 99)
-#   )%>%
-#   rowwise()%>%
-#   mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:magagement), na.rm = TRUE))%>%
-#   group_by(submission_id)%>%
-#   #group_by(farm_survey_data_id)%>%
-#   summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))
-# 
-# performance_indicators <- performance_indicators%>%
-#   #left_join(tmp%>%select(farm_survey_data_id, kpi1b_crop_health_fieldwork))
-#   left_join(tmp%>%select(submission_id, kpi1b_crop_health_fieldwork))
+#Fieldwork
+tmp <- sites%>%
+  mutate_at(
+    vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
+         weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
+    function(x) as.numeric(x)
+  )%>%
+  mutate_at(
+    vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
+         weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
+    function(x) na_if(x, 99)
+  )%>%
+  rowwise()%>%
+  mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:magagement), na.rm = TRUE))%>%
+  group_by(farm_id,owner_id,submission_id)%>%
+  summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select(farm_id, owner_id, kpi1b_crop_health_fieldwork))
 
 ################################################################################
 # ANIMAL HEALTH (KPI 2)
@@ -551,18 +549,18 @@ for(i in required_vars){
 }
 
 
-required_vars <- c("seasonal_labour_n_working", "seasonal_labour_hours", "seasonal_labour_months_count")
-
-for(i in required_vars){
-  
-  if(i %!in% colnames(seasonal_workers)){
-    
-    seasonal_workers <- seasonal_workers%>%
-      mutate(!!i := NA)
-    
-  }
-  
-}
+# required_vars <- c("seasonal_labour_n_working", "seasonal_labour_hours", "seasonal_labour_months_count")
+# 
+# for(i in required_vars){
+#   
+#   if(i %!in% colnames(seasonal_workers)){
+#     
+#     seasonal_workers <- seasonal_workers%>%
+#       mutate(!!i := NA)
+#     
+#   }
+#   
+# }
 
 required_vars <- c("total_crop_area_ha", "livestock_land_own_ha", "livestock_land_share_ha", "fish_area_ha",
                    "income_crops", "income_livestock", "income_fish")
@@ -960,7 +958,7 @@ performance_indicators <- performance_indicators%>%
     kpi2a_animal_health = indicator_scale_set(1,5,kpi2a_animal_health),#3
     kpi2b_fish_health_scaled = indicator_scale_set(1,5,kpi2b_fish_health), #4
     kpi3_soil_health_scaled = indicator_scale_set(1,5,kpi3_soil_health), #5
-    #kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use), #6
+    kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use), #6
     kpi5a_animal_diversity_scaled = indicator_scale_set(1,5,kpi5a_animal_diversity), #7
     kpi5b_tree_diversity_scaled = indicator_scale_set(1,5,kpi5b_tree_diversity), #8
     kpi6a_crop_richness_index_scaled = kpi6a_crop_richness_index, #9
@@ -981,13 +979,25 @@ performance_indicators <- performance_indicators%>%
     kpi15_diet_diversity_scaled = indicator_scale_set(0,10,kpi15_diet_diversity),#24
     kpi16_farmer_agency_scaled = indicator_scale_set(1,5,kpi16_farmer_agency),#25
     kpi17a_land_security_perception_scaled = indicator_scale_set(1,5,kpi17a_land_security_perception),#26
-    kpi17b_land_tenure = kpi17b_land_tenure,#27
-    kpi18_human_wellbeing = indicator_scale_set(1,5,kpi18_human_wellbeing)#28
+    kpi17b_land_tenure_scaled = kpi17b_land_tenure,#27
+    kpi18_human_wellbeing_scaled  = indicator_scale_set(1,5,kpi18_human_wellbeing)#28
   )
 
 ################################################################################
 # WRITE TABLE TO DATABASE
 ################################################################################
+
+performance_indicators <- performance_indicators%>%
+  mutate(id = row_number())%>%
+  mutate_at(vars(kpi1a_crop_health:kpi18_human_wellbeing_scaled), as.character)%>%
+  pivot_longer(cols = -c(id,farm_id, owner_id, submission_id))%>%
+  group_by(id,farm_id,owner_id,submission_id)%>%
+  mutate(value = replace_na(value, "NA"))%>%
+  summarise(properties = jsonlite::toJSON(data.table::transpose(cur_data(),make.names = TRUE)))%>%
+  mutate(properties = str_remove_all(properties, "\\["))
+
+performance_indicators <- performance_indicators%>%
+  mutate(properties = str_remove_all(properties, "\\]"))
 
 dbWriteTable(con,"performance_indicators",performance_indicators,overwrite=TRUE)
 

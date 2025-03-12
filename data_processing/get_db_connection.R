@@ -233,8 +233,16 @@ permanent_workers <- entity_values%>%
 
 # SITES
 
-# TO DO
+site_data_ids <- entities$id[entities$dataset_id==15]
 
+sites <- entity_values%>%
+  filter(entity_id %in% site_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(site_no = value[dataset_variable_name=="site_no"])%>%
+  filter(dataset_variable_name!="site_no")%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, owner_id, submission_id, site_no), names_from = dataset_variable_name, values_from = value)
 
 #################################################################################
 # FIX TO NUMERIC
@@ -250,6 +258,8 @@ livestock_uses <- number_fix(livestock_uses)
 permanent_workers <- number_fix(permanent_workers)
 # seasonal_workers <- number_fix(seasonal_workers)
 # products <- number_fix(products)
+sites <- number_fix(sites)
+
 
 missing_codes <- c(99,999,9999,99999, 888, 8888, 8888, 555, 5555, 55555, 777, 7777, 77777)
 
