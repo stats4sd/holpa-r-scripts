@@ -207,29 +207,29 @@ permanent_workers <- entity_values%>%
   pivot_wider(id_cols = c(farm_id, submission_id, owner_id, entity_id), names_from = dataset_variable_name, values_from = value)%>%
   ungroup()
 
-# # Products
-# 
-# products_data_ids <- entities$id[entities$dataset_id==12]
-# 
-# products <- entity_values%>%
-#   filter(entity_id %in% products_data_ids)%>%
-#   left_join(farm_ids)%>%
-#   group_by(entity_id)%>%
-#   mutate(products_id = value[dataset_variable_name=="products_id"])%>%
-#   filter(dataset_variable_name!="products_id")%>%
-#   select(-id)%>%
-#   pivot_wider(id_cols = c(farm_id, products_id), names_from = dataset_variable_name, values_from = value)
+# Products
 
-# # Seasonal workers
-# 
-# seasonal_worker_data_ids <- entities$id[entities$dataset_id==13]
-# 
-# seasonal_workers <- entity_values%>%
-#   filter(entity_id %in% seasonal_worker_data_ids)%>%
-#   left_join(farm_ids)%>%
-#   group_by(entity_id)%>%
-#   select(-id)%>%
-#   pivot_wider(id_cols = c(farm_id, entity_id), names_from = dataset_variable_name, values_from = value)
+products_data_ids <- entities$id[entities$dataset_id==12]
+
+products <- entity_values%>%
+  filter(entity_id %in% products_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  mutate(product_name = value[dataset_variable_name=="product_name"])%>%
+  filter(dataset_variable_name!="product_name")%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, product_name), names_from = dataset_variable_name, values_from = value)
+
+# Seasonal workers
+
+seasonal_worker_data_ids <- entities$id[entities$dataset_id==13]
+
+seasonal_workers <- entity_values%>%
+  filter(entity_id %in% seasonal_worker_data_ids)%>%
+  left_join(farm_ids)%>%
+  group_by(entity_id)%>%
+  select(-id)%>%
+  pivot_wider(id_cols = c(farm_id, entity_id), names_from = dataset_variable_name, values_from = value)
 
 # SITES
 
@@ -256,8 +256,8 @@ fish_uses <- number_fix(fish_uses)
 livestock <- number_fix(livestock)
 livestock_uses <- number_fix(livestock_uses)
 permanent_workers <- number_fix(permanent_workers)
-# seasonal_workers <- number_fix(seasonal_workers)
-# products <- number_fix(products)
+seasonal_workers <- number_fix(seasonal_workers)
+products <- number_fix(products)
 sites <- number_fix(sites)
 
 
@@ -421,11 +421,11 @@ if("area_at_threat" %in% colnames(main_surveys)){
       area_at_threat_ha = ifelse(is.na(area_at_threat), NA, area_at_threat_ha))
 }
 
-# #permanent_workers <- permanent_workers%>%
-# #  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_codes, NA, perm_labourer_numbers))
-# 
-# seasonal_workers <- seasonal_workers%>%
-#   mutate(seasonal_labour_n_working = ifelse(seasonal_labour_n_working %in% missing_codes, NA, seasonal_labour_n_working))
+permanent_workers <- permanent_workers%>%
+  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_codes, NA, perm_labourer_numbers))
+ 
+seasonal_workers <- seasonal_workers%>%
+   mutate(seasonal_labour_n_working = ifelse(seasonal_labour_n_working %in% missing_codes, NA, seasonal_labour_n_working))
 
 ecological_practices <- ecological_practices%>%
   mutate(practice_area_ha = ifelse(is.na(practice_area),NA, practice_area_ha))

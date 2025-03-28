@@ -157,7 +157,7 @@ for(i in required_vars){
 # and most existing implementations do not have sufficient main_surveys
 
 # nut_ref <- ref_crops%>%
-#   group_by(team_id)%>%
+#   group_by(owner_id)%>%
 #   filter(!is.na(recommended_fert_use))%>%
 #   summarise(
 #     n = n(),
@@ -172,7 +172,7 @@ tmp <- main_surveys%>%
                                                bought_organic_fert_kg_ha)), 
                                       na.rm = TRUE))%>%
   mutate(median_input = median(total_fertiliser_input, na.rm = TRUE))%>%
-  #left_join(nut_ref, by = "team_id")%>%
+  #left_join(nut_ref, by = "owner_id")%>%
   #mutate(ref_value_col = coalesce(ref_val, median_input))%>%
   #mutate(kpi4_nutrient_use = total_fertiliser_input/ref_value_col)%>%
   mutate(kpi4_nutrient_use = total_fertiliser_input/median_input)%>%
@@ -460,7 +460,7 @@ for(i in required_vars){
 }
 
 tmp <- main_surveys%>%
-  #left_join(ref_income%>%select(team_id, ref_income), by = "team_id")%>%
+  #left_join(ref_income%>%select(owner_id, ref_income), by = "owner_id")%>%
   group_by(owner_id)%>%
   mutate(median_income = median(income_sum, na.rm = TRUE))%>% #HOLPA script used mean - median more suitable 
   #mutate(kpi11a_income_ratio = income_sum / coalesce(ref_income, median_income))%>%
@@ -511,7 +511,7 @@ for(i in required_vars){
 
 #based on medians
 tmp <- crops%>%
-  #left_join(ref_yield%>%select(team_id, choice_list_entry_id, expected_yield), by = c("team_id", "crop_id" = "choice_list_entry_id))%>%
+  #left_join(ref_yield%>%select(owner_id, choice_list_entry_id, expected_yield), by = c("owner_id", "crop_id" = "choice_list_entry_id))%>%
   group_by(owner_id, primary_crop_id)%>%
   mutate(median_yield_kg_ha = median(as.numeric(yield_kg), na.rm = TRUE))%>%
   #mutate(ref_yield  = coalesce(expected_yield, median_yield_kg_ha))%>%
@@ -576,40 +576,41 @@ for(i in required_vars){
   
 }
 
-# tmp_permanent <- permanent_workers%>%
-#   mutate(hours_per_year = perm_labour_group_n_workers * perm_labour_hours * 365)%>%
-#   group_by(farm_survey_data_id)%>%
-#   summarise(total_perm_hours_per_year = sum(hours_per_year,na.rm = TRUE))
-#   
-# tmp_seasonal <- seasonal_workers%>%
-#   mutate(hours_per_season = seasonal_labour_n_working * seasonal_labour_hours * seasonal_labour_months_count * 30)%>%
-#   group_by(farm_survey_data_id)%>%
-#   summarise(total_seasonal_hours_per_year = sum(hours_per_season, na.rm = TRUE)) 
-# 
-# tmp_land <- main_surveys%>%
-#   select(id, total_crop_area_ha, livestock_land_own_ha, livestock_land_share_ha, fish_area_ha)%>%
-#   rowwise()%>%
-#   mutate(total_agricultural_land_ha = sum(c_across(total_crop_area_ha:fish_area_ha), 
-#                                           na.rm = TRUE))
-# 
-# tmp_income <- main_surveys%>%
-#   select(id, income_crops, income_livestock, income_fish)%>%
-#   rowwise()%>%
-#   mutate(total_agricultural_income = sum(c_across(income_crops:income_fish)))
-#   
-# tmp <- tmp_permanent%>%
-#   left_join(tmp_seasonal)%>%
-#   left_join(tmp_land)%>%
-#   left_join(tmp_income)%>%
-#   rowwise()%>%
-#   mutate(total_labour_hours_per_year = sum(c_across(total_perm_hours_per_year:total_seasonal_hours_per_year),
-#                                              na.rm = TRUE))%>%
-#   mutate(kpi13a_labour_input = total_labour_hours_per_year/total_agricultural_land_ha)%>%
-#   mutate(kpi13b_labour_productivity = total_agricultural_income/total_labour_hours_per_year)
-# 
-# performance_indicators <- performance_indicators%>%
-#   left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi13a_labour_input,kpi13b_labour_productivity))
-  
+#NEEDS TO ACCOUNT FOR HIRED WOKERS EITHER BY COALESCING TABLE IN PROCESSING OR CALCUALTING HERE
+tmp_permanent <- permanent_workers%>%
+  mutate(hours_per_year = perm_labour_group_n_workers * perm_labour_hours * 365)%>%
+  group_by(farm_id)%>%
+  summarise(total_perm_hours_per_year = sum(hours_per_year,na.rm = TRUE))
+
+tmp_seasonal <- seasonal_workers%>%
+  mutate(hours_per_season = seasonal_labour_n_working * seasonal_labour_hours * seasonal_labour_months_count * 30)%>%
+  group_by(farm_id)%>%
+  summarise(total_seasonal_hours_per_year = sum(hours_per_season, na.rm = TRUE))
+
+tmp_land <- main_surveys%>%
+  select(farm_id, total_crop_area_ha, livestock_land_own_ha, livestock_land_share_ha, fish_area_ha)%>%
+  rowwise()%>%
+  mutate(total_agricultural_land_ha = sum(c_across(total_crop_area_ha:fish_area_ha),
+                                          na.rm = TRUE))
+
+tmp_income <- main_surveys%>%
+  select(farm_id, income_crops, income_livestock, income_fish)%>%
+  rowwise()%>%
+  mutate(total_agricultural_income = sum(c_across(income_crops:income_fish)))
+
+tmp <- tmp_permanent%>%
+  left_join(tmp_seasonal)%>%
+  left_join(tmp_land)%>%
+  left_join(tmp_income)%>%
+  rowwise()%>%
+  mutate(total_labour_hours_per_year = sum(c_across(total_perm_hours_per_year:total_seasonal_hours_per_year),
+                                             na.rm = TRUE))%>%
+  mutate(kpi13a_labour_input = total_labour_hours_per_year/total_agricultural_land_ha)%>%
+  mutate(kpi13b_labour_productivity = total_agricultural_income/total_labour_hours_per_year)
+
+performance_indicators <- performance_indicators%>%
+  left_join(tmp%>%select(farm_id, kpi13a_labour_input,kpi13b_labour_productivity))
+
 ################################################################################
 # CLIMATE RESILIENCE (KPI 14)
 ################################################################################
@@ -924,8 +925,8 @@ indicator_scale_set <- function(min, max, var){
 indicator_scale_main_surveys <- function(var){
   
   scaled_scores <- performance_indicators%>%
-    group_by(team_id)%>%
-    select(team_id, {{var}})%>%
+    group_by(owner_id)%>%
+    select(owner_id, {{var}})%>%
     mutate(max_score = max({{var}}, na.rm = TRUE),
            min_score = min({{var}}, na.rm = TRUE))%>%
     mutate(
@@ -939,8 +940,8 @@ indicator_scale_main_surveys <- function(var){
 indicator_scale_main_surveys_rev <- function(var){
   
   scaled_scores <- performance_indicators%>%
-    group_by(team_id)%>%
-    select(team_id, {{var}})%>%
+    group_by(owner_id)%>%
+    select(owner_id, {{var}})%>%
     mutate(max_score = max({{var}}, na.rm = TRUE),
            min_score = min({{var}}, na.rm = TRUE))%>%
     mutate(
@@ -972,8 +973,8 @@ performance_indicators <- performance_indicators%>%
     kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),#17
     kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),#18
     kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),#19
-    #kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),#20
-    #kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),#21
+    kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),#20
+    kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),#21
     kpi14a_climate_resilience_scaled = indicator_scale_set(0,20,kpi14a_climate_resilience),#22
     kpi14b_climate_resilience_scaled = indicator_scale_set(1,5,kpi14b_climate_resilience),#23
     kpi15_diet_diversity_scaled = indicator_scale_set(0,10,kpi15_diet_diversity),#24

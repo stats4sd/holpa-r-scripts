@@ -931,7 +931,7 @@ diet_scores <- function(){
 fairness_scores <- function(){
 
 tmp_a <- products%>%
-  filter(product_id %in% c("crops", "livestock", "fish", "trees", "honey"))%>%
+  filter(product_name %in% c("crop", "livestock", "fish", "trees", "honey"))%>%
   mutate(
     score = fair_price,
     label = case_when(
@@ -944,16 +944,16 @@ tmp_a <- products%>%
   )%>%
   mutate(
     name_prefix = case_when(
-      product_id == "crops" ~ "fairness_1_", #90
-      product_id == "livestock" ~ "fairness_2_", #92
-      product_id == "fish" ~ "fairness_3_", #94
-      product_id == "trees" ~ "fairness_4_", #96
-      product_id == "honey" ~ "fairness_5_" #98
+      product_name == "crop" ~ "fairness_1_", #90
+      product_name == "livestock" ~ "fairness_2_", #92
+      product_name == "fish" ~ "fairness_3_", #94
+      product_name == "trees" ~ "fairness_4_", #96
+      product_name == "honey" ~ "fairness_5_" #98
     )
   )%>%
   arrange(name_prefix)%>%
   pivot_wider(
-    id_cols = farm_survey_data_id,
+    id_cols = farm_id,
     names_from = name_prefix,
     values_from = c(score,label),
     names_glue = "{name_prefix}_{.value}",
@@ -961,8 +961,8 @@ tmp_a <- products%>%
   )
 
 tmp_b <- products%>%
-  filter(is.na(product_id))%>%
-  group_by(farm_survey_data_id)%>%
+  filter(!is.na(product_name))%>%
+  group_by(farm_id)%>%
   summarise(fairness_6_score = round(mean(as.numeric(fair_price), na.rm = TRUE),0))%>% #99
   mutate(fairness_6_label = case_when( #100
           fairness_6_score == 5 ~ "Always get a fair price",
@@ -973,8 +973,8 @@ tmp_b <- products%>%
         ))
 
 agroecology_scores <- agroecology_scores%>%
-  left_join(tmp_a, by = c("farm_id" = "farm_survey_data_id"))%>%
-  left_join(tmp_b, by = c("farm_id" = "farm_survey_data_id"))
+  left_join(tmp_a, by = c("farm_id" = "farm_id"))%>%
+  left_join(tmp_b, by = c("farm_id" = "farm_id"))
 
 return(agroecology_scores)
 
@@ -988,9 +988,22 @@ return(agroecology_scores)
 #CHECK DEFINITION FOR OTHERS
 
 connectivity_scores <- function(){
+  
+  required_vars <- c("buyer_other")
+  
+  for(i in required_vars){
+    
+    if(i %!in% colnames(products)){
+      
+      products <- products%>%
+        mutate(!!i := NA)
+      
+    }
+    
+  }
 
 tmp_a <- products%>%
-  filter(product_id %in% c("crops", "livestock", "fish", "trees", "honey"))%>%
+  filter(product_name %in% c("crop", "livestock", "fish", "trees", "honey"))%>%
   mutate(
     score = case_when(
             str_detect(buyer, "direct_to_consumer") ~ 5,
@@ -1010,16 +1023,16 @@ tmp_a <- products%>%
   )%>%
   mutate(
     name_prefix = case_when(
-      product_id == "crops" ~ "connectivity_1_", #102
-      product_id == "livestock" ~ "connectivity_2_", #104
-      product_id == "fish" ~ "connectivity_3_", #106
-      product_id == "trees" ~ "connectivity_4_", #108
-      product_id == "honey" ~ "connectivity_5_" #110
+      product_name == "crop" ~ "connectivity_1_", #102
+      product_name == "livestock" ~ "connectivity_2_", #104
+      product_name == "fish" ~ "connectivity_3_", #106
+      product_name == "trees" ~ "connectivity_4_", #108
+      product_name == "honey" ~ "connectivity_5_" #110
     )
   )%>%
   arrange(name_prefix)%>%
   pivot_wider(
-    id_cols = farm_survey_data_id,
+    id_cols = farm_id,
     names_from = name_prefix,
     values_from = c(score,label),
     names_glue = "{name_prefix}_{.value}",
@@ -1027,8 +1040,8 @@ tmp_a <- products%>%
   )
 
 tmp_b <- products%>%
-  filter(is.na(product_id))%>%
-  group_by(farm_survey_data_id)%>%
+  filter(!is.na(product_name))%>%
+  group_by(farm_id)%>%
   mutate(
     score = case_when(
       str_detect(buyer, "direct_to_consumer") ~ 5,
@@ -1051,8 +1064,8 @@ tmp_b <- products%>%
   )
 
 agroecology_scores <- agroecology_scores%>%
-  left_join(tmp_a, by = c("farm_id" = "farm_survey_data_id"))%>%
-  left_join(tmp_b, by = c("farm_id" = "farm_survey_data_id"))
+  left_join(tmp_a, by = c("farm_id" = "farm_id"))%>%
+  left_join(tmp_b, by = c("farm_id" = "farm_id"))
 
 return(agroecology_scores)
 
@@ -1187,8 +1200,8 @@ agroecology_scores <- synergy_scores()
 agroecology_scores <- economic_div_score()
 agroecology_scores <- cc_knowledge_scores()
 agroecology_scores <- diet_scores()
-#agroecology_scores <- fairness_scores()
-#agroecology_scores <- connectivity_scores()
+agroecology_scores <- fairness_scores()
+agroecology_scores <- connectivity_scores()
 agroecology_scores <- governance_scores()
 agroecology_scores <- participation_scores()
 
