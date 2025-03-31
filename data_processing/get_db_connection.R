@@ -207,6 +207,10 @@ permanent_workers <- entity_values%>%
   pivot_wider(id_cols = c(farm_id, submission_id, owner_id, entity_id), names_from = dataset_variable_name, values_from = value)%>%
   ungroup()
 
+permanent_workers <- permanent_workers%>%
+  mutate(perm_labour_group_n_workers = coalesce(perm_labour_group_n_workers, perm_labour_numbers),
+         perm_labour_group_name = coalesce(perm_labour_group_name, perm_labour_group))
+
 # Products
 
 products_data_ids <- entities$id[entities$dataset_id==12]
@@ -422,8 +426,8 @@ if("area_at_threat" %in% colnames(main_surveys)){
 }
 
 permanent_workers <- permanent_workers%>%
-  mutate(perm_labourer_numbers = ifelse(perm_labourer_numbers %in% missing_codes, NA, perm_labourer_numbers))
- 
+  mutate(perm_labour_group_n_workers = ifelse(perm_labour_group_n_workers %in% missing_codes, NA, perm_labour_group_n_workers))
+
 seasonal_workers <- seasonal_workers%>%
    mutate(seasonal_labour_n_working = ifelse(seasonal_labour_n_working %in% missing_codes, NA, seasonal_labour_n_working))
 
@@ -439,8 +443,8 @@ crops <- crops%>%
 ################################################################################
 # GET REFERNCE DATASETS
 ################################################################################
-#ref_cli_mitigation <- read.csv("reference data/climate_mitigation.csv")
 ref_cli_mitigation <- dbGetQuery(con,"SELECT * FROM climate_mitigation_scores")
-#ref_income <- read.csv("reference data/income.csv")
 ref_income <- dbGetQuery(con,"SELECT * FROM gni_entries")
-ref_crops <- dbGetQuery(con,"SELECT * FROM crop_list_entries")
+ref_crops <- dbGetQuery(con,"SELECT * FROM ref_crops")
+
+ref_crops <- number_fix(ref_crops)

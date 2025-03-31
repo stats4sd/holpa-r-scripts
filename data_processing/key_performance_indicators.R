@@ -10,6 +10,8 @@ source("data_processing/get_db_connection.R")
 
 performance_indicators <- main_surveys%>%select(farm_id, owner_id, submission_id)
 
+teams$country_id <- "KEN" # TO REMOVE
+
 ################################################################################
 # CROP HEALTH (KPI 1)
 ################################################################################
@@ -156,14 +158,13 @@ for(i in required_vars){
 #first choice should be to use reference values here but could be difficult to effectively implement, 
 # and most existing implementations do not have sufficient main_surveys
 
-# nut_ref <- ref_crops%>%
-#   group_by(owner_id)%>%
-#   filter(!is.na(recommended_fert_use))%>%
-#   summarise(
-#     n = n(),
-#     ref_val = median(recommended_fert_use)
-#   )%>%
-#   filter(n >= 10) # ASK HOLPA WHAT IS DEEMED TO BE SUFFICENT INFORMATION
+nut_ref <- ref_crops%>%
+  group_by(team_id)%>%
+  filter(!is.na(recommended_fert_use))%>%
+  summarise(
+    n = n(),
+    ref_val = median(recommended_fert_use)
+  )
 
 tmp <- main_surveys%>%
   rowwise()%>%
@@ -172,17 +173,21 @@ tmp <- main_surveys%>%
                                                bought_organic_fert_kg_ha)), 
                                       na.rm = TRUE))%>%
   mutate(median_input = median(total_fertiliser_input, na.rm = TRUE))%>%
-  #left_join(nut_ref, by = "owner_id")%>%
-  #mutate(ref_value_col = coalesce(ref_val, median_input))%>%
-  #mutate(kpi4_nutrient_use = total_fertiliser_input/ref_value_col)%>%
-  mutate(kpi4_nutrient_use = total_fertiliser_input/median_input)%>%
-  mutate(kpi4_nutrient_use = ifelse(is.infinite(kpi4_nutrient_use) | 
-                                      is.nan(kpi4_nutrient_use),NA,
-                                    kpi4_nutrient_use
-                                    ))
+  left_join(nut_ref, by = c("owner_id" = "team_id"))%>%
+  mutate(kpi4_nutrient_use_ref = total_fertiliser_input/ref_val)%>%
+  mutate(kpi4_nutrient_use_median = total_fertiliser_input/median_input)%>%
+  mutate(kpi4_nutrient_use_ref = ifelse(is.infinite(kpi4_nutrient_use_ref) | 
+                                      is.nan(kpi4_nutrient_use_ref),NA,
+                                      kpi4_nutrient_use_ref
+                                    ))%>%
+  mutate(kpi4_nutrient_use_median = ifelse(is.infinite(kpi4_nutrient_use_median) | 
+                                          is.nan(kpi4_nutrient_use_median),NA,
+                                          kpi4_nutrient_use_median
+  ))
+
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi4_nutrient_use))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi4_nutrient_use_ref, kpi4_nutrient_use_median))
 
 ################################################################################
 # BIODIVERSITY - DESCRIPTIVE (KPI 5)
@@ -459,15 +464,19 @@ for(i in required_vars){
   
 }
 
+tmp_income_ref <- teams%>%
+  select(id, country_id)%>%
+  left_join(ref_income%>%select(-id))
+
 tmp <- main_surveys%>%
-  #left_join(ref_income%>%select(owner_id, ref_income), by = "owner_id")%>%
+  left_join(tmp_income_ref%>%select(id, gni), by = c("owner_id" = "id"))%>%
   group_by(owner_id)%>%
   mutate(median_income = median(income_sum, na.rm = TRUE))%>% #HOLPA script used mean - median more suitable 
-  #mutate(kpi11a_income_ratio = income_sum / coalesce(ref_income, median_income))%>%
-  mutate(kpi11a_income_ratio = income_sum / median_income)
+  mutate(kpi11a_income_ratio_ref = income_sum / gni)%>%
+  mutate(kpi11a_income_ratio_median = income_sum / median_income)
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi11a_income_ratio))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi11a_income_ratio_ref, kpi11a_income_ratio_median))
 
 # Income stability
 performance_indicators <- performance_indicators%>%
@@ -511,25 +520,32 @@ for(i in required_vars){
 
 #based on medians
 tmp <- crops%>%
-  #left_join(ref_yield%>%select(owner_id, choice_list_entry_id, expected_yield), by = c("owner_id", "crop_id" = "choice_list_entry_id))%>%
+  left_join(ref_crops%>%select(team_id, name, expected_yield), by = c("owner_id" = "team_id", "primary_crop_id" = "name"))%>%
   group_by(owner_id, primary_crop_id)%>%
   mutate(median_yield_kg_ha = median(as.numeric(yield_kg), na.rm = TRUE))%>%
-  #mutate(ref_yield  = coalesce(expected_yield, median_yield_kg_ha))%>%
   ungroup()%>%
-  #mutate(yield_ratio = yield_kg_ha/ref_yield)%>%
-  mutate(yield_ratio = as.numeric(yield_kg)/median_yield_kg_ha)%>%
-  mutate(yield_gap = ifelse(
-    yield_ratio > 1, 0,
+  mutate(yield_ratio_median = as.numeric(yield_kg)/median_yield_kg_ha)%>%
+  mutate(yield_gap_median = ifelse(
+    yield_ratio_median > 1, 0,
     ifelse(
-      yield_ratio == 0, NA,
-      (1 - yield_ratio)*100
+      yield_ratio_median == 0, NA,
+      (1 - yield_ratio_median)*100
+    )
+  ))%>%
+  mutate(yield_ratio_ref = as.numeric(yield_kg)/expected_yield)%>%
+  mutate(yield_gap_ref = ifelse(
+    yield_ratio_ref > 1, 0,
+    ifelse(
+      yield_ratio_ref == 0, NA,
+      (1 - yield_ratio_ref)*100
     )
   ))%>%
   group_by(farm_id, owner_id, submission_id)%>%
-  summarise(kpi12_yield_gap = mean(yield_gap, na.rm = TRUE))
+  summarise(kpi12_yield_gap_ref = mean(yield_gap_ref, na.rm = TRUE),
+            kpi12_yield_gap_median = mean(yield_gap_median, na.rm = TRUE))
 
 performance_indicators <- performance_indicators%>%
-  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi12_yield_gap))
+  left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi12_yield_gap_ref, kpi12_yield_gap_median))
 
 ################################################################################
 # LABOUR PRODUCTIVITY (KPI 13)
@@ -959,7 +975,8 @@ performance_indicators <- performance_indicators%>%
     kpi2a_animal_health = indicator_scale_set(1,5,kpi2a_animal_health),#3
     kpi2b_fish_health_scaled = indicator_scale_set(1,5,kpi2b_fish_health), #4
     kpi3_soil_health_scaled = indicator_scale_set(1,5,kpi3_soil_health), #5
-    kpi4_nutrient_use_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use), #6
+    kpi4_nutrient_use_ref_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use_ref), #6
+    kpi4_nutrient_use__median_scaled = indicator_scale_set(0.5,2,kpi4_nutrient_use_median), #6
     kpi5a_animal_diversity_scaled = indicator_scale_set(1,5,kpi5a_animal_diversity), #7
     kpi5b_tree_diversity_scaled = indicator_scale_set(1,5,kpi5b_tree_diversity), #8
     kpi6a_crop_richness_index_scaled = kpi6a_crop_richness_index, #9
@@ -968,11 +985,13 @@ performance_indicators <- performance_indicators%>%
     kpi8_climate_mitigation_scaled = indicator_scale_set(1,5,kpi8_climate_mitigation),#12
     kpi9_water_stress_scaled = kpi9_water_stress,#13
     kpi10_energy_use_scaled = indicator_scale_set(1,5,kpi10_energy_use),#14
-    kpi11a_income_ratio_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio),#15
+    kpi11a_income_ratio_ref_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio_ref),#15,
+    kpi11a_income_ratio_median_scaled = indicator_scale_set(0.5,2,kpi11a_income_ratio_median),#15
     kpi11b_income_stability_scaled = indicator_scale_set(1,5,kpi11b_income_stability),#16
-    kpi11c_income_v_expenditures = indicator_scale_set(0,1,kpi11c_income_v_expenditures),#17
-    kpi11d_income_sufficiency = indicator_scale_set(1,5,kpi11d_income_sufficiency),#18
-    kpi12_yield_gap = indicator_scale_set(0,99,kpi12_yield_gap),#19
+    kpi11c_income_v_expenditures_scaled = indicator_scale_set(0,1,kpi11c_income_v_expenditures),#17
+    kpi11d_income_sufficiency_scaled = indicator_scale_set(1,5,kpi11d_income_sufficiency),#18
+    kpi12_yield_gap_ref_scaled = indicator_scale_set(0,99,kpi12_yield_gap_ref),#19,
+    kpi12_yield_gap_median_scaled = indicator_scale_set(0,99,kpi12_yield_gap_median),#19
     kpi13a_labour_input_scaled = indicator_scale_main_surveys_rev(kpi13a_labour_input),#20
     kpi13b_labour_productivity_scaled  = indicator_scale_main_surveys(kpi13b_labour_productivity),#21
     kpi14a_climate_resilience_scaled = indicator_scale_set(0,20,kpi14a_climate_resilience),#22
