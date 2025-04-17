@@ -4,7 +4,7 @@ library(httr)
 
 ################################################################################
 # IMPORT main_surveys FROM DATABASE
-################################################################################ 
+################################################################################
 
 source("data_processing/get_db_connection.R")
 
@@ -20,14 +20,14 @@ required_vars <- c("crop_loss_perc")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 #Household
@@ -40,16 +40,16 @@ performance_indicators <- performance_indicators%>%
 tmp <- sites%>%
   mutate_at(
     vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-         weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
+         weeds, natural_vegetation, management),
     function(x) as.numeric(x)
   )%>%
   mutate_at(
     vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-         weeds, natural_vegetation, magagement), #should remember to change the name of the variable as currently a typo in the name
+         weeds, natural_vegetation, management),
     function(x) na_if(x, 99)
   )%>%
   rowwise()%>%
-  mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:magagement), na.rm = TRUE))%>%
+  mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:management), na.rm = TRUE))%>%
   group_by(farm_id,owner_id,submission_id)%>%
   summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))
 
@@ -64,14 +64,14 @@ required_vars <- c("disease_injury", "fish_disease")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 ## livestock health
@@ -106,14 +106,14 @@ required_vars <- c("soil_fertility", "erosion")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- main_surveys%>%
@@ -144,18 +144,18 @@ required_vars <- c("chem_fert_kg_ha", "own_organic_fert_kg_ha", "bought_organic_
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 
-#first choice should be to use reference values here but could be difficult to effectively implement, 
+#first choice should be to use reference values here but could be difficult to effectively implement,
 # and most existing implementations do not have sufficient main_surveys
 
 nut_ref <- ref_crops%>%
@@ -170,17 +170,17 @@ tmp <- main_surveys%>%
   rowwise()%>%
   mutate(total_fertiliser_input = sum(c_across(c(chem_fert_kg_ha,
                                                own_organic_fert_kg_ha,
-                                               bought_organic_fert_kg_ha)), 
+                                               bought_organic_fert_kg_ha)),
                                       na.rm = TRUE))%>%
   mutate(median_input = median(total_fertiliser_input, na.rm = TRUE))%>%
   left_join(nut_ref, by = c("owner_id" = "team_id"))%>%
   mutate(kpi4_nutrient_use_ref = total_fertiliser_input/ref_val)%>%
   mutate(kpi4_nutrient_use_median = total_fertiliser_input/median_input)%>%
-  mutate(kpi4_nutrient_use_ref = ifelse(is.infinite(kpi4_nutrient_use_ref) | 
+  mutate(kpi4_nutrient_use_ref = ifelse(is.infinite(kpi4_nutrient_use_ref) |
                                       is.nan(kpi4_nutrient_use_ref),NA,
                                       kpi4_nutrient_use_ref
                                     ))%>%
-  mutate(kpi4_nutrient_use_median = ifelse(is.infinite(kpi4_nutrient_use_median) | 
+  mutate(kpi4_nutrient_use_median = ifelse(is.infinite(kpi4_nutrient_use_median) |
                                           is.nan(kpi4_nutrient_use_median),NA,
                                           kpi4_nutrient_use_median
   ))
@@ -198,14 +198,14 @@ required_vars <- c("pollinator_diversity", "pest_diversity", "pest_enemy_diversi
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 
@@ -217,7 +217,7 @@ tmp <- main_surveys%>%
       x == "high" ~ 5,
       x == "medium" ~ 3.66,
       x == "low" ~ 2.33,
-      x == "none" ~ 1 
+      x == "none" ~ 1
     )
   )%>%
   rowwise()%>%
@@ -240,14 +240,14 @@ required_vars <- c("crops_count", "seed_type", "exotic_local")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 ## CROP RICHNESS
@@ -258,7 +258,7 @@ tmp1 <- main_surveys%>%
     crop_richness_min = min(crops_count, na.rm = TRUE),
     crop_richness_max = max(crops_count, na.rm = TRUE)
   )%>%
-  mutate(kpi6a_crop_richness_index = 
+  mutate(kpi6a_crop_richness_index =
            (crops_count - crop_richness_min)/(crop_richness_max-crop_richness_min)*100)
 
 tmp2 <- main_surveys%>%
@@ -287,14 +287,14 @@ required_vars <- c("natural_vegetation", "bushland", "fallow_land", "hedgerows",
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- main_surveys%>%
@@ -340,14 +340,14 @@ required_vars <- c("practice_number", "practice_area_ha")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(ecological_practices)){
-    
+
     ecological_practices <- ecological_practices%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- ecological_practices%>%
@@ -358,7 +358,7 @@ tmp <- ecological_practices%>%
          practice_share = practice_area_ha/total_area,
          weighted_cc_score = score * practice_share)%>%
   summarise(kpi8_climate_mitigation = mean(weighted_cc_score, na.rm = TRUE))
-  
+
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(farm_id, owner_id, submission_id, kpi8_climate_mitigation))
 
@@ -370,14 +370,14 @@ required_vars <- c("months_with_stress")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- main_surveys%>%
@@ -398,38 +398,38 @@ required_vars <- c("irrigation_energy_types", "tillage_energy_types", "cooking_e
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- main_surveys%>%
   mutate(
     renewable = ifelse(
-      str_detect(irrigation_energy_types, 
+      str_detect(irrigation_energy_types,
                  "animal_traction|burning_plant_materials|human_power|solar_panel|wind_turbine|biogas|cow_dung_cakes")|
-        str_detect(tillage_energy_types, 
+        str_detect(tillage_energy_types,
                    "animal_traction|burning_plant_materials|human_power|solar_panel|wind_turbine|biogas|cow_dung_cakes")|
-        str_detect(cooking_energy_types, 
+        str_detect(cooking_energy_types,
                    "animal_traction|burning_plant_materials|human_power|solar_panel|wind_turbine|biogas|cow_dung_cakes")|
-        str_detect(food_energy_types, 
+        str_detect(food_energy_types,
                    "animal_traction|burning_plant_materials|human_power|solar_panel|wind_turbine|biogas|cow_dung_cakes"),
       1,
       0
     ),
     non_renewable = ifelse(
-      str_detect(irrigation_energy_types, 
+      str_detect(irrigation_energy_types,
                  "electricity|gas|coal|petrol_or_diesel|lpg|oil")|
-        str_detect(tillage_energy_types, 
+        str_detect(tillage_energy_types,
                    "electricity|gas|coal|petrol_or_diesel|lpg|oil")|
-        str_detect(cooking_energy_types, 
+        str_detect(cooking_energy_types,
                    "electricity|gas|coal|petrol_or_diesel|lpg|oil")|
-        str_detect(food_energy_types, 
+        str_detect(food_energy_types,
                    "electricity|gas|coal|petrol_or_diesel|lpg|oil"),
         1,
       0
@@ -450,18 +450,18 @@ performance_indicators <- performance_indicators%>%
 # INCOME (KPI 11)
 ################################################################################
 
-required_vars <- c("income_sum", "income_stability", "farm_loss", "suffcient_income")
+required_vars <- c("income_sum", "income_stability", "farm_loss", "sufficient_income")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp_income_ref <- teams%>%
@@ -471,7 +471,7 @@ tmp_income_ref <- teams%>%
 tmp <- main_surveys%>%
   left_join(tmp_income_ref%>%select(id, gni), by = c("owner_id" = "id"))%>%
   group_by(owner_id)%>%
-  mutate(median_income = median(income_sum, na.rm = TRUE))%>% #HOLPA script used mean - median more suitable 
+  mutate(median_income = median(income_sum, na.rm = TRUE))%>% #HOLPA script used mean - median more suitable
   mutate(kpi11a_income_ratio_ref = income_sum / gni)%>%
   mutate(kpi11a_income_ratio_median = income_sum / median_income)
 
@@ -496,8 +496,8 @@ performance_indicators <- performance_indicators%>%
 # Income sufficiency
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%
-              mutate(suffcient_income = as.numeric(suffcient_income))%>%
-              select(farm_id, owner_id, submission_id, "kpi11d_income_sufficiency" = suffcient_income)) #typo in variable name
+              mutate(sufficient_income = as.numeric(sufficient_income))%>%
+              select(farm_id, owner_id, submission_id, "kpi11d_income_sufficiency" = sufficient_income)) #typo in variable name
 
 
 ################################################################################
@@ -508,14 +508,14 @@ required_vars <- c("primary_crop_id", "yield_kg")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(crops)){
-    
+
     crops <- crops%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 #based on medians
@@ -554,42 +554,42 @@ performance_indicators <- performance_indicators%>%
 required_vars <- c("perm_labour_group_n_workers", "perm_labour_hours")
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(permanent_workers)){
-    
+
     permanent_workers <- permanent_workers%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 
 # required_vars <- c("seasonal_labour_n_working", "seasonal_labour_hours", "seasonal_labour_months_count")
-# 
+#
 # for(i in required_vars){
-#   
+#
 #   if(i %!in% colnames(seasonal_workers)){
-#     
+#
 #     seasonal_workers <- seasonal_workers%>%
 #       mutate(!!i := NA)
-#     
+#
 #   }
-#   
+#
 # }
 
 required_vars <- c("total_crop_area_ha", "livestock_land_own_ha", "livestock_land_share_ha", "fish_area_ha",
                    "income_crops", "income_livestock", "income_fish")
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 #NEEDS TO ACCOUNT FOR HIRED WOKERS EITHER BY COALESCING TABLE IN PROCESSING OR CALCUALTING HERE
@@ -636,14 +636,14 @@ required_vars <- c("highest_education_male", "highest_education_female", "asset_
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 ## ABS Pillar
@@ -828,7 +828,7 @@ tmp <- main_surveys%>%
   )%>%
   rowwise()%>%
   mutate(kpi15_diet_diversity = sum(c_across(c(grains,pulses,nuts_seeds,
-                                             dairy, meats, eggs, 
+                                             dairy, meats, eggs,
                                              dark_leafy_veg,
                                              vitA, veg, fruit)), na.rm = TRUE))
 
@@ -843,14 +843,14 @@ required_vars <- c("hhwomen_agency_step_now", "hhmen_agency_step_now")
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- main_surveys%>%
@@ -879,14 +879,14 @@ required_vars <- c("land_security_perception", "area_at_threat_ha", "total_land_
 
 
 for(i in required_vars){
-  
+
   if(i %!in% colnames(main_surveys)){
-    
+
     main_surveys <- main_surveys%>%
       mutate(!!i := NA)
-    
+
   }
-  
+
 }
 
 tmp <- main_surveys%>%
@@ -925,7 +925,7 @@ performance_indicators <- performance_indicators%>%
 ################################################################################
 
 indicator_scale_set <- function(min, max, var){
-  
+
   scaled_scores <- performance_indicators%>%
     select({{var}})%>%
     mutate({{var}} := case_when(
@@ -933,13 +933,13 @@ indicator_scale_set <- function(min, max, var){
       {{var}} > max ~ max,
       .default = {{var}}))%>%
     mutate({{var}} := ({{var}} - min)/(max-min)*100)
-  
+
   return(scaled_scores[[1]])
-  
+
 }
 
 indicator_scale_main_surveys <- function(var){
-  
+
   scaled_scores <- performance_indicators%>%
     group_by(owner_id)%>%
     select(owner_id, {{var}})%>%
@@ -948,13 +948,13 @@ indicator_scale_main_surveys <- function(var){
     mutate(
       score_scaled = ({{var}} - min_score)/(max_score-min_score)*100
     )
-  
+
   return(scaled_scores$score_scaled)
-  
+
 }
 
 indicator_scale_main_surveys_rev <- function(var){
-  
+
   scaled_scores <- performance_indicators%>%
     group_by(owner_id)%>%
     select(owner_id, {{var}})%>%
@@ -963,9 +963,9 @@ indicator_scale_main_surveys_rev <- function(var){
     mutate(
       score_scaled = 100 - (({{var}} - min_score)/(max_score-min_score)*100)
     )
-  
+
   return(scaled_scores$score_scaled)
-  
+
 }
 
 performance_indicators <- performance_indicators%>%
@@ -1022,4 +1022,3 @@ performance_indicators <- performance_indicators%>%
 dbWriteTable(con,"performance_indicators",performance_indicators,overwrite=TRUE)
 
 dbDisconnect(con)
-  
