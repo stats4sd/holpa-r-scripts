@@ -1,0 +1,2698 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={HOLPA Key Performance and Agroecological Indicator Protocols},
+  pdfauthor={Sarah K. Jones,a,* Andrea Cecilia Sánchez,a,b,c, Chris Dickensd, Matthias S. Gecke, Chaturangi Wickramaratned, Veronique Alaryf,g, Peter Boloh, Dennis Junior Chorumai, Somphasith Douangsavanhj, Modou Gueye Fallk, Gatien Falconnierl,m,n,o, Shweta Guptap,q, Chris Kettler, Smitha Krishnans, Sylvia Nyawirah, Guillermo Orjuela-Ramirezt, Boko Michel Orounladjiu, Piedad Parejav, Telma Sibandal, Christine Lamannae,1},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{HOLPA Key Performance and Agroecological Indicator Protocols}
+\author{Sarah K. Jones,a,* Andrea Cecilia Sánchez,a,b,c, Chris Dickensd,
+Matthias S. Gecke, Chaturangi Wickramaratned, Veronique Alaryf,g, Peter
+Boloh, Dennis Junior Chorumai, Somphasith Douangsavanhj, Modou Gueye
+Fallk, Gatien Falconnierl,m,n,o, Shweta Guptap,q, Chris Kettler, Smitha
+Krishnans, Sylvia Nyawirah, Guillermo Orjuela-Ramirezt, Boko Michel
+Orounladjiu, Piedad Parejav, Telma Sibandal, Christine Lamannae,1}
+\date{2025-12-05}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Welcome}\label{welcome}
+\addcontentsline{toc}{chapter}{Welcome}
+
+\markboth{Welcome}{Welcome}
+
+This is the homepage for the HOLPA Key Performance and Agroecological
+Indicator Protocols.
+
+\bookmarksetup{startatroot}
+
+\chapter{Introduction}\label{introduction}
+
+This chapter introduces the HOLPA protocols.
+
+\part{1. Environmental KPIs}
+
+\chapter{1.1 Crop, livestock and fish
+diversity}\label{crop-livestock-and-fish-diversity}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\caption{Table 7: Method for calculating key performance
+indicators}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Crop, livestock and fish diversity}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Crop, livestock and fish diversity}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Agrobiodiversity \\
+Purpose of indicator & Relevant for the post-2020 Global Biodiversity
+Framework Target 10 on `Proportion of agricultural area under productive
+and sustainable agriculture', where the Agrobiodiversity Index is a
+complementary indicator (CBD/COP/15/L.26). The Agrobiodiversity Index
+includes various measures of agrobiodiversity, including crop and
+livestock diversity. \\
+Data source & Household survey \\
+Measurement & Diversity of crop varieties (or species) and fish and
+livestock breeds (or species) on the farm, measured using data on
+richness and area coverage. \\
+Measurement units & Count with associated production area recorded in
+hectares, disaggregated by crop and animal species and ideally also
+variety/breed \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+This indicator can be calculated by collecting data on the:
+
+\begin{itemize}
+\tightlist
+\item
+  Count of crop varieties and species, and the relative area occupied.
+\item
+  Count of livestock breeds and species.
+\item
+  Count of fish breeds and species.
+\end{itemize}
+
+These data can be collected as part of a household survey. To verify the
+data, and if time allows, the researcher and farmer could conduct a
+transect of the farm and discuss and record where different crops are
+planted.
+\end{minipage} \\
+Guidance on data entry and reporting & Be sure to use the same area
+units for all species/varieties/breeds, so that diversity indices can be
+calculated. Crop and livestock varieties/breeds and species names should
+be stored in the local language and also using their scientific and
+English names to enable comparisons across sites. A local agronomist may
+need to help identify the scientific and English names. \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & FAO (2019), Jones et al.~(2021) \textsuperscript{1,2} \\
+\end{longtable}
+
+\chapter{1.2 Insect, mammal and tree
+diversity}\label{insect-mammal-and-tree-diversity}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\caption{Table 8: Method for converting key performance indicators from
+their original formats to a standardized 0 to 100 scale}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Insect, mammal and tree diversity}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Insect, mammal and tree diversity}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Biodiversity \\
+Purpose of indicator & Relevant for global climate mitigation targets
+(the Paris Agreement) and the post-2020 Global Biodiversity Framework
+Target 10 on `Proportion of agricultural area under productive and
+sustainable agriculture'. Biodiversity indicators selected to be easy to
+use and scalable, in line with Essential Biodiversity Variables 2020
+initiative recommendations. \\
+Data source & Household survey, field survey \\
+Measurement & Diversity of insect, mammal and tree species per hectare
+of farmland, measured using data on richness, abundance, and density,
+and standardised to a scale of 0 to 100 to enable data aggregation. \\
+Measurement units & Count with associated production area recorded in
+hectares, disaggregated by insect/mammal/tree species, tree maturity,
+and local/exotic origin. \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+This indicator can be calculated by collecting data on the:
+
+\begin{itemize}
+\tightlist
+\item
+  Richness and abundance of mammals, insects and trees
+\end{itemize}
+
+These data can be collected as part of household and field surveys.
+
+To enable more indepth tree data analysis, e.g.~to support efforts to
+monitor native species, ancient specimens, and carbon sequestration
+on-farm, additional data can be collected on:
+
+\begin{itemize}
+\item
+  Proportion of native tree species
+\item
+  Proportion of mature trees (\textgreater50cm diameter at breast
+  height, or height \textgreater10m)
+\end{itemize}
+\end{minipage} \\
+Guidance on data entry and reporting & Species names (if available)
+should be stored in the local language and also using their scientific
+and English names to enable comparisons across sites. \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & Landmann et al.~(2023)\textsuperscript{3}, Navarro et
+al.~(2017)\textsuperscript{4}, GEO-BON\textsuperscript{5} \\
+\end{longtable}
+
+\chapter{1.3 Landscape complexity}\label{landscape-complexity}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Landscape complexity}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Biodiversity \\
+Purpose of indicator & Relevant for the post-2020 Global Biodiversity
+Framework Goal B on conserving services provided by ecosystems and
+Target 10 on `Proportion of agricultural area under productive and
+sustainable agriculture' (CBD/COP/15/L.26). Aligns with SDG indicators
+2.4.1 and 15.3.1 on proportion of agricultural area under productive and
+sustainable agriculture. Maintaining at least 20\% natural and
+semi-natural habitat in agricultural landscapes is important for
+safeguarding food security, biodiversity, and ecosystem services
+(Garibaldi et al.~2020). \\
+Data source & Satellite data, or direct measurement by walking around
+natural or semi-natural features on-farm with a GPS. In both cases, the
+field or farm boundary needs delineating. \\
+Measurement & Percentage of farmland area that is covered with natural
+or semi-natural vegetation. \\
+Measurement units & Percentage cover, disaggregated by type of
+feature \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+We discuss three options for measurement, i) farmer estimates validated
+through field surveys (default option in HOLPA), ii) using satellite
+imagery, iii) direct measurement.
+
+\textbf{\emph{Farmer estimates}}
+
+A simplistic and rapid way to assess this indicator is to ask
+respondents to estimate the proportion of their farmland covered by
+natural or semi-natural vegetation (e.g.~bushland, fallow land,
+hedgerows, natural grassland, ponds, lakes, forest patches). This can be
+validated by assessing the proportion of natural vegetation contained
+within three 10x10m plots sampled on the farm, taking a GPS point to
+allow for satellite-based analysis of the proportion of natural
+vegetation at larger spatial scales.
+
+\textbf{\emph{Satellite imagery}}
+
+Natural or semi-natural features on farmland (see Definitions) are often
+visible on high resolution (\textless50m and ideally \textless10m)
+satellite imagery, such as Google Earth imagery. In a GIS, import the
+boundary of the field or farm of interest (see Definitions). If no
+boundary is available, generate a 1km diameter circular plot around each
+fieldwork plot, using a GPS point collected at the centre of the plot on
+the ground. In Google Earth Engine, digitise all visible natural or
+semi-natural features within the area of interest. Calculate the area of
+land with natural or semi-natural features to obtain an estimate of the
+share of land covered with natural or semi-natural features. Where
+possible this should be verified on the ground.
+
+Examples:
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4.38542in,height=3.28125in]{kpis/environmental/media/image1.png}
+
+}
+
+\caption{A computer screen shot of a field Description automatically
+gene rated}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4.42708in,height=3.28125in]{kpis/environmental/media/image2.png}
+
+}
+
+\caption{A screenshot of a computer Description automatically gene
+rated}
+
+\end{figure}%
+
+\emph{Known problems:}
+
+\begin{itemize}
+\item
+  Distinguishing between tree canopies and shade can be difficult.
+\item
+  Determining what is farmland and what is natural land can be
+  difficult.
+\item
+  Distinguishing between grass and shrubs is not always easy.
+\item
+  The condition of the vegetation is an unknown but important variable.
+\end{itemize}
+
+\textbf{\emph{Direct measurement}}
+
+Natural or semi-natural features coverage can be determined by walking
+around the field or farm of interest including all natural or
+semi-natural features, recording the boundaries with a handheld GPS.
+These areas can be imported into a GIS and used to obtain an estimate of
+the percentage of farmland covered with natural or semi-natural
+features.
+
+\textbf{Definitions:}
+
+\textbf{\emph{Farmland}} includes areas delineated with generally linear
+boundaries and inside which there are one of the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Regular rows of woody or herbaceous crops
+\item
+  Visible tractor tracks
+\item
+  Visible rows of tilled soil
+\item
+  Evidence of irrigation, e.g.~area is much greener than surrounding
+  land, or visible sprinkler system
+\item
+  Hay bales in field
+\end{enumerate}
+
+\textbf{\emph{Natural or semi-natural features}} on farmland includes
+linear or areal features on farmland comprising:
+
+\begin{itemize}
+\item
+  Single or small groups of trees or shrubs not regularly arranged
+  within the field. These include woodlots, forest remnants.
+\item
+  Narrow strips of trees, shrubs or other vegetation along field edge
+  that have no visible management, e.g., are not arranged in rows, no
+  signs of tractor or tillage activity, irregular shape. These include
+  hedgerows, flower strips, grass borders.
+\item
+  Other natural or semi-natural features, including long-term
+  (\textgreater6 month) fallow land, rivers, ponds.
+\end{itemize}
+
+This list of natural or semi-natural features should be discussed and
+adjusted with local communities and/or based on expert knowledge of the
+context
+\end{minipage} \\
+Guidance on data entry and reporting & Record which natural or
+semi-natural features were detected, e.g.~hedgerows, flower strip. For
+fallow land, record how long the land has been in fallow. \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & Garibaldi et al.~(2020), Mohamed et
+al.~(2024)\textsuperscript{5,6} \\
+\end{longtable}
+
+\chapter{1.4 Water stress}\label{water-stress}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Water stress}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Water \\
+Purpose of indicator & Aligns to SDG 6.4.2 on level of water stress, and
+SDG 6.6.1 on extent of water-related ecosystems. \\
+Data source & Household survey \\
+Measurement & Proportion of months with agricultural water shortages per
+year, for all agriculturally active months \\
+Measurement units & \% \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+This indicator can be calculated by collecting data on the:
+
+\begin{itemize}
+\tightlist
+\item
+  Number of months for which a household experienced water shortages in
+  the last 12 months, in relation to crop, livestock, fish or other
+  agricultural activities (ideally disaggregated).
+\end{itemize}
+
+The indicator is calculated by summing the number of months of water
+stress and dividing this by 12, and then taking the inverse (1/x) so
+that higher values indicate less water stress.
+
+Additional data can be collected on water sources (disaggregated by
+rainwater, water storage on-farm, water storage off-farm, flood water,
+piped water, other) to distinguish rainfed water stress versus irrigated
+water stress, and whether water harvesting measures are used.
+
+These data can be collected as part of a household survey.
+\end{minipage} \\
+Guidance on data entry and reporting & Collect data by asking which
+months (Jan, Feb, Mar, etc) water is needed per activity, and then which
+months there are water shortages per activity, to ensure alignment
+between the two responses. \\
+Indicator i nterpretation and threshold setting & This indicator
+presents the percentage of months in a year with water stress. Lower
+values indicate less stress, while high values indicate more stress.
+Therefore the indicator values should be inversed \\
+Limitations & \begin{minipage}[t]{\linewidth}\raggedright
+Key limitations of the measurement approach for this indicator include:
+
+\begin{itemize}
+\item
+  Water quality is not accounted for.
+\item
+  Water storage and delivery infrastructure are not considered.
+\end{itemize}
+
+Alternatives to consider for future surveys include the
+\textquotesingle\textquotesingle Agricultural Water Scarcity
+Index\textquotesingle\textquotesingle{} which is a dimensionless index;
+or \textquotesingle\textquotesingle Water
+Productivity\textquotesingle\textquotesingle{} (kg produced/m3 water
+consumed); or Quantify freshwater (rainfall, groundwater and surface
+water) supplied to different agricultural enterprises on the farm during
+the month or year. For the latter, users should:
+
+\begin{itemize}
+\item
+  Estimate amount of water (m3/year) required by crop, livestock, fish
+  or other agricultural enterprises (disaggregated) on the farm.
+\item
+  Estimate the amount of water (m3/year) supplied to each agricultural
+  enterprise on the farm.
+\item
+  Calculate: Water Stress (\%) = (Total freshwater supplied \textbf{/}
+  Available freshwater resources) ×
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{99}
+  \tightlist
+  \item
+  \end{enumerate}
+\item
+  Classify water stress (\%) into the following categories:
+
+  \begin{itemize}
+  \item
+    No stress = \textless10. Low water demand relative to water supply.
+  \item
+    Low stress = 10-20. Moderate demand -- sustainable status.
+  \item
+    Medium stress = 20-40. Significant pressure on water resources.
+  \item
+    High stress = 40-80. Strong competition for water -- management is
+    critical.
+  \item
+    Critical stress = \textgreater80. Unsustainable water extraction for
+    agriculture.
+  \end{itemize}
+\end{itemize}
+\end{minipage} \\
+{[}Note to me: add these to zotero{]}\{. comment-start id=``17''
+author=``J ones, Sarah ( Alliance Biov ersity-CIAT)'' d ate=``2025-12-
+05T11:56:00Z'' \}References{[}{]} \{.comment-end id=``17''\} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Biancalani, R., \& Marinelli, M. (2021). Assessing SDG indicator 6.4.2
+  "level of water stress" at major basins level. \emph{UCL Open
+  Environment}.
+\item
+  Food and Agriculture Organization (FAO). (2021). \emph{SDG Indicator
+  6.4.2 -- Level of water stress: Methodology}. United Nations FAO.
+  (\url{http://www.fao.org/aquastat}).
+\item
+  van Vliet, M. T. H., Jones, E. R., et al. (2021). Global water
+  scarcity including surface water quality and expansions of clean water
+  technologies. \emph{Environmental Research Letters}, 16(2), 024020.
+  \url{https://doi.org/10.1088/1748-9326/ABBFC3}
+\end{enumerate}
+\end{minipage} \\
+\end{longtable}
+
+\chapter{\texorpdfstring{1.5 \hl{Energy
+use}}{1.5 Energy use}}\label{energy-use}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+{[}Sustainable energy security aims to meet present energy needs without
+compromising the ability of future generations to meet their own needs.
+This requires a transition to cleaner energy sources, improved energy
+efficiency, and the development of more sustainable patterns of
+consumption. (https://e
+nergy.sustainability-directory.com/question/what-are
+-key-indicators-of-energy-security/){]}\{.comment-start id=``19'' author
+=``CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)''
+date=``2025-11-26T10:21:00Z''\}{[}Renewable Energy Share -Percentage of
+energy supply from renewable sources{]}\{.comment-start id=``20'' author
+=``CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)''
+date=``2025-11-26T10:32:00Z''\}\phantomsection\label{21}{This will be
+hard to measure-\/-how do we define energy share without measuring hours
+of use, energy efficiency level etc, and some estimate of KJ used per
+source? For example: one hour of LPG use is very different from 1 hour
+of bio-mass burning stoves.}\textbf{Sustainable energy
+use}\phantomsection\label{19}{\phantomsection\label{20}{\phantomsection\label{21}{}}}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Energy use \\
+Purpose of indicator & {[}we need to consider that most of the global
+south is affected by energy poverty and are not the main consumers of
+fossil fuels for energy. another point to consider some energy sources
+which can be considered green energy - e.g.~biogas digestors contribute
+to GHG emissions when they leak.{]}\{.comment-start id=``22'' author
+=``CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)''
+date=``2025-11-26T09:24:00Z''\}Fossil fuels and other non-renewable
+energy sources\phantomsection\label{22}{} contribute to global
+greenhouse gas emissions, exacerbating global warming. Increasing the
+share of renewable energy sources while reducing overall energy
+consumption contributes to net zero emissions targets (Paris Agreement,
+SDG 13), while self- and locally produced energy helps ensure an
+affordable and reliable energy supply (SDG 7). \\
+Data source & Household survey \\
+\begin{minipage}[t]{\linewidth}\raggedright
+{[}Can we define this as a binary variable\\
+1- use only clean energy sources for domestic use (LPG/Electric for
+cooking, e lectric/solar for heating and lighting)\\
+0-use unclean or mix of clean and unclean sources\\
+Likewise for on-farm use-\/-1 if using electric, solar or manual tools
+/equipment{]}\{. comment-start id=``23'' author='' Alvi, Muzna (
+IFPRI-India)'' da te=``2025-12-0 2T14:56:00Z''\} Measurement{[}{]}
+\{.comment-end id=``23''\}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{itemize}
+\item
+  Proportion of energy sources that are from renewable sources (energy
+  produced from solar panels, wind turbines, hydropower or other
+  renewable sources).
+\item
+  Proportion of consumed energy that is produced on-farm or by local
+  suppliers.
+\end{itemize}
+\end{minipage} \\
+Measurement units & \% \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+This indicator can be calculated by collecting data on:
+
+\begin{itemize}
+\tightlist
+\item
+  Sources of energy , disaggregated by renewable and non-renewable, per
+  activity (cooking, irrigation, tillage, and other
+  food-related/agricultural activities){[}. Used to provide a Likert
+  scale measure of clean energy:{]}\{.insertion author=``Jones, Sarah
+  (Alliance Bioversity-CIAT)''
+\end{itemize}
+
+date=``2025-12-05T10:14:00Z''\}{}
+
+\begin{verbatim}
+-   [Totall]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:14:00Z"}[y]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:15:00Z"} [clean: 100%
+    renewable energy sources]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+\end{verbatim}
+
+date=``2025-12-05T10:14:00Z''\}{[}{]}\{.paragraph-insertion
+
+\begin{verbatim}
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:14:00Z"}
+
+-   [Partially clean:]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:14:00Z"}
+    [1-99]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:15:00Z"}[%]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+\end{verbatim}
+
+date=``2025-12-05T10:14:00Z''\}{[}{]}\{.paragraph-insertion
+
+\begin{verbatim}
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:14:00Z"}
+
+-   [Not clean: 0%]{.insertion
+
+author="Jones, Sarah (Alliance Bioversity-CIAT)"
+    date="2025-12-05T10:15:00Z"}
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Proportion of energy used that is produced on-farm, by the community,
+  or purchased from other sources
+\end{itemize}
+
+Data on the proportion of renewable and locally produced energy sources
+can be combined to provide a Likert-scale measure of the sustainability
+of energy use.
+\end{minipage} \\
+Guidance on data entry and reporting & {[}\hl{Record the energy sources
+in the system assessed.}{]}\{.insertion author =``CHIMONYO, Vimbayi
+Grace Petrova (CIMMYT-Zimbabwe)'' date=``2025-11-26T07:33:00Z''\} \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & {[}\hl{https://ener
+gy.sustainability-directory.com/question/what-are-ke
+y-indicators-of-energy-security/}{]}\{.insertion author =``CHIMONYO,
+Vimbayi Grace Petrova (CIMMYT-Zimbabwe)''
+date=``2025-11-26T08:22:00Z''\} \\
+\end{longtable}
+
+\chapter{1.6 Climate mitigation}\label{climate-mitigation}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.1528}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.8333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Ind icator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Net greenhouse gas emissions}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Climate mitigation \\
+Purpose of i ndicator & Globally, the agriculture and land use sector
+contributes approximately 18\% of total greenhouse gas emissions, rising
+to nearly 60\% of GHG emissions in parts of the developing world where
+agriculture dominates the economy. With the world set to exceed the
+emissions threshold for keeping warming below 1.5\textsuperscript{o}C in
+less than 10 years\textsuperscript{7}, mitigation from all sectors is a
+top global priority.
+
+This indicator is relevant for global climate mitigation goals (Paris
+Agreement) and nationally determined contributions (NDCs). It is also
+relevant for the post-2020 Global Biodiversity Framework Target 10 on
+`Proportion of agricultural area under productive and sustainable
+agriculture', where changes in soil organic carbon stocks is a
+complementary indicator (CBD/COP/15/L.26). \\
+Data source & Farmer survey, literature review, and/or field
+measurements \\
+Mea surement & Qualitative score of net greenhouse gas emissions
+
+(alternative: carbon storage in soil and above-ground biomass) \\
+Mea surement units & 5-point Likert scale (alternative: t C
+ha\textsuperscript{−1} yr\textsuperscript{−1}) \\
+Guidance on mea surement & \begin{minipage}[t]{\linewidth}\raggedright
+We discuss two options for measurement of net greenhouse gas emissions:
+i) qualitative assessment of climate mitigation potential of on-farm
+practices, ii) quantitative assessment of carbon storage and
+sequestration only, based on soil organic carbon (SOC) and estimates of
+carbon stored in live woody biomass.
+
+\textbf{Qualitative assessment}
+
+Given the importance of climate change mitigation and the relative
+difficulty of accurately quantifying net GHG emissions from smallholder
+agriculture across diverse country contexts, we propose a qualitative
+approach for integration of mitigation into all performance assessments.
+
+Measurement involves:
+
+\begin{itemize}
+\item
+  Classifying farming practices according to their net emissions:
+  1,2,3,4,5, where 1 represents high emitting and low sequestrating
+  practices, and 5 represents low emitting and high sequestrating
+  practices.
+\item
+  Collecting household survey data on the share of cropland under each
+  practice.
+\item
+  Calculating a weighted average score for all practices found on the
+  farm, using the share of cropland as weights.
+\end{itemize}
+
+Note that the final score could instead be weighted by productivity for
+an emissions intensity estimate, if practice data are collected for each
+main crop/livestock/fish.
+
+Locally relevant farming practices need to be identified and classified
+into a net emissions category. The classification can be done through
+literature review and local experts.
+
+Some qualitative assessments/reviews of mitigation potential of
+agricultural practices already exist. We use one such review by Bell et
+al.~(2018) to provide an example scoring of practices by emission
+category. The overall score is an average of the component score. In the
+overall score, 1 represents high emitting and low sequestrating
+practices, and 5 represents low emitting and high sequestrating
+practices.
+
+\section{---------------------------------}\label{section}
+
+\textbf{Practices} \textbf{Carbon }Carbon \textbf{Avoided GHG }Overall
+\textbf{References} s equestration sequestration emissions**
+score\textbf{ i n soils} in biomass\textbf{ ---------------
+--------------- - -------------- ------------- -----------
+---------------- }*Cropping
+
+systems***
+
+Agroforestry 5 5 4 4.66 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Biochar 3 3 2 2.66 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Crop rotation 3 3 3 3 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Drip irrigation 3 3 2 2.66 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Embedded 4 5 4 4.33 Bell et al. natural (2018) (hedgerows)
+
+Green manure 4 3 2 3 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Intercropping 5 3 5 4.33 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Microdosing 3 3 2 2.66 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Mulching 4 3 3 3.33 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Reduced tillage 4 3 4 3.66 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+***Lowland rice
+
+systems***
+
+Biochar 4 4 2 3.33 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Green manure 4 4 4 4 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Microdosing 4 4 2 3.33 Bell et al.
+
+\begin{verbatim}
+                                               (2018)
+\end{verbatim}
+
+Rice-fish 3 3 4 3.33 Bell et al. integration (2018)
+
+Alternate 3 3 4 3.33 Bell et al. wetting and (2018) drying
+
+***Livestock
+
+systems***
+
+Improved feed 4 4 4 4 Bell et al. quality (2018)
+
+Planting 4 3 3 3.33 Bell et al. N-fixing (2018) legumes
+
+Rotational 4 3 3 3.33 Bell et al. grazing (2018)
+
+***Fish
+
+systems***
+
+Improved feed 3 3 3 3 Bell et al. quality (2018)
+---------------------------------
+---------------------------------------------------------
+
+\textbf{Quantitative assessment}
+
+Measurement involves collecting data on tree diameter at breast height
+(dbh), tree height, number of trees, and collecting data on soil organic
+carbon through laboratory analysis of soil samples.
+
+Carbon storage and sequestration in woody biomass:
+
+\begin{itemize}
+\item
+  Get on-farm tree count for trees with dbh \textgreater{} 50cm or
+  \textgreater10m in height
+\item
+  Convert above and below-ground biomass to t/ha using IPCC conversion
+  factors.
+\end{itemize}
+
+Soil carbon storage:
+
+\begin{itemize}
+\tightlist
+\item
+  Use the median SOC in the 0-20cm zone from across the three plots per
+  farm (see Soil Health indicator).
+\end{itemize}
+
+\textbf{Additional GHG measurement options (beyond the scope of the
+standard HOLPA tool, see Complementary Indicators)}
+
+The most precise, quantitative measurements of GHG emissions are
+obtained through field measurements of GHG fluxes, either through
+collection of gas samples and later analysis in a gas chromatography lab
+(e.g.~for ruminant methane emission), or through real-time measurement
+of gas fluxes using an infrared gas analyzer (e.g.~leaf photosynthesis
+and respiration, soil respiration, or landscape eddy covariance). These
+methods require costly equipment and/or laboratory analysis, as well as
+expert technicians to collect and analyze the samples. Further details
+on the procedures are provided in the section on Complementary
+Indicators.
+
+In lieu of direct measurement, all other approaches to quantifying GHG
+emissions from agriculture rely on collecting activity data and using
+emissions factors to convert activities into emissions levels (e.g.~from
+IPCC). Activity data is a description of the farm practices and areas
+(or number of livestock) over which they are practiced. Activity data
+can be collected via household surveys, potentially supplemented with
+measurement of farm sizes. Higher levels of detail in the activity data
+(amounts of inputs used, crops and crop varieties, soil types, feed
+formulations, tree species in agroforestry systems, etc.) generally
+allow for more precise estimation of emissions. However, conversion of
+activity data into quantitative emissions relies on the use of emissions
+factors. Most widely available emissions factors (e.g.~Tier 1 Approach)
+are based on data from temperate countries
+(\href{https://onlinelibrary.wiley.com/doi/10.1111/gcb.12361}{Ogle et
+al. 2013}; Albanito et al.~2017) and may not be appropriate for
+estimating GHG emissions from agricultural activities in tropical
+countries.
+
+Models of GHG emissions also rely on collection of activity data and
+emissions factors, but many can account for local conditions, such as
+soil types, livestock breeds, climate, etc to produce more appropriate
+emissions estimates for tropical or developing countries not well
+represented in the Tier 1 approach. Several models are available for
+calculating emissions, including the Ex-Ante Carbon Balance Tool
+(\href{https://www.fao.o\%20rg/in-action/epic/ex-act-tool/suite-of-tools/ex-act/en/}{EXACT})
+and the \href{https://coolfarmtool.org/}{Cool Farm Tool}, however use of
+these models requires a degree of technical expertise.
+\end{minipage} \\
+Guidance on data entry and r eporting & \\
+I ndicator interp retation and t hreshold setting & \\
+Lim itations & \\
+Re ferences & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{itemize}
+\item
+  Thornton et al.~2018. A qualitative evaluation of CSA options in mixed
+  crop-livestock systems in developing countries.\textsuperscript{8}
+\item
+  Bell et al.~2018. A Practical Guide to Climate Smart Agricultural
+  Technologies in Africa. \emph{CCAFS Working Paper
+  No.~224}.\textsuperscript{9}
+\item
+  Anuga et al.~2020. Towards low carbon agriculture: Systematic
+  narratives of climate-smart agriculture mitigation potential in
+  Africa. \emph{Current Research in Environmental
+  Sustainability}.\textsuperscript{10}
+\item
+  MacLeod et al.~2020. Quantifying greenhouse gas emissions from global
+  aquaculture\emph{. Scientific Reports}.\textsuperscript{11}
+\end{itemize}
+\end{minipage} \\
+\end{longtable}
+
+\part{2. Agricultural KPIs}
+
+\chapter{2.1 Crop health}\label{crop-health}
+
+\section{Indicator}\label{indicator}
+
+\textbf{Crop health}
+
+\section{Theme}\label{theme}
+
+Crop health
+
+\section{Purpose of indicator}\label{purpose-of-indicator}
+
+Crop and pasture health can influence agricultural productivity and
+resilience of plants to stress, pests and competition. Crop health can
+be affected by any biological, chemical, or physical factors that may
+affect plant physiology and crop performance, impacting food production
+(SDG2) and the spread of food-borne diseases with consequences for human
+health (SDG3).
+
+\section{Data source}\label{data-source}
+
+Household survey, field measurements
+
+\section{Measurement}\label{measurement}
+
+\% crop losses, and SOCLA indicators of crop health
+
+\section{Measurement units}\label{measurement-units}
+
+Score from 1 to 10, representing the mean indicator value across 10
+indicators
+
+\section{Guidance on measurement}\label{guidance-on-measurement}
+
+We propose two complementary measures of crop health: i) Qualitative
+based on household survey responses, ii) Qualitative based on field
+observations.
+
+\textbf{Household survey based}
+
+A simple measure of crop health can be provided by collecting responses
+on: What percentage of the total crop production was lost or damaged in
+the last 12 months?
+
+\textbf{Field based}
+
+More detailed data on crop health can be determined through field
+measurements interpreted jointly by farmers and researchers. Field
+measurements to collect data on each crop health indicator should be
+conducted every 50m along a transect of approximately 150m (this may
+vary depending on the farm size), to collect data on all 10 crop health
+indicators at three sampling sites per farm. Crop health should be
+assessed for only the main crop(s) grown on the farm to keep the task
+manageable.
+
+At three 10x10m square plots per farm, observe the crops and/or pasture
+present in the plot and jointly with the respondent record the responses
+to the indicators with the respondent. Refer to the example images
+provided in the field survey (Appendix 7.1.3.3 Crop and pasture health)
+to determine the most appropriate responses crop health related
+questions.
+
+The proposed indicators were developed by the Latin American Society for
+Agroecology (SOCLA) and described in Nicholls et
+al.~(2004)\textsuperscript{12}. The SOCLA 10 indicators of crop health
+are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Appearance
+\item
+  Crop growth
+\item
+  Disease incidence
+\item
+  Insect pest incidence
+\item
+  Natural enemy abundance and diversity
+\item
+  Weed competition and pressure
+\item
+  Actual or potential yield
+\item
+  Vegetational diversity
+\item
+  Natural surrounding vegetation
+\item
+  Management system
+\end{enumerate}
+
+Each indicator is scored from 1 to 10 based on the following guidelines
+(from Nicholls et al.~2004, Table 1):
+
+\pandocbounded{\includegraphics[keepaspectratio]{kpis/agricultural/media/image3.png}}
+
+\section{Guidance on data entry and
+reporting}\label{guidance-on-data-entry-and-reporting}
+
+Record the crop species and variety in the system assessed. Be sure to
+take a GPS point and keep a record of the geographic coordinates where
+crop health was assessed to allow follow-up surveys in the same
+locations.
+
+\section{Indicator interpretation and threshold
+setting}\label{indicator-interpretation-and-threshold-setting}
+
+\section{Limitations}\label{limitations}
+
+\section{References}\label{references}
+
+Nicholls et al.~(2004), FAO (2019) \textsuperscript{13},
+\textsuperscript{1}
+
+\chapter{2.2 Animal health}\label{animal-health}
+
+\section{Indicator}\label{indicator-1}
+
+\textbf{Animal health}
+
+\section{Theme}\label{theme-1}
+
+Animal health
+
+\section{Purpose of indicator}\label{purpose-of-indicator-1}
+
+Maintaining healthy and diverse stocks of animals on-farm contributes to
+overall agroecosystem functioning for more sustainable farming systems
+(SDG2, GBF Target 10). Keeping animals in poor health increases the
+spread of zoonoses, food-borne disease, and livestock mortalities, with
+associated negative consequences on human health (SDG2 and 3) and
+livelihoods (SDG1). Healthier animals have a smaller environmental
+footprint (SDG12 and 13).
+
+\section{Data source}\label{data-source-1}
+
+Household survey with farm transect
+
+\section{Measurement}\label{measurement-1}
+
+Qualitative measure of livestock disease and losses. Alternative: Health
+and welfare of farm animals, measured using the welfare outcome
+assessment tool as applied to each livestock species.
+
+\section{Measurement units}\label{measurement-units-1}
+
+Various (e.g.~number of animals in each welfare category, number of
+mortalities per 100 animals)
+
+\section{Guidance on measurement}\label{guidance-on-measurement-1}
+
+We discuss two measures of animal health: i) qualitative welfare
+assessment, ii) (optional) full welfare assessment.
+
+\textbf{Qualitative asessment}
+
+Likert score (1 to 4) based on the following questions:
+
+What was the extent of injury, illness, or death of livestock due to
+diseases in the last 12 months?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  None
+\item
+  Low
+\item
+  Medium
+\item
+  High
+\end{enumerate}
+
+What was the extent of injury, illness or death of fish due to diseases
+in the last 12 months?
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  None
+\item
+  Low
+\item
+  Medium
+\item
+  High
+\end{enumerate}
+
+\textbf{Full welfare assessment (optional)}
+
+The welfare outcome assessment tool is a practical and scientifically
+informed way of assessing and measuring animal welfare. It aims to
+provide an objective, accurate and direct picture of animal welfare.
+
+The assessment measures the impact of farm inputs (e.g.~housing, space,
+feed, veterinary care, management) on the health, physical condition and
+behaviour of the animals themselves. There are different assessment
+approaches for each livestock species: laying hens, dairy cows, pigs,
+broiler hens, beef cattle, sheep. The method was developed by Assurewel
+and is implemented by the UK Soil Association and RSPCA:
+http://www.assurewel.org/aboutassurewel/aboutwelfareoutcomeassessment.html.
+
+The assessment of one livestock species takes around 30 mins per farm.
+The researcher will need to complete, with the farmer, the AssureWel
+simple scoresheet for each livestock produced on the farm. For example,
+for dairy cattle, this includes documenting:
+
+\begin{itemize}
+\tightlist
+\item
+  Mobility (good, impaired, severely impaired)
+\item
+  Body condition (thin, moderate, fat)
+\item
+  Cleanliness (clean to very dirty)
+\item
+  Hair loss, lesions and swellings
+\item
+  Number of cows with broken tails
+\item
+  Number of cows needing further care
+\item
+  Farmer records of mobility, mastitis, calf and heifer survivability,
+  cull and casualty cows.
+\end{itemize}
+
+\section{Guidance on data entry and
+reporting}\label{guidance-on-data-entry-and-reporting-1}
+
+\section{Indicator interpretation and threshold
+setting}\label{indicator-interpretation-and-threshold-setting-1}
+
+\section{Limitations}\label{limitations-1}
+
+\section{References}\label{references-1}
+
+\begin{itemize}
+\tightlist
+\item
+  \textsuperscript{14} -- assessment protocol for dairy cattle
+\item
+  \textsuperscript{15} -- scoresheet for dairy cattle
+\item
+  \textsuperscript{16} -- explanation of measures for dairy cattle
+\item
+  See \url{http://www.assurewel.org} for protocols, scoresheets and
+  explanations for laying hens, pigs, broiler hens, beef cattle, and
+  sheep.
+\end{itemize}
+
+\chapter{2.3 Soil health}\label{soil-health}
+
+\section{Purpose of indicator}\label{purpose-of-indicator-2}
+
+Soil organic carbon or organic matter (SOC or SOM) is a key indicator of
+soil health, supporting vegetation growth, soil stability, soil
+fertility and other vital ecosystem services. SOC/SOM assessment is
+relevant for assessing carbon emission and sequestration, and soil
+health, under local and international commitments. This indicator is
+relevant to global climate mitigation goals (Paris Agreement) and the
+post-2020 Global Biodiversity Framework Target 10 on `Proportion of
+agricultural area under productive and sustainable agriculture', where
+changes in soil organic carbon stocks is a complementary indicator
+(CBD/COP/15/L.26). In resource-constrained projects, it can be
+challenging to collect soil samples and run laboratory analyses to
+calculate SOC. We propose using simple qualitative measures of soil
+erosion and fertility o provide an alternative, rapid assessment of soil
+health in cases where SOC is unattainable.
+
+\section{Data source}\label{data-source-2}
+
+Soil samples collected on-site (alternative: household survey)
+
+\section{Measurement}\label{measurement-2}
+
+Laboratory measurement of \% soil organic carbon, or \% soil organic
+matter (alternative: qualitative assessment of erosion and fertility
+through household survey)
+
+\section{Measurement units}\label{measurement-units-2}
+
+\% (alternative: Likert-scale score)
+
+\section{Guidance on measurement}\label{guidance-on-measurement-2}
+
+We discuss two options for the measurement of soil health: i) soil
+organic carbon calculated in a laboratory from soil samples, ii)
+qualitative measure of soil health.
+
+\textbf{Soil organic carbon}
+
+Soil samples should be taken randomly, in a W-shaped pattern, from 5
+points per plot, for three 10x10m plots per farm.
+
+After collecting the soil samples, a standard laboratory procedure
+should be used to determine the carbon content of the sample. The
+loss-on-ignition method17 can be used to estimate the SOC/SOM using the
+following steps.
+
+Air-dry the soil samples after collection, and grind fine enough to
+sieve through a mesh \textless2 mm or smaller.
+
+Oven dry each sample at 105°C for 24 hours.
+
+Weigh 5.000g ±0.001g of each oven-dried sample and place each into a
+crucible. This will be the pre-ignition weight of the sample.
+
+Heat the sample in a muffle furnace at 375°C for 16 hours or overnight
+
+Weigh the sample after the ignition and this will be the post-ignition
+weight
+
+Calculate percentage SOC/SOM using the following equation:
+
+SOC~\left(SOM\right)\left(\%\right)=\frac{pre\ ignition\ weight\ \left(g\right)-post\ ignition\ weight\ \left(g\right)}{pre\ ignition\ weight\ (g)}
+
+Alternatively, a Carbon Nitrogen (CN) Elemental Analyser can be used to
+estimate soil organic carbon content. The C-N elemental analyser
+provides a quantitative measurement of SOC and N content based on the
+amount of C and N produced after combustion of products in a sample.
+
+Alternatively, the Walkey Black method can be used to estimate soil
+organic matter content. Walkey Black provides a qualitative measurement
+of SOM after oxidising the soil with potassium dichromate and H2SO4 and
+measuring the color change; which is proportionate to the organic matter
+available in the soil. A conversion factor can be used to convert either
+SOC to SOM or vice versa.
+
+\textbf{Qualitative measure of soil health}
+
+To complement SOC data, and to allow for a basic assessment of soil
+health in cases where neither soil organic carbon data or SOCLA (see
+Complementary indicators) can be collected (e.g.~to due to resource
+constraints), HOLPA includes two standard questions on farmer
+perceptions of soil health. Farmer perceptions of soil fertility and
+erosion are gathered using a simple Likert scale, based on the following
+two questions:
+
+How would you describe the fertility of your soil on your farmland?
+
+\begin{verbatim}
+- Highly fertile (score 5)
+- Moderately fertile (score 3.66)
+- Low fertility (score 2.33)
+- Infertile (score 1).
+\end{verbatim}
+
+How would you describe the level of soil erosion problems on your
+farmland?
+
+\begin{verbatim}
+- Soil erosion is not a problem on my farm (score 5)
+- Soil erosion is a minor problem on my farm (score 3)
+- Soil erosion is a major problem on my farm (score 1).
+\end{verbatim}
+
+These perception questions can be used to assign a soil health score
+from 1 (infertile and major soil erosion) to 3 (highly fertile with no
+soil erosion), by taking the median across the fertility and erosion
+responses.
+
+\section{Guidance on data entry and
+reporting}\label{guidance-on-data-entry-and-reporting-2}
+
+Report the SOC content as a volume-based concentration (i.e.~\%)
+
+\section{Indicator interpretation and threshold
+setting}\label{indicator-interpretation-and-threshold-setting-2}
+
+\section{Limitations}\label{limitations-2}
+
+\section{References}\label{references-2}
+
+Bahadori, M., \& Tofighi, H. (2016). A modified Walkley-Black method
+based on spectrophotometric procedure. Communications in Soil Science
+and Plant Analysis, 47(2), 213-220. 18
+
+Gelman, F., Binstock, R., \& Halicz, L. (2012). Application of the
+Walkley--Black titration for the organic carbon quantification in
+organic rich sedimentary rocks. Fuel, 96, 608-610.19
+
+Nelson, D.W., and Sommers, L.E. (1996). Total Carbon, Organic Carbon,
+and Organic Matter. In Methods of Soil Analysis (John Wiley \& Sons,
+Ltd), pp.~961--1010. https://doi.org/10.2136/sssabookser5.3.c34.17
+
+Walkley, A. and I.A. Black. 1934. An examination of the Degtjareff
+method for determining soil organic matter and a proposed modification
+of the chromic acid titration method. Soil Sci. 37:29-38.20
+
+\chapter{2.4 Nutrient use}\label{nutrient-use}
+
+\section{Indicator}\label{indicator-2}
+
+\textbf{Nutrient use}
+
+\section{Theme}\label{theme-2}
+
+Nutrient management
+
+\section{Purpose of indicator}\label{purpose-of-indicator-3}
+
+Nutrient use per unit area provides information on the under or over-use
+of fertilizers, which has implications for crop productivity, economic
+viability, and environmental sustainability. By monitoring nutrient
+applications, farmers and agronomists can determine if the current
+inputs are meeting or exceeding the nutrient needs of the crop and if
+adjustments are needed to optimize input use and reduce nutrient losses
+to the environment. This indicator is related to a number of Sustainable
+Development Goals (SDG) e.g., SDG 2 on zero hunger and SDG 15 life on
+land.
+
+\section{Data source}\label{data-source-3}
+
+Field measurements, household survey
+
+\section{Measurement}\label{measurement-3}
+
+Fertilizer applications in the production system
+
+\section{Measurement units}\label{measurement-units-3}
+
+Fertilizer input (kg) per hectare per year, disaggregated by organic and
+chemical inputs. Can be presented as a ratio of recommended fertilizer
+input intensity in the landscape obtained from extension services and
+literature.
+
+\section{Guidance on measurement}\label{guidance-on-measurement-3}
+
+Nutrient use can be determined at the three levels i.e.~plot level (the
+level of individual crops), farm level (the level of a whole farm and
+its cropping system), and landscape level (a larger area e.g.~region or
+watershed).
+
+At all scales, it is important to consider all possible sources of
+inputs into the system to avoid under or overestimation of nutrient use.
+
+Specific survey questions should address the following:
+
+\begin{itemize}
+\tightlist
+\item
+  What is the amount of nutrient input, such as nitrogen (N), phosphorus
+  (P), or potassium (K), added to the farm system through fertilization
+  or other means per year?
+\item
+  What proportion of these nutrients come from each source (chemical,
+  organic plant, manure)?
+\end{itemize}
+
+\section{Guidance on data entry and
+reporting}\label{guidance-on-data-entry-and-reporting-3}
+
+Uniform data entry and conversion of inputs to kg ha\textsuperscript{-1}
+yr\textsuperscript{-1}.
+
+\section{Indicator interpretation and threshold
+setting}\label{indicator-interpretation-and-threshold-setting-3}
+
+\section{Limitations}\label{limitations-3}
+
+\section{References}\label{references-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Dobermann, (2007)\textsuperscript{21}
+\item
+  European Union Nitrogen Use Efficiency (2016)\textsuperscript{22}
+\end{itemize}
+
+\part{3. Social KPIs}
+
+\chapter{3.1 Diet quality}\label{diet-quality}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.1806}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.8056}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{I ndicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Diet quality}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Nutrition \\
+Purpose of indicator & Eradicating food insecurity and malnutrition is a
+sustainable development goal (SDG2). Nutritious diets are a prerequisite
+to achieving this goal. \\
+Data source & Household and individual survey using the \textbf{Diet
+Quality Questionnaire (DQQ)}, developed by the Global Diet Quality
+Project \\
+M easurement & Diet quality from 24-hour food consumption recalls,
+calculated from the number of food groups consumed per individual and
+household, from 29 food groups. \\
+M easurement units & \begin{minipage}[t]{\linewidth}\raggedright
+Raw measurement: Y/N for consumption of each food group together with
+(optional) food group source (own production, purchased, borrowed, food
+aid, other).
+
+Final measurement:
+
+\begin{itemize}
+\item
+  Household Food Group Diversity Score (FGDS) (0-10) (\textbf{this
+  measurement is the default KPI})
+\item
+  Minimum Dietary Diversity for Women of Reproductive Age (MDD-W) (0/1)
+\item
+  All-5 recommended food groups consumed (0/1)
+\item
+  Non-Communicable Disease (NDC) Protect (0-9), which is an indicator of
+  dietary factors that protect against NDCs according to the World
+  Health Organisation (WHO)
+\item
+  NDC-Risk (0-9), which is an indicator of dietary factors increasing
+  the risk of NCDs according to WHO
+\item
+  Global Dietary Recommendations (GDR) Score (0 to 18), which indicates
+  level of adherence to global dietary recommendations for a healthy
+  diet according to WHO
+\item
+  (Optional) Proportion of food that is produced on-farm
+\end{itemize}
+\end{minipage} \\
+Guidance on m easurement & \begin{minipage}[t]{\linewidth}\raggedright
+The \textbf{Diet Quality Questionnaire (DQQ)} is a standardized tool to
+collect indicators of \textbf{\emph{dietary adequacy}}, including the
+minimum dietary diversity for women (MDD-W) indicator, and All-5, as
+well as indicators of \textbf{\emph{protection of health against
+noncommunicable diseases (NCDs)}}, including NCD-Protect, NCD-Risk, and
+the global dietary recommendations score (GDR). It is a low-burden tool
+for collecting valid, comparable food group consumption data in
+populations.
+
+The DQQ is two-pages long and includes 29 multiple choice questions
+corresponding to the 29 DQQ food groups. Each question asks the
+respondent if they consumed a specific DQQ food groups with yes/no
+responses. The questionnaire takes approximately 5 minutes to complete
+per individual.
+
+The survey should be completed for the adult household members,
+including men and women. Researchers can optionally add one column
+asking, for each food group, the source: own production, purchased,
+borrowed, food aid, other. This will allow calculation of the proportion
+of consumed food that is from each source.
+
+Note that the timing of survey affects results. Try to collect data from
+all farms at a period when food supplies are adequate, rather than when
+some farms are more likely to suffer shortages (e.g.~end of dry season,
+or after a drought season).
+
+\textbf{DQQ Food Groups:}
+
+1. Foods made from grains
+
+2. Whole grains
+
+3. White roots, tubers, and plantains
+
+4. Pulses
+
+5. Vitamin A-rich orange vegetables
+
+6. Dark green leafy vegetables
+
+7. Other vegetables
+
+8. Vitamin A-rich fruits
+
+9. Citrus
+
+10. Other fruits
+
+11. Baked / grain-based sweets
+
+12. Other sweets
+
+13. Eggs
+
+14. Cheese
+
+15. Yogurt
+
+16. Processed meats
+
+17. Unprocessed red meat (ruminant)
+
+18. Unprocessed red meat (non-ruminant)
+
+19. Poultry
+
+20. Fish and seafood
+
+21. Nuts and seeds
+
+22. Packaged ultra-processed salty snacks
+
+23. Instant noodles
+
+24. Deep fried foods
+
+25. Fluid milk
+
+26. Sweet tea / coffee / cocoa
+
+27. Fruit juice and fruit-flavored drinks
+
+28. Sugar-sweetened beverages (soft drinks, energy drinks, sports
+drinks)
+
+29. Fast food
+
+\textbf{Examples of how the final scores are calculated}:
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4.7607in,height=2.47002in]{kpis/social/media/image4.png}
+
+}
+
+\caption{A table with numbers and text Description automatically g
+enerated}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=5.16225in,height=0.99242in]{kpis/social/media/image5.png}
+
+}
+
+\caption{A white sheet with black text Description automatically g
+enerated}
+
+\end{figure}%
+\end{minipage} \\
+Guidance on data entry and reporting & \\
+Indicator inte rpretation and threshold setting & \\
+L imitations & \\
+References & \begin{minipage}[t]{\linewidth}\raggedright
+Global Diet Quality Project resources\textsuperscript{23}:
+
+\begin{itemize}
+\item
+  \url{https://www.globaldietquality.org/dqq}
+\item
+  \href{https://drive.google.com/fil\%20e/d/1glD4SAdYKKCfTE2fWfr0VsZwpYC3L-3G/view?usp=sharing}{DQQ
+  Food Group Descriptions}
+\item
+  \href{https://docs.google.com/document/d/1RGwNit\%20itbYqSrGpUXhQs7mHWgLIgOxAlN5N0AOZN3qc/edit?usp=sharing}{Diet
+  Quality Questionnaire (DQQ) Indicator Guide}
+\end{itemize}
+
+Diet Quality Questionnaires are adapted to each country, downloadable
+from the Global Diet Quality Project website and translated into many
+languages.
+\end{minipage} \\
+\end{longtable}
+
+\chapter{3.2 Land tenure security}\label{land-tenure-security}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Land tenure security}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Land tenure \\
+Purpose of indicator & Land access is closely linked to use and control
+over productive resources. Secure land tenure is therefore a key
+determinant of individual agency, income and wellbeing. This indicator
+is aligned with SDG 1.4.2 and 5.a.1. \\
+Data source & Parcels (most preferable) or household/farm (most
+possible) survey using a simplified version of the harmonized
+questionnaire proposed by FAO et al. (2019)\textsuperscript{24}.
+Additionally, GPS delineation of parcels is strongly advised wherever
+feasible, as evidence points to systematic bias in farmer estimates of
+land area\textsuperscript{25}. \\
+Measurement & ((Area of agricultural land used by the household for
+which at least one member of the household has their name on a legally
+recognized document OR has the right to sell OR has the right to
+bequeath)/(Total land area used by the household))*100 \\
+Measurement units & \% \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+The indicator can be calculated with data collected using FAO's
+harmonized questionnaire, which is a standardized and succinct survey
+instrument designed to collect the essential data for computation of
+both 1.4.2\textsuperscript{a} and 5.A.1\textsuperscript{b} Sustainable
+Development Goals (SDGs) indicators simultaneously.
+
+The methodology proposed 5 versions of the questionnaire (see next
+figure) depending on: (i) the respondent selection approach, (ii)
+whether or not the survey collects data at the parcel-level and (iii)
+whether or not the existing survey includes a parcel roster. Each
+version of the questionnaire has approximated 10 questions and assumes
+that a separate household member roster exists and that the sex of each
+household member is captured in that roster.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=3.89583in,height=2.84631in]{kpis/social/media/image6.png}
+
+}
+
+\caption{A diagram of a company Description automatically generated with
+medium confid ence}
+
+\end{figure}%
+
+Where possible, it is advised to have parcel level data and implement a
+self-respondent approach (i.e., where individuals respond for themselves
+only, not on behalf of others) (version 2 with 7 questions). Where it is
+not, land tenure data should be collected at the household/farm level,
+using the version 3 (13 questions) of the questionnaire.
+
+A sub-indicator can be calculated as: ((Number of adult women in
+agricultural households whose name is on a legally recognized document
+OR who have the right to sell OR bequeath agricultural land)/(Total
+adult individuals in agricultural households whose name is on a legally
+recognized document OR who have the right to sell OR bequeath
+agricultural land))*100.
+
+Note, for pastoralists, land tenure security may be better measured in
+terms of mobility, i.e. proportion of grazing lands over which the
+farmer has unrestricted rights to graze livestock.
+
+\ul{Guidance of how to apply the questionnaire:}
+
+- The survey should be completed for the adult household member (18
+years old or older).
+
+- Because a self-respondent approach is going to be used and only some
+(or one) randomly selected household members are interviewed about their
+
+tenure rights, only the selected members are part of the reference
+population (i.e., denominator in the indicator and sub-indicator
+formulas).
+
+- The country-specific questionnaire should include: i) a comprehensive
+list of all tenure types applicable to the country; ii) a comprehensive
+list of land tenure-related documents, specifying which ones the
+government considers as legally recognized; iii) \textbf{i}mages of the
+documents considered legally recognized; iv) a context-specific
+definition of alienation rights.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4.08333in,height=4.83333in]{kpis/social/media/image7.png}
+
+}
+
+\caption{A screenshot of a document Description automatically gene
+rated}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4.83333in,height=4.19792in]{kpis/social/media/image8.png}
+
+}
+
+\caption{A close up of a document Description automatically gene rated}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=4.83333in,height=2.78125in]{kpis/social/media/image9.png}
+
+}
+
+\caption{A screenshot of a computer Description automatically gene
+rated}
+
+\end{figure}%
+
+\textsuperscript{a} Proportion of total adult population with secure
+tenure rights to land, with (a) legally recognized documentation; and
+(b) who perceive their rights to land as secure, by sex and by type of
+tenure.
+
+\textsuperscript{b} (a) proportion of total agricultural population with
+ownership or secure rights over agricultural land by sex; and (b) share
+of women among owners or rights bearers of agricultural land, by type of
+tenure.
+\end{minipage} \\
+Guidance on data entry and reporting & Check that the total land area
+accessed by the household matches the sum of the land areas with
+different access types. \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & FAO; The World Bank; UN-Habitat. 2019. Measuring
+Individuals' Rights to Land: An Integrated Approach to Data Collection
+for SDG Indicators 1.4.2 and 5.a.1. Washington, DC.
+72p.\textsuperscript{24} \\
+\end{longtable}
+
+\chapter{3.3 Farmer agency}\label{farmer-agency}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.8194}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{In dicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Farmer agency}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Social justice \\
+Purpose of indicator & Individual agency to decide on what to consume,
+produce, and trade, and how to produce it, is a basic human right for
+farmers. Monitoring farmer agency provides an indication of the power
+dynamics influencing major decisions about the farm and food system, and
+level of social equality (SDG 10, 16). \\
+Data source & Household surveys \\
+Me asurement & Ladder of Power and Freedom, from GENNOVATE \\
+Me asurement units & Score of 1 to 5, and quotes and insights from
+analysing qualitative data, for the household and each individual
+surveyed \\
+Guidance on me asurement & \begin{minipage}[t]{\linewidth}\raggedright
+The GENNOVATE Ladder of Power and Freedom is a qualitative data
+collection tool aimed at understanding local men and women farmers' own
+perceptions of agency and key factors determining levels of agency.
+Here, agency refers to `the capacity to make important decisions in
+one's life and act upon them' \textsuperscript{26}.
+
+The Ladder provides comparative qualitative measures of agency that
+remain contextually grounded, and can be converted to a single
+quantitative agency score (but see notes on effectively applying the
+ladder approach). Data are collected through an individual interview
+using the ladder visual (see inset), which is a scoreboard showing
+different levels of agency. Data can also be collected at the community
+level through a focus group.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=5.21616in,height=4.23256in]{kpis/social/media/image10.png}
+
+}
+
+\caption{A close-up of a questionnaire Description automatically g
+enerated}
+
+\end{figure}%
+
+\emph{Source:} \textsuperscript{26}
+
+The ladder is applied as follows. The researcher identifies a meaningful
+historical benchmark, usually 10 years in the past, and provides (or
+creates) a visual of the five-step ladder on a sheet of paper. The
+researcher introduces the purpose of the exercise. They will need to
+explain the five-step ladder, and that step 5 indicates great power and
+freedom while step 1 indicates very little power and freedom to make
+important decisions.
+
+For example: \emph{Today we want to talk to you about how much power and
+freedom {[}wo{]}men in this household have to control the household food
+system -- that is, how and what kind of food is produced, where it goes,
+and how and what kind of food people consume. Please imagine a five-step
+ladder {[}show figure{]}, where at the bottom, on the first step, stand
+the individual {[}wo{]}men of this community with little capacity to
+make their own decisions about food production and consumption. These
+{[}wo{]}men have little to say about the types and varieties of crops,
+animals, trees, and animals they cultivate, the way they manage their
+water, land, soil, animals, and wildlife, the markets available to them,
+and the food source and food choices available to them. On the highest
+step, the fifth, stand those who have great capacity to make important
+decisions for themselves, including what they grow, how they manage
+their land, soil, water, animals, and trees, and what food they buy.}
+
+Request the individual to mark on the ladder the step they think
+household members of their gender occupy.
+
+Facilitate the discussion on reasons for the step identified. For
+example:
+
+\emph{Q. Why would you place {[}wo{]}men on this step? Would you like to
+volunteer the reasons for your rating?}
+
+\emph{Q. Would you position different types of {[}wo{]}men in different
+places on this ladder? Older people, younger people, poorer people,
+single people, etc.? Do women and men differ?}
+
+Repeat the rankings and discussion to capture perceptions of power and
+freedom a decade ago (or at the pre-defined historical benchmark). These
+sticky notes / cards can fill in the other side of the ladder. These
+discussions should also be probed deeply to elicit detailed explanations
+for the trends in agency identified. The goal of the exercise is to
+understand the factors that shape women's or men's conceptions of power
+and freedom in their lives, and reasons for changes in these conceptions
+over time, rather than obtaining exact measurements or absolute values
+for agency.
+
+Time permitting, facilitate a discussion about the changes the
+participants would like to see and what would be needed to achieve their
+vision. For example:
+
+\emph{Q. Having talked through this together, are there changes you
+would like to see to give {[}wo{]}men more power and freedom in the
+future? What would be needed to achieve this? What are the major
+obstacles?}
+
+Record the whole interview and take good notes. During the discussion,
+listen closely for the reasoning behind votes, root causes of high or
+low agency, factors that contributed to change, and any differences
+reported for different groups in the community. Make note of powerful
+quotes that could be extracted later. Record how many votes are cast for
+each ladder step for both past and present.
+
+\textbf{Example responses for data collected at the community level:}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=5.16279in,height=2.66965in]{kpis/social/media/image11.png}
+
+}
+
+\caption{A table with numbers and arrows Description automatically g
+enerated}
+
+\end{figure}%
+
+\emph{Source:} \textsuperscript{26}
+
+\textbf{Notes on effectively applying the ladder approach:}
+
+\begin{itemize}
+\item
+  Researchers should ideally be the same sex as participants.
+\item
+  Individual surveys should be conducted in a private room without the
+  presence of any members of the household or anyone of the opposite
+  sex.
+\item
+  Since the tool requires respondents to recall circumstances 10 years
+  ago, the minimum recommended respondent age is 25 years old. However
+  the 10-year timeframe could be reduced if younger respondents are
+  present.
+\item
+  To assist with recall, it is helpful to identify the year
+  corresponding to 10 years ago (e.g.~2014) and an important event at
+  that time.
+\item
+  Researchers need to have a good level of skill in qualitative data
+  collection to collect meaningful data on agency using this (or any)
+  method. For example, managing group dynamics in household (or focus
+  group) surveys is important to ensure the perspectives of individuals
+  with lower levels of agency are captured.
+\item
+  The researcher should probe deeply into individual explanations of
+  ladder rankings to understand the reasons for these rankings.
+\item
+  Reducing agency to a single score (i.e., the mean step change at
+  household level) risks undermining the relevance and quality of the
+  data collected. Focusing on qualitative data collection and analysis
+  is strongly recommended for a more meaningful and accurate
+  understanding of individual and household agency.
+\end{itemize}
+\end{minipage} \\
+Guidance on data entry and reporting & This indicator collects sensitive
+data on human subjects. Researchers should obtain ethical approval from
+a verified review board prior to data collection. Study participants
+should receive assurances that their testimonies will be provided
+anonymously and no identifying information shared in any future
+publications. \\
+Indicator inter pretation and threshold setting &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{itemize}
+\tightlist
+\item
+\end{itemize}
+\end{minipage} \\
+Li mitations & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{itemize}
+\tightlist
+\item
+\end{itemize}
+\end{minipage} \\
+R eferences & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{itemize}
+\item
+  Petesch and Bullock (2018) \textsuperscript{26}
+\item
+  Tavenner and Crane (2022) \textsuperscript{27}
+\end{itemize}
+\end{minipage} \\
+\end{longtable}
+
+\chapter{3.4 Human well-being}\label{human-well-being}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Indicator
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Personal Wellbeing Index
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Human well-being \\
+Purpose of indicator & This indicator aligns with SDG 3 ``Ensure healthy
+lives and promote well-being for all at all ages''. \\
+Data source & Household survey \\
+Measurement & OECD Personal Wellbeing Index evaluation questions \\
+Measurement units & \begin{minipage}[t]{\linewidth}\raggedright
+\phantomsection\label{63}{I would drop this indicator, which is tailored
+to individuals in developed countries. Subjective wellbeing indicators
+need to be anchored to some frame-of-references, which are other
+individuals in the community to which the individual situation should be
+compared.}\phantomsection\label{64}{I agree-\/-these questions seem to
+be from the OECD tool-\/-which I assume are targeted towards wealthy
+OECD countries with predominantly urban
+population}\phantomsection\label{65}{instead consider Generalized
+self-efficacy score used in Pro-WEAI. I cope text below from
+\href{../customXml/item1.xml}{https://weai.ifpri.info/files/
+2023/07/Pro-WEAI-Guide.pdf}\\
+The NGSE is a cross-culturally validated scale to measure self-efficacy,
+or a person's perception of their capabilities and ability to reach
+their goals (Chen et al., 2001). We ask respondents to think about how
+each statement relates to their life and indicate if they strongly
+disagree, disagree, neither agree nor disagree, agree or strongly agree
+with the statement. The four statements are: 2) When facing difficult
+tasks, I am certain that I will accomplish them, 3) In general, I think
+that I can obtain outcomes that are important to me, 6) I am 9 confident
+that I can perform effectively on many different tasks, and 8) Even when
+things are tough, I can perform quite well.5 For each statement that an
+individual strongly disagrees with they are given a score of 1. If they
+disagree, they are given a score of 2, neither agree nor disagree
+receives a score of 3, agree receives a score of 4 and strongly agree
+receives a score of 5. The scores for each of the 4 statements are then
+summed to get the final score. For example, if an individual strongly
+agrees with all 4 statements they will have a score of 20 (4x5). In
+order to be adequate in self efficacy a respondent must have a New
+General Self-Efficacy Scale score of at least 16. This is equivalent to
+an average response across the statements of ``agree."}Likert scale
+(0-10)\phantomsection\label{63}{\phantomsection\label{64}{\phantomsection\label{65}{}}}\strut
+\end{minipage} \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+Human well-being encompasses quality of life and the ability of people
+and societies to contribute to the world with a sense of meaning and
+purpose. It encompasses a broad range of factors, including material
+well-being and emotional, physical, and social
+health\textsuperscript{28}. While people's living conditions (e.g.,
+housing, income, employment) are important contributors to well-being,
+measuring living conditions (i.e.~material well-being) alone fails to
+capture what people think and feel about their lives -- i.e., their
+subjective well-being.
+
+OECD's Personal Wellbeing Index is computed based on responses to the
+following questions\textsuperscript{29}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Thinking about your own life and personal circumstances, how satisfied
+  are you with your life as a whole? {[}0-10{]}
+\item
+  How satisfied are you with your standard of living? {[}Standard of
+  Living{]} {[}0-10{]}
+\item
+  How satisfied are you with your health? {[}Personal Health{]}
+  {[}0-10{]}
+\item
+  How satisfied are you with what you are achieving in life?
+  {[}Achieving in Life{]} {[}0-10{]}
+\item
+  How satisfied are you with your personal relationships? {[}Personal
+  Relationships{]} {[}0-10{]}
+\item
+  How satisfied are you with how safe you feel? {[}Personal Safety{]}
+  {[}0-10{]}
+\item
+  How satisfied are you with feeling part of your community?
+  {[}Community-Connectedness{]} {[}0-10{]}
+\item
+  How satisfied are you with your future security? {[}Future Security{]}
+  {[}0-10{]}
+\item
+  How satisfied are you with the amount of time you have to do the
+  things that you like doing? {[}0-10{]}
+\item
+  How satisfied are you with the quality of your local environment?
+  {[}0-10{]}
+\item
+  For respondents who are employed only: How satisfied are you with your
+  job? {[}0-10{]}
+\end{enumerate}
+\end{minipage} \\
+Guidance on data entry and reporting & Key issues include the need to be
+careful with question wording, use consistent scales, and appropriate
+question ordering.
+
+1. Question wording
+
+``Because question wording matters to how people respond to questions on
+subjective well-being, the translation of questions is of high
+importance. Potential issues arising from translation cannot be
+eliminated, but they can be managed through an effective translation
+process. A robust translation process, including back translation, is
+therefore essential'' \textsuperscript{29}.
+
+2. Scale design
+
+``Variation in response formats can affect data quality and
+comparability. In the case of evaluative measures, there is empirical
+support for using a 0-10 point numerical scale, anchored by verbal
+labels which represent conceptual absolutes (such as completely
+satisfied/completely dissatisfied). On balance, it is preferable to
+label scale interval points (between the anchors) with numerical, rather
+than with verbal, labels'' \textsuperscript{29}.
+
+3. Question order
+
+\phantomsection\label{66}{Replies are strongly affected by individual
+perceptions about own status compared to neighbors\textquotesingle{} or
+friends\textquotesingle, so they are expression on a relative -not
+absolute- condition.}Subjective well-being questions are influenced by
+context \phantomsection\label{66}{}and thus need to be asked in the
+right place so as not to be influenced by previous questions. {Also
+cons}{ider randomizing the order in which the well-being questions are
+asked to reduce ordering-bias.} \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & WHO (2024), Promoting well-being, \textless h
+ttps://www.who.int/activities/promoting-well-being\textgreater, accessed
+1 July 2024\textsuperscript{28}
+
+OECD (2013), OECD Guidelines on Measuring Subjective Well-being, OECD
+Publishing.
+\url{http://dx.doi.org/10.1787/9789264191655-en}\textsuperscript{29}
+
+International Wellbeing Group (2006), Personal Wellbeing Index, 4th
+edition, Melbourne, Australian Centre on Quality of Life, Deakin
+University.\textsuperscript{30} \\
+\end{longtable}
+
+\part{4. Economic KPIs}
+
+\chapter{4.1 Agricultural productivity}\label{agricultural-productivity}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Indicator}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Crop and livestock productivity}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Agricultural productivity \\
+Purpose of indicator & Ensuring productivity and closing yield gaps is a
+primary goal in agricultural systems and vital for achieving global food
+security (SDG2), and securing livelihoods (SDG1). \\
+Data source & Household survey (farmer recall) \\
+Measurement & For crops: kg/ha (dry weight) of
+\phantomsection\label{75}{Why "harvestable" and not
+"harvested"?}\phantomsection\label{76}{totally agreed - we have to be
+specific}\phantomsection\label{77}{Also is "dry-weight" needed? For
+example: maize etc consumed as corn on the cob, dry weight is not
+relevant, but maize used as feed might use
+dry-weight?}\phantomsection\label{78}{I think harvestable is to qualify
+that this is non-spoilt/infected crop. Perhaps a better qualifier is
+consumable/usable/sellable crop?}harvestable
+\phantomsection\label{75}{\phantomsection\label{76}{\phantomsection\label{77}{\phantomsection\label{78}{}}}}produce;
+land equivalent ratio for intercropped and agroforestry systems (0 to
+infinity)
+
+For livestock: \#\# animals slaughtered for consumption/sale/gifts, kg
+meat/animal, litres (milk)/animal {eggs/chicken, manure/animal}{,
+wool/animal,} {}{skin/animal} \\
+Measurement units & Kg/ha; kg/animal; l/animal; land equivalent area \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+\textbf{\ul{Crop productivity through farmer recall}}
+
+Harvestable production per unit land area (kg/ha) for at least
+\phantomsection\label{83}{Why only three main crops? And main based on
+land area, sales, quantity harvested,
+or...?}\phantomsection\label{84}{agree - each crop grown by each
+household has some importance - why then limit the farmer - if they can
+recall info for all crops, we should allow
+it.}\phantomsection\label{85}{It says minimum 3, not maximum. We have to
+make tradeoffs based on length of survey and respondent fatigue.\\
+Farmers usually know what their "main crops" are when you ask
+them-\/-usually based on economic importance to the HHs, not necessarily
+quantity or land (though most times it is correlated)}the three main
+crops\phantomsection\label{83}{\phantomsection\label{84}{\phantomsection\label{85}{}}},
+based on farmer recall for all produce harvested over the past 12
+months. In the case of intercropped or agroforestry systems, collect
+data for all crops present in the plot and compute the land equivalent
+ratio (LER).
+
+\textbf{\ul{Livestock productivity}}
+
+Production of animal products per unit livestock, for at least the three
+main livestock species (including fish), based on farmer recall of all
+products consumed, sold or gifted over the last 12 months.
+
+Desirable additional data:
+
+\begin{itemize}
+\tightlist
+\item
+  Population growth rate: ratio between the production in number of
+  animals and the initial population size
+\item
+  Total annual livestock production = (stock variation +offtake-Intake)/
+  Initial size
+\item
+  Production of milk : av. production per female (/day)* number of
+  reproductive female* milking period
+\item
+  Skin \& hides (from offtake)
+\item
+  Wool : total production per year
+\item
+  Manure : total production (can be collected in declarative)
+\item
+  Productivity indicators: 1) Number of new sub-adults produced per
+  reproductive female per year 2) Number of new adults produced per
+  reproductive female and year
+\end{itemize}
+
+\textbf{\ul{Crop productivity - detailed measurements (beyond the scope
+of HOLPA)}}
+
+For crops see FAO (2017): https://www.fao.org/3/ca6514en/ca6514en.pdf.
+
+For livestock see FAO (2018):
+https://www.fao.org/3/ca6400en/ca6400en.pdf.
+
+Summary for crop yield: Yields of all crops should be measured by
+randomly demarcating at least three same-size plots in a field,
+harvesting all produce, then drying the produce and weighing it to
+determine its dry weight. If possible take into account harvest losses
+(proportion of diseased, rotten or otherwise unusable produce).
+Alternatively, yields can be measured based on farmer recall
+particularly where farmers keep good records, but note that in many
+cases this method is inaccurate. Alternatively, farmers can be asked to
+keep crop diaries and record all harvested produce over the cropping
+season, which produced reliable results for the LSMS but is unsuitable
+for illiterate farmers. See guide for further details on calculating
+yields in mixed cropping systems.
+
+Crop and pasture areas should be estimated by walking along the
+perimeter of the farmed areas with a GPS (preferred method) or using the
+rope-and-compass method (see
+https://www.fao.org/3/ca6514en/ca6514en.pdf). Areas of additional plots
+that are far away or difficult to access can be estimated by farmers,
+and verified on Google Earth imagery if possible. Asking farmers to
+estimate the area of their fields can work well for small parcel sizes
+in some contexts, but is often unreliable e.g.~when farmers are not
+familiar with the units of measurement or if farmers have incentives to
+misreport crop area (see
+https://www.fao.org/3/ca6514en/ca6514en.pdf).\strut
+\end{minipage} \\
+Guidance on data entry and reporting & \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & Dutilly C., Alary V., Bonnet P., Lesnoff M., Fandamu P., De
+Haan Cees, 2020. Multi-scale assessment of the livestock sector for
+policy design in Zambia. Journal of Policy Modeling 42 (2): 401-418.
+\url{https://doi.org/10.1016/j.jpolmod.2019.07.004}\textsuperscript{31}
+
+Alary, V., Lasseur, J., Frija, A., \& Gautier, D. (2022). Assessing the
+sustainability of livestock socio-ecosystems in the drylands through a
+set of indicators. Agricultural Systems, 198,
+103389.\textsuperscript{32} \\
+\end{longtable}
+
+\chapter{4.2 Labour productivity}\label{labour-productivity}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Indicator
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\phantomsection\label{88}{This is labor intensity, not
+productivity.}Labour inputs per unit agricultural land
+are\phantomsection\label{88}{}a
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & Labour productivity \\
+Purpose of indicator & Labour inputs required for agricultural
+production is one of the primary factors determining which practices are
+used, how profitable they are, and the social sustainability of the
+production system. Distinguishing which productive systems promote
+sustainable employment contributes to SDG 2 and SDG8. \\
+Data source & Farmer recall during household survey \\
+Measurement & Person hours per year, disaggregated by gender, season,
+and productive activity \\
+Measurement units & \phantomsection\label{89}{This is amount of labor,
+it\textquotesingle s not intensity or productivity.}Person hours per
+year {per} {hectare} {o}{f cultivated
+land}\phantomsection\label{89}{} \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+This indicator can be computed by collecting data on number of labour
+hours per year per hectare of land actively used for agricultural
+purposes. Labour hours should be disaggregated by:
+
+\begin{itemize}
+\item
+  gender
+\item
+  age
+\item
+  type of worker: hired or not hired, permanent or seasonal
+\item
+  type of activity: routine (e.g.~manure collection, milking) or
+  seasonal work (e.g. seeding, harvesting, pruning).
+\end{itemize}
+\end{minipage} \\
+Guidance on data entry and reporting & \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & FAO (2010) \textsuperscript{33} \\
+\end{longtable}
+
+\chapter{4.3 Total Income and Income
+Stability}\label{total-income-and-income-stability}
+
+Content for this KPI will be added here.
+
+\chapter{4.4 Climate resilience}\label{climate-resilience}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7639}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Indicator
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Resilience score
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Theme & \begin{minipage}[t]{\linewidth}\raggedright
+\phantomsection\label{136}{World Bank: resilient futures project\\
+Maybe have indicators that we can calculate using the data we
+collected?\\
+Carlo also has some ideas on simple outcome indicators we might be able
+to use}\phantomsection\label{137}{Comparison paper:
+\href{../customXml/item2.xml}{http
+s://www.sciencedirect.com/science/article/pii/S03043
+8782200044X}}Climate
+resilience\phantomsection\label{136}{\phantomsection\label{137}{}}\strut
+\end{minipage} \\
+Purpose of indicator & Climate change is affecting food systems around
+the world, with temperatures and precipitation anomalies and extreme
+events leading to crop/livestock losses, altering species ranges,
+creating agricultural water stress, altering working conditions and
+triggering human migration. Building farm and food system resilience to
+climate change and other major stressors (e.g.~pandemics, war) is
+fundamental to prevent food and livelihood insecurity (SDG 1, 2), and
+avoidable loss of life (SDG 3, 15). \\
+Data source & Household survey \\
+Measurement & Resilience score adapted from RIMA \\
+Measurement units & \phantomsection\label{138}{The RIMA methodology has
+been subject to severe criticism and scrutiny. The list of component
+variables is completely arbitrary and the final RIMA value is not a
+measure of realized resilience, but rather a measure of wellbeing that
+might or might not be correlated to actual household resilience to
+shocks, The four pillars represent a grouping of variables proxies of
+welfare and the resulting indicator is again a welfare proxy, which has
+little conceptual relationship with resilience. Of course, household
+with higher values in the component variables could likely be associated
+to higher resilience to weather shocks, but only through their higher
+welfare. It could very well be called a proxy indicator of
+multidimensional poverty.}Score \phantomsection\label{139}{this scale is
+too wide}0-20\phantomsection\label{138}{\phantomsection\label{139}{}} \\
+Guidance on measurement & \begin{minipage}[t]{\linewidth}\raggedright
+Resilience is the capacity of socioeconomic systems (e.g., households)
+to withstand shocks through adaptation and transformation.
+
+FAO's Resilience Index Measurement and Analysis (RIMA) is one way to
+measure resilience. FAO computes a Resilience Capacity Index (RCI) based
+on data collected across four pillars:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Access to basic services (ABS)
+\item
+  Assets (AST)
+\item
+  Social safety nets (SSN)
+\item
+  Adaptive capacity (AC)
+\end{enumerate}
+
+FAO calculates the RCI using structural equation modelling (SEM),
+combining Confirmatory Factor Analysis and Path Analysis. There are two
+steps: 1) estimate resilience of each pillar through Factor Analysis
+(FA), 2) calculate a resilience index from the pillars, using Ordinary
+Least Squares with the outcome variable being a food security
+indicator(s) such as dietary diversity score. The benefit of this
+approach is that is possible to quantify the contribution of each pillar
+to the overall resilience. The limitation is that the RCI depends
+heavily on which indicator is used as the outcome variable which does
+not capture the variation across the four pillars.
+
+For HOLPA, we adapt the FAO approach to directly combine the data from
+the four pillars into a measure of resilience scaled from 0-20. This can
+be done by assigning scores of 0-5 to all responses, then taking the
+mean within each pillar, and summing scores across the four pillars
+according to the following table:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0694}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3750}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2222}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ Pi ll ar }
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Question}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Score assigned to response}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+A BS & Does your farm/household have the following services: 1) Drinking
+water piped to the household, 2) Toilet with piped sewer or septic tank,
+3) Electrical energy, 4) Waste (rubbish) collection service, 5) Mobile
+phone reception, 6) Internet. {[}Count services{]} & 5: 3 or more
+
+2.5: 1-2
+
+0: None \\
+A BS & How far (one way) is the household from the closest accessible
+and functioning service in minutes (walking): 1) Freshwater source, 2)
+primary school, 3) public hospital or health facility, 4) livestock
+market 5) agricultural/crops market, 6) public means of transport, 7)
+well-maintained road suitable for cars. & For each service:
+
+5: \textless5 mins
+
+2.5: 5-20 mins
+
+0: \textgreater{} 20 mins \\
+A ST & How many of the following assets do household members own: 1)
+Car, 2) Motorbike, 3) Bicycle, 4) Gas or electric cooker, 5) Mobile
+phone, 6) Ox-plough, 7) Tractor, 8) Machete. {[}Count assets{]} & 5: 5
+or more distinct asset types
+
+2.5: 2-4
+
+0: 0-1 \\
+S SN & On average, how many school meals have the children living in the
+household received per week, during the last month of attending school?
+& 5: 5 meal
+
+4: 4 meal
+
+3: 3 meal
+
+2: 2 meal
+
+1: 1 meal
+
+0: 0 meals \\
+S SN & Would any of the following individuals or organisations provide
+your household support in case of need: 1) local farmer associations or
+cooperatives, 2) other local associations (e.g. women support groups,
+youth groups), 3) individuals from my community, 4) individuals from a
+different community, 5) community leaders, 6) NGOs 8) local government,
+9) national government, 10) other (please specify). {[}Count sources{]}
+& 5: 3 or more
+
+2.5: 1-2
+
+0: None \\
+AC & Can the head of household read and write in any language? & 5: Can
+read and write
+
+2.5: Can read or write
+
+0: Cannot read or write, or prefer not to say \\
+AC & On average, how many years have the household members of working
+age (\textgreater14 and \textless65 years old) attended formal school? &
+5: ≥7 (Secondary or higher)
+
+2.5:\textless7 (Primary only)
+
+0:0 (None) \\
+AC & Has any household member received training in the last 12 months? &
+5: Y
+
+0: N \\
+AC & In the past 12 months, what were all the household's sources of
+income: : 1) Agriculture, animal breeding, fishing, 2) Other family
+business, 3) Government salary, 4) private sector salary, 5) Cash
+transfers (e.g. transfers from absent family members, donations), 6)
+Other (please specify) {[}count sources{]} & 5: 3 or more sources
+
+2.5: 2 sources
+
+0: 1 source \\
+AC & In the past 7 days, what percentage of the
+household\textquotesingle s income was used for buying food & 5: 0-25\%
+
+3.33: 26-50\%
+
+1.66: 51-75\%
+
+0: 76-100\% \\
+AC & In the past 5 years, has your farm/household had access to credit
+to support investment in your farming business. & 5:Y
+
+0:N, or I don't know \\
+AC & How do you feel about your farm/household\textquotesingle s ability
+to meet credit repayments now and until the loans are fully repaid? & 5:
+Full repayments
+
+3.33: Uncertain future repayments
+
+1.66: Uncertain current repayments
+
+0: Uncertain current and future repayments \\
+AC & Do you have access to crop insurance? If yes, what is covered, e.g.
+losses from weather events, pest outbreaks market shocks? & 5:Y
+
+0:N \\
+AC & Do you have access to subsidies for agricultural inputs? If yes,
+which inputs & 5:Y
+
+0:N \\
+\end{longtable}
+
+Additionally, HOLPA collects data on household exposure to shocks over
+the last 12 months and any coping mechanisms employed.
+\end{minipage} \\
+Guidance on data entry and reporting & \\
+Indicator i nterpretation and threshold setting & \\
+Limitations & \\
+References & FAO (2016) RIMA\textsuperscript{34} \\
+\end{longtable}
+
+\part{5. Complementary Indicators}
+
+\chapter{5.1 Bat, Bird, and Insect
+Diversity}\label{bat-bird-and-insect-diversity}
+
+Content for this complementary indicator will be added here.
+
+\chapter{5.2 Pollinator Diversity}\label{pollinator-diversity}
+
+Content for this complementary indicator will be added here.
+
+\chapter{5.3 Soil Health (SOCLA)}\label{soil-health-socla}
+
+Content for this complementary indicator will be added here.
+
+\chapter{5.4 Nutrient Use Efficiency}\label{nutrient-use-efficiency}
+
+Content for this complementary indicator will be added here.
+
+\chapter{5.5 Nutrient Balance}\label{nutrient-balance}
+
+Content for this complementary indicator will be added here.
+
+\chapter{5.6 Greenhouse Gas Emissions}\label{greenhouse-gas-emissions}
+
+Content for this complementary indicator will be added here.
+
+\chapter{5.7 Enteric Methane Emission
+Intensity}\label{enteric-methane-emission-intensity}
+
+Content for this complementary indicator will be added here.
+
+\bookmarksetup{startatroot}
+
+\chapter{Agroecological Indicators}\label{agroecological-indicators}
+
+Content for the agroecological indicators chapter will be added here.
+
+\bookmarksetup{startatroot}
+
+\chapter*{References}\label{references-4}
+\addcontentsline{toc}{chapter}{References}
+
+\markboth{References}{References}
+
+\phantomsection\label{refs}
+
+
+
+
+\end{document}
