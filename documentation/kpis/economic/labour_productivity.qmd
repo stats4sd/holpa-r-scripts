@@ -1,0 +1,67 @@
+# 4.2 Labour productivity 
+
++---------------+------------------------------------------------------+
+| Indicator     | [This is labor intensity, not                        |
+|               | productivity.]{.comment-start id="88"                |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:36:00Z"}Labour inputs per unit   |
+|               | agricultural land are[]{.comment-end id="88"}a       |
++===============+======================================================+
+| Theme         | Labour productivity                                  |
++---------------+------------------------------------------------------+
+| Purpose of    | Labour inputs required for agricultural production   |
+| indicator     | is one of the primary factors determining which      |
+|               | practices are used, how profitable they are, and the |
+|               | social sustainability of the production system.      |
+|               | Distinguishing which productive systems promote      |
+|               | sustainable employment contributes to SDG 2 and      |
+|               | SDG8.                                                |
++---------------+------------------------------------------------------+
+| Data source   | Farmer recall during household survey                |
++---------------+------------------------------------------------------+
+| Measurement   | Person hours per year, disaggregated by gender,      |
+|               | season, and productive activity                      |
++---------------+------------------------------------------------------+
+| Measurement   | [This is amount of labor, it\'s not intensity or     |
+| units         | productivity.]{.comment-start id="89"                |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:37:00Z"}Person hours per year    |
+|               | [per]{.insertion author="Alvi, Muzna (IFPRI-India)"  |
+|               | date="2025-12-02T10:26:00Z"} [hectare]{.insertion    |
+|               | author="Alvi, Muzna (IFPRI-India)"                   |
+|               | date="2025-12-02T10:27:00Z"} [o]{.insertion          |
+|               | author="Alvi, Muzna (IFPRI-India)"                   |
+|               | date="2025-12-02T10:26:00Z"}[f cultivated            |
+|               | land]{.insertion author="Alvi, Muzna (IFPRI-India)"  |
+|               | date="2025-12-02T10:27:00Z"}[]{.comment-end id="89"} |
++---------------+------------------------------------------------------+
+| Guidance on   | This indicator can be computed by collecting data on |
+| measurement   | number of labour hours per year per hectare of land  |
+|               | actively used for agricultural purposes. Labour      |
+|               | hours should be disaggregated by:                    |
+|               |                                                      |
+|               | -   gender                                           |
+|               |                                                      |
+|               | -   age                                              |
+|               |                                                      |
+|               | -   type of worker: hired or not hired, permanent or |
+|               |     seasonal                                         |
+|               |                                                      |
+|               | -   type of activity: routine (e.g. manure           |
+|               |     collection, milking) or seasonal work (e.g.      |
+|               |     seeding, harvesting, pruning).                   |
++---------------+------------------------------------------------------+
+| Guidance on   |                                                      |
+| data entry    |                                                      |
+| and reporting |                                                      |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | FAO (2010) ^33^                                      |
++---------------+------------------------------------------------------+

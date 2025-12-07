@@ -1,0 +1,19 @@
+---
+book:
+  title: "HOLPA Key Performance and Agroecological Indicator Protocols"
+  author: "Sarah K. Jones,a,* Andrea Cecilia Sánchez,a,b,c, Chris Dickensd, Matthias S. Gecke, Chaturangi Wickramaratned, Veronique Alaryf,g, Peter Boloh, Dennis Junior Chorumai, Somphasith Douangsavanhj, Modou Gueye Fallk, Gatien Falconnierl,m,n,o, Shweta Guptap,q, Chris Kettler, Smitha Krishnans, Sylvia Nyawirah, Guillermo Orjuela-Ramirezt, Boko Michel Orounladjiu, Piedad Parejav, Telma Sibandal, Christine Lamannae,1 "
+  date: "12/5/2025"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - kpis.qmd
+    - ae_indicators.qmd
+    - references.qmd
+
+---
+
+
+
+
+# HOLPA Key Performance Indicator Protocols
+

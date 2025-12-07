@@ -1,0 +1,196 @@
+# 3.3 Farmer agency
+
++-----------+----------------------------------------------------------+
+| **In      | **Farmer agency**                                        |
+| dicator** |                                                          |
++===========+==========================================================+
+| Theme     | Social justice                                           |
++-----------+----------------------------------------------------------+
+| Purpose   | Individual agency to decide on what to consume, produce, |
+| of        | and trade, and how to produce it, is a basic human right |
+| indicator | for farmers. Monitoring farmer agency provides an        |
+|           | indication of the power dynamics influencing major       |
+|           | decisions about the farm and food system, and level of   |
+|           | social equality (SDG 10, 16).                            |
++-----------+----------------------------------------------------------+
+| Data      | Household surveys                                        |
+| source    |                                                          |
++-----------+----------------------------------------------------------+
+| Me        | Ladder of Power and Freedom, from GENNOVATE              |
+| asurement |                                                          |
++-----------+----------------------------------------------------------+
+| Me        | Score of 1 to 5, and quotes and insights from analysing  |
+| asurement | qualitative data, for the household and each individual  |
+| units     | surveyed                                                 |
++-----------+----------------------------------------------------------+
+| Guidance  | The GENNOVATE Ladder of Power and Freedom is a           |
+| on        | qualitative data collection tool aimed at understanding  |
+| me        | local men and women farmers' own perceptions of agency   |
+| asurement | and key factors determining levels of agency. Here,      |
+|           | agency refers to 'the capacity to make important         |
+|           | decisions in one's life and act upon them' ^26^.         |
+|           |                                                          |
+|           | The Ladder provides comparative qualitative measures of  |
+|           | agency that remain contextually grounded, and can be     |
+|           | converted to a single quantitative agency score (but see |
+|           | notes on effectively applying the ladder approach). Data |
+|           | are collected through an individual interview using the  |
+|           | ladder visual (see inset), which is a scoreboard showing |
+|           | different levels of agency. Data can also be collected   |
+|           | at the community level through a focus group.            |
+|           |                                                          |
+|           | ![A close-up of a questionnaire Description              |
+|           | automatically                                            |
+|           | g                                                        |
+|           | enerated](media/image10.png){width="5.216159230096238in" |
+|           | height="4.232557961504812in"}                            |
+|           |                                                          |
+|           | *Source:* ^26^                                           |
+|           |                                                          |
+|           | The ladder is applied as follows. The researcher         |
+|           | identifies a meaningful historical benchmark, usually 10 |
+|           | years in the past, and provides (or creates) a visual of |
+|           | the five-step ladder on a sheet of paper. The researcher |
+|           | introduces the purpose of the exercise. They will need   |
+|           | to explain the five-step ladder, and that step 5         |
+|           | indicates great power and freedom while step 1 indicates |
+|           | very little power and freedom to make important          |
+|           | decisions.                                               |
+|           |                                                          |
+|           | For example: *Today we want to talk to you about how     |
+|           | much power and freedom \[wo\]men in this household have  |
+|           | to control the household food system -- that is, how and |
+|           | what kind of food is produced, where it goes, and how    |
+|           | and what kind of food people consume. Please imagine a   |
+|           | five-step ladder \[show figure\], where at the bottom,   |
+|           | on the first step, stand the individual \[wo\]men of     |
+|           | this community with little capacity to make their own    |
+|           | decisions about food production and consumption. These   |
+|           | \[wo\]men have little to say about the types and         |
+|           | varieties of crops, animals, trees, and animals they     |
+|           | cultivate, the way they manage their water, land, soil,  |
+|           | animals, and wildlife, the markets available to them,    |
+|           | and the food source and food choices available to them.  |
+|           | On the highest step, the fifth, stand those who have     |
+|           | great capacity to make important decisions for           |
+|           | themselves, including what they grow, how they manage    |
+|           | their land, soil, water, animals, and trees, and what    |
+|           | food they buy.*                                          |
+|           |                                                          |
+|           | Request the individual to mark on the ladder the step    |
+|           | they think household members of their gender occupy.     |
+|           |                                                          |
+|           | Facilitate the discussion on reasons for the step        |
+|           | identified. For example:                                 |
+|           |                                                          |
+|           | *Q. Why would you place \[wo\]men on this step? Would    |
+|           | you like to volunteer the reasons for your rating?*      |
+|           |                                                          |
+|           | *Q. Would you position different types of \[wo\]men in   |
+|           | different places on this ladder? Older people, younger   |
+|           | people, poorer people, single people, etc.? Do women and |
+|           | men differ?*                                             |
+|           |                                                          |
+|           | Repeat the rankings and discussion to capture            |
+|           | perceptions of power and freedom a decade ago (or at the |
+|           | pre-defined historical benchmark). These sticky notes /  |
+|           | cards can fill in the other side of the ladder. These    |
+|           | discussions should also be probed deeply to elicit       |
+|           | detailed explanations for the trends in agency           |
+|           | identified. The goal of the exercise is to understand    |
+|           | the factors that shape women's or men's conceptions of   |
+|           | power and freedom in their lives, and reasons for        |
+|           | changes in these conceptions over time, rather than      |
+|           | obtaining exact measurements or absolute values for      |
+|           | agency.                                                  |
+|           |                                                          |
+|           | Time permitting, facilitate a discussion about the       |
+|           | changes the participants would like to see and what      |
+|           | would be needed to achieve their vision. For example:    |
+|           |                                                          |
+|           | *Q. Having talked through this together, are there       |
+|           | changes you would like to see to give \[wo\]men more     |
+|           | power and freedom in the future? What would be needed to |
+|           | achieve this? What are the major obstacles?*             |
+|           |                                                          |
+|           | Record the whole interview and take good notes. During   |
+|           | the discussion, listen closely for the reasoning behind  |
+|           | votes, root causes of high or low agency, factors that   |
+|           | contributed to change, and any differences reported for  |
+|           | different groups in the community. Make note of powerful |
+|           | quotes that could be extracted later. Record how many    |
+|           | votes are cast for each ladder step for both past and    |
+|           | present.                                                 |
+|           |                                                          |
+|           | **Example responses for data collected at the community  |
+|           | level:**                                                 |
+|           |                                                          |
+|           | ![A table with numbers and arrows Description            |
+|           | automatically                                            |
+|           | g                                                        |
+|           | enerated](media/image11.png){width="5.162789807524059in" |
+|           | height="2.669647856517935in"}                            |
+|           |                                                          |
+|           | *Source:* ^26^                                           |
+|           |                                                          |
+|           | **Notes on effectively applying the ladder approach:**   |
+|           |                                                          |
+|           | -   Researchers should ideally be the same sex as        |
+|           |     participants.                                        |
+|           |                                                          |
+|           | -   Individual surveys should be conducted in a private  |
+|           |     room without the presence of any members of the      |
+|           |     household or anyone of the opposite sex.             |
+|           |                                                          |
+|           | -   Since the tool requires respondents to recall        |
+|           |     circumstances 10 years ago, the minimum recommended  |
+|           |     respondent age is 25 years old. However the 10-year  |
+|           |     timeframe could be reduced if younger respondents    |
+|           |     are present.                                         |
+|           |                                                          |
+|           | -   To assist with recall, it is helpful to identify the |
+|           |     year corresponding to 10 years ago (e.g. 2014) and   |
+|           |     an important event at that time.                     |
+|           |                                                          |
+|           | -   Researchers need to have a good level of skill in    |
+|           |     qualitative data collection to collect meaningful    |
+|           |     data on agency using this (or any) method. For       |
+|           |     example, managing group dynamics in household (or    |
+|           |     focus group) surveys is important to ensure the      |
+|           |     perspectives of individuals with lower levels of     |
+|           |     agency are captured.                                 |
+|           |                                                          |
+|           | -   The researcher should probe deeply into individual   |
+|           |     explanations of ladder rankings to understand the    |
+|           |     reasons for these rankings.                          |
+|           |                                                          |
+|           | -   Reducing agency to a single score (i.e., the mean    |
+|           |     step change at household level) risks undermining    |
+|           |     the relevance and quality of the data collected.     |
+|           |     Focusing on qualitative data collection and analysis |
+|           |     is strongly recommended for a more meaningful and    |
+|           |     accurate understanding of individual and household   |
+|           |     agency.                                              |
++-----------+----------------------------------------------------------+
+| Guidance  | This indicator collects sensitive data on human          |
+| on data   | subjects. Researchers should obtain ethical approval     |
+| entry and | from a verified review board prior to data collection.   |
+| reporting | Study participants should receive assurances that their  |
+|           | testimonies will be provided anonymously and no          |
+|           | identifying information shared in any future             |
+|           | publications.                                            |
++-----------+----------------------------------------------------------+
+| Indicator | -                                                        |
+| inter     |                                                          |
+| pretation |                                                          |
+| and       |                                                          |
+| threshold |                                                          |
+| setting   |                                                          |
++-----------+----------------------------------------------------------+
+| Li        | -                                                        |
+| mitations |                                                          |
++-----------+----------------------------------------------------------+
+| R         | -   Petesch and Bullock (2018) ^26^                      |
+| eferences |                                                          |
+|           | -   Tavenner and Crane (2022) ^27^                       |
++-----------+----------------------------------------------------------+

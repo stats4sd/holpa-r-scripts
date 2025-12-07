@@ -1,0 +1,145 @@
+# 3.2 Land tenure security
+
++---------------+------------------------------------------------------+
+| **Indicator** | **Land tenure security**                             |
++===============+======================================================+
+| Theme         | Land tenure                                          |
++---------------+------------------------------------------------------+
+| Purpose of    | Land access is closely linked to use and control     |
+| indicator     | over productive resources. Secure land tenure is     |
+|               | therefore a key determinant of individual agency,    |
+|               | income and wellbeing. This indicator is aligned with |
+|               | SDG 1.4.2 and 5.a.1.                                 |
++---------------+------------------------------------------------------+
+| Data source   | Parcels (most preferable) or household/farm (most    |
+|               | possible) survey using a simplified version of the   |
+|               | harmonized questionnaire proposed by FAO et al.      |
+|               | (2019)^24^. Additionally, GPS delineation of parcels |
+|               | is strongly advised wherever feasible, as evidence   |
+|               | points to systematic bias in farmer estimates of     |
+|               | land area^25^.                                       |
++---------------+------------------------------------------------------+
+| Measurement   | ((Area of agricultural land used by the household    |
+|               | for which at least one member of the household has   |
+|               | their name on a legally recognized document OR has   |
+|               | the right to sell OR has the right to                |
+|               | bequeath)/(Total land area used by the               |
+|               | household))\*100                                     |
++---------------+------------------------------------------------------+
+| Measurement   | \%                                                   |
+| units         |                                                      |
++---------------+------------------------------------------------------+
+| Guidance on   | The indicator can be calculated with data collected  |
+| measurement   | using FAO's harmonized questionnaire, which is a     |
+|               | standardized and succinct survey instrument designed |
+|               | to collect the essential data for computation of     |
+|               | both 1.4.2^a^ and 5.A.1^b^ Sustainable Development   |
+|               | Goals (SDGs) indicators simultaneously.              |
+|               |                                                      |
+|               | The methodology proposed 5 versions of the           |
+|               | questionnaire (see next figure) depending on: (i)    |
+|               | the respondent selection approach, (ii) whether or   |
+|               | not the survey collects data at the parcel-level and |
+|               | (iii) whether or not the existing survey includes a  |
+|               | parcel roster. Each version of the questionnaire has |
+|               | approximated 10 questions and assumes that a         |
+|               | separate household member roster exists and that the |
+|               | sex of each household member is captured in that     |
+|               | roster.                                              |
+|               |                                                      |
+|               | ![A diagram of a company Description automatically   |
+|               | generated with medium                                |
+|               | confid                                               |
+|               | ence](media/image6.png){width="3.8958333333333335in" |
+|               | height="2.8463090551181103in"}                       |
+|               |                                                      |
+|               | Where possible, it is advised to have parcel level   |
+|               | data and implement a self-respondent approach (i.e., |
+|               | where individuals respond for themselves only, not   |
+|               | on behalf of others) (version 2 with 7 questions).   |
+|               | Where it is not, land tenure data should be          |
+|               | collected at the household/farm level, using the     |
+|               | version 3 (13 questions) of the questionnaire.       |
+|               |                                                      |
+|               | A sub-indicator can be calculated as: ((Number of    |
+|               | adult women in agricultural households whose name is |
+|               | on a legally recognized document OR who have the     |
+|               | right to sell OR bequeath agricultural land)/(Total  |
+|               | adult individuals in agricultural households whose   |
+|               | name is on a legally recognized document OR who have |
+|               | the right to sell OR bequeath agricultural           |
+|               | land))\*100.                                         |
+|               |                                                      |
+|               | Note, for pastoralists, land tenure security may be  |
+|               | better measured in terms of mobility, i.e.           |
+|               | proportion of grazing lands over which the farmer    |
+|               | has unrestricted rights to graze livestock.          |
+|               |                                                      |
+|               | [Guidance of how to apply the                        |
+|               | questionnaire:]{.underline}                          |
+|               |                                                      |
+|               | \- The survey should be completed for the adult      |
+|               | household member (18 years old or older).            |
+|               |                                                      |
+|               | \- Because a self-respondent approach is going to be |
+|               | used and only some (or one) randomly selected        |
+|               | household members are interviewed about their        |
+|               |                                                      |
+|               | tenure rights, only the selected members are part of |
+|               | the reference population (i.e., denominator in the   |
+|               | indicator and sub-indicator formulas).               |
+|               |                                                      |
+|               | \- The country-specific questionnaire should         |
+|               | include: i) a comprehensive list of all tenure types |
+|               | applicable to the country; ii) a comprehensive list  |
+|               | of land tenure-related documents, specifying which   |
+|               | ones the government considers as legally recognized; |
+|               | iii) **i**mages of the documents considered legally  |
+|               | recognized; iv) a context-specific definition of     |
+|               | alienation rights.                                   |
+|               |                                                      |
+|               | ![A screenshot of a document Description             |
+|               | automatically                                        |
+|               | gene                                                 |
+|               | rated](media/image7.png){width="4.083333333333333in" |
+|               | height="4.833333333333333in"}                        |
+|               |                                                      |
+|               | ![A close up of a document Description automatically |
+|               | gene                                                 |
+|               | rated](media/image8.png){width="4.833333333333333in" |
+|               | height="4.197916666666667in"}                        |
+|               |                                                      |
+|               | ![A screenshot of a computer Description             |
+|               | automatically                                        |
+|               | gene                                                 |
+|               | rated](media/image9.png){width="4.833333333333333in" |
+|               | height="2.78125in"}                                  |
+|               |                                                      |
+|               | ^a^ Proportion of total adult population with secure |
+|               | tenure rights to land, with (a) legally recognized   |
+|               | documentation; and (b) who perceive their rights to  |
+|               | land as secure, by sex and by type of tenure.        |
+|               |                                                      |
+|               | ^b^ (a) proportion of total agricultural population  |
+|               | with ownership or secure rights over agricultural    |
+|               | land by sex; and (b) share of women among owners or  |
+|               | rights bearers of agricultural land, by type of      |
+|               | tenure.                                              |
++---------------+------------------------------------------------------+
+| Guidance on   | Check that the total land area accessed by the       |
+| data entry    | household matches the sum of the land areas with     |
+| and reporting | different access types.                              |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | FAO; The World Bank; UN-Habitat. 2019. Measuring     |
+|               | Individuals' Rights to Land: An Integrated Approach  |
+|               | to Data Collection for SDG Indicators 1.4.2 and      |
+|               | 5.a.1. Washington, DC. 72p.^24^                      |
++---------------+------------------------------------------------------+

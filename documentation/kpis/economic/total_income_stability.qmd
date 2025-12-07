@@ -1,0 +1,306 @@
+### [Total income and income stability]{.mark}
+
++---------------+------------------------------------------------------+
+| Indicator     | Total [Fall backs are usually assets and             |
+|               | consumption, when income data cannot be collected    |
+|               | properly. Carlo/others can propose some papers       |
+|               | showing these are valid, and methods for             |
+|               | this]{.comment-start id="97"                         |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-11-28T10:04:00Z"}income[]{.comment-end    |
+|               | id="97"}; Income stability                           |
++===============+======================================================+
+| Theme         | Income                                               |
++---------------+------------------------------------------------------+
+| Purpose of    | Total income and income stability are indicators of  |
+| indicator     | household living standards. Ensuring that            |
+|               | agricultural livelihoods provide adequate and stable |
+|               | or increasing incomes contributes to rural           |
+|               | development and ending poverty (SDG1).               |
++---------------+------------------------------------------------------+
+| Data source   | Household survey                                     |
++---------------+------------------------------------------------------+
+| Measurement   | [National income is a measure coming from national   |
+|               | accounts for which the calculation method is         |
+|               | completely different than the calculation method of  |
+|               | household-level income. Which type of information    |
+|               | would this ratio provide? GDP per-capita isn\'t      |
+|               | comparable to per-capita income at the household     |
+|               | level.]{.comment-start id="102"                      |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-28T00:00:00Z"}Ratio of household       |
+|               | income to [Could compare to national poverty line    |
+|               | instead]{.comment-start id="103"                     |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:53:00Z"}[But poverty line is     |
+|               | determined based on consumption, not on income, so   |
+|               | comparing income to the poverty line is not          |
+|               | recommended.]{.comment-start id="104"                |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:57:00Z"}national                 |
+|               | income[[[]{.comment-end id="104"}]{.comment-end      |
+|               | id="103"}]{.comment-end id="102"}; Likert score      |
++---------------+------------------------------------------------------+
+| Measurement   | Ratio (unitless); Likert score 1-3 [or               |
+| units         | 1-5]{.insertion                                      |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:49:00Z"}                         |
++---------------+------------------------------------------------------+
+| Guidance on   | We discuss three measurement approaches used in      |
+| measurement   | HOLPA: i) [calculating total household               |
+|               | income]{.mark}, ii) qualitative measure of income    |
+|               | stability, iii) qualitative measure of               |
+|               | income-expenditure ratio.                            |
+|               |                                                      |
+|               | [Collecting income is a time-consuming task if we    |
+|               | would like the measure to be minimally reliable.     |
+|               | Asking one unique question for each source of income |
+|               | suffers by severe misreporting and potentially huge  |
+|               | underreporting given the common reluctancy to unveil |
+|               | the individual revenues (for fear of losing          |
+|               | benefits, of being robbed or mistreated by community |
+|               | members, retaliation, etc.). Being income highly     |
+|               | confidential and sensitive information, it needs to  |
+|               | be collected adding up different detailed pieces of  |
+|               | information coming from multiple activities and      |
+|               | probing questions. In my opinion, and based on my    |
+|               | experience having collected income data for many     |
+|               | years in several settings, either we spend time and  |
+|               | resources for each and every source of income to try |
+|               | to capture it adequately, or asking with one         |
+|               | question is potentially very misleading for          |
+|               | analytical and policy purposes. Better to use other  |
+|               | proxies than using a potentially biased              |
+|               | measure.]{.comment-start id="107"                    |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:51:00Z"}**[Income level          |
+|               | (KPI1)]{.underline}**[]{.comment-end id="107"}       |
+|               |                                                      |
+|               | Total income per household is the total amount of    |
+|               | profit or net earning a household makes over a given |
+|               | period. Ideally, income should be computed from data |
+|               | collected on all types of income generating          |
+|               | activities agricultural or non-agricultural          |
+|               | activities, goods and service based) and all types   |
+|               | of household expenses, over the last 12 months. In   |
+|               | practice, these data can be challenging to           |
+|               | accurately collect in systems without digital        |
+|               | records because they rely on farmer recall of all    |
+|               | incoming and outcoming funds. Data on income should  |
+|               | be compared to the national mean income level and    |
+|               | used to calculate the ratio of household to mean     |
+|               | national income.                                     |
+|               |                                                      |
+|               | In addition, collecting data on income sources can   |
+|               | be used to assess the level of dependency on single  |
+|               | income sources or the capacity to withstand a shock  |
+|               | through income diversification[Markowitz, 1952.      |
+|               | Portfolio Selection. *The Journal of Finance*, Vol.  |
+|               | 7, No. 1\                                            |
+|               | , pp. 77-91.]{.comment-start id="109"                |
+|               | author="Alary, Veronique (CIRAD)"                    |
+|               | date="2025-11-24T22:14:00Z"}.[]{.comment-end         |
+|               | id="109"}[]{.paragraph-insertion                     |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}                         |
+|               |                                                      |
+|               | [**Income based on assets (alternative               |
+|               | KPI1)**]{.insertion                                  |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}[]{.paragraph-insertion  |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}                         |
+|               |                                                      |
+|               | [[\[Veronique found that 10 questions on assets were |
+|               | a good indicator of total                            |
+|               | income\]]{.mark}]{.insertion                         |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}[]{.paragraph-insertion  |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}                         |
+|               |                                                      |
+|               | [[Flows (income) versus stocks                       |
+|               | (wealth)]{.mark}]{.insertion                         |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}[]{.paragraph-insertion  |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}                         |
+|               |                                                      |
+|               | -   [[For wealth there is the DHS asset              |
+|               |     index]{.mark}]{.insertion                        |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |                                                      |
+|               |  date="2025-12-05T09:58:00Z"}[]{.paragraph-insertion |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |     date="2025-12-05T09:58:00Z"}                     |
+|               |                                                      |
+|               | -   [[Related issues on interpretation of income -   |
+|               |     subsistence farmers may have a low income but    |
+|               |     high food security]{.mark}]{.insertion           |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |                                                      |
+|               |  date="2025-12-05T09:58:00Z"}[]{.paragraph-insertion |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |     date="2025-12-05T09:58:00Z"}                     |
+|               |                                                      |
+|               | [[Carlo has references that show how to              |
+|               | use]{.mark}]{.insertion                              |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}[]{.paragraph-insertion  |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-12-05T09:58:00Z"}                         |
+|               |                                                      |
+|               | [Same concern here. This question is subject to very |
+|               | arbitrary judgement on the extent to which is        |
+|               | considered stable or not.]{.comment-start id="125"   |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:52:00Z"}**[Income stability      |
+|               | (qualitative) (KPI2)]{.underline}**[]{.comment-end   |
+|               | id="125"}                                            |
+|               |                                                      |
+|               | Respondents are asked 'How would you rate the        |
+|               | stability of household income?':                     |
+|               |                                                      |
+|               | 5 - Income is increasing over time.                  |
+|               |                                                      |
+|               | 4 -- Income is stable over time.                     |
+|               |                                                      |
+|               | 3 - Income varies little from year to year.          |
+|               |                                                      |
+|               | 2 - Income varies from year to year.                 |
+|               |                                                      |
+|               | 1 - Income is on a decreasing trend.                 |
+|               |                                                      |
+|               | This information provides a rapid indication of      |
+|               | income trends.                                       |
+|               |                                                      |
+|               | [Also this question is very problematic, considers   |
+|               | only farm income, assumes an unequivocal meaning of  |
+|               | the word \"money\", doesn\'t consider any variation  |
+|               | in wealth or stock, any annual value/flow of durable |
+|               | assets, doesn\'t distinguish between earnings and    |
+|               | profits, doesn\'t consider any in-kind income,       |
+|               | disregards any eventual remittance or public         |
+|               | transfer, etc.. Summing up, it\'s not worth          |
+|               | asking.]{.comment-start id="126"                     |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:57:00Z"}**[Income-expenditure    |
+|               | balance (complementary indicator, not a              |
+|               | KPI)]{.underline}**[]{.comment-end id="126"}         |
+|               |                                                      |
+|               | HOLPA collects data on whether expenditures are less |
+|               | than, equal to, or more than income received by the  |
+|               | household, over the last 12 months. The responses    |
+|               | can be used to give a simple measure of whether the  |
+|               | household has sufficient income to meet its needs.   |
+|               |                                                      |
+|               | Data are collected by asking: In the last 12 months, |
+|               | did the household spend more money on the farm than  |
+|               | it earns from the farm?                              |
+|               |                                                      |
+|               | -   Yes                                              |
+|               |                                                      |
+|               | -   No                                               |
+|               |                                                      |
+|               | -   I don\'t know                                    |
++---------------+------------------------------------------------------+
+| Guidance on   | For KP1, be sure to use the same time unit and       |
+| data entry    | currency. Discuss income in terms of the local       |
+| and reporting | currency during the survey. When possible (not       |
+|               | always easy), it may be more appropriate to ask the  |
+|               | question of total income for each source of income   |
+|               | to avoid confusion (IDH, 2021). If a crop was grown  |
+|               | during multiple seasons within one year, it is       |
+|               | preferable to ask the question for each season and   |
+|               | then evaluate over the year. For livestock           |
+|               | activities, distinguish regular income (e.g., milk,  |
+|               | eggs per week) and more occasional income due to the |
+|               | sale of animals.                                     |
++---------------+------------------------------------------------------+
+| Indicator     | Income level depends on occupational activity, but   |
+| i             | this is not the only determining factor. [Income     |
+| nterpretation | level is also a criterion of social differentiation; |
+| and threshold | it partially influences consumption, savings,        |
+| setting       | accumulation, and lifestyle behaviors.]{.mark}       |
+|               |                                                      |
+|               | -                                                    |
++---------------+------------------------------------------------------+
+| Limitations   | Total income assessment faces at least three main    |
+|               | difficulties:                                        |
+|               |                                                      |
+|               | 1\. The attitude of the head of household and        |
+|               | her/his family, who will (i) either underestimate    |
+|               | their net income to avoid taxes, benefit from        |
+|               | potential survey-related assistance, avoid social    |
+|               | pressures from neighbors, (ii) or overestimate it to |
+|               | display their social success or assert their social  |
+|               | position (Parvathi et al, 2018; Carletto et al,      |
+|               | 2022; Angel et al., 2019).                           |
+|               |                                                      |
+|               | 2.The complexity of income in rural areas, with      |
+|               | significant seasonal variability in both earnings    |
+|               | and production costs, means that respondents may     |
+|               | rely on either recent transactions or their primary  |
+|               | activity, neglecting all sources of income derived   |
+|               | from other activity.                                 |
+|               |                                                      |
+|               | 3\. the revenues can be earned and manage by the     |
+|               | different members of the household who share the     |
+|               | same roof or the same meal (household unit). In this |
+|               | case, it is important to make a link between the     |
+|               | various activities carried out by all household      |
+|               | members.                                             |
+|               |                                                      |
+|               | Alternative income indicators to consider in future  |
+|               | surveys include:                                     |
+|               |                                                      |
+|               | -   Using the main household assets (type of         |
+|               |     housing, number of rooms and building materials, |
+|               |     means of transport and communication, production |
+|               |     tools, livestock) and their owners, it is        |
+|               |     possible to develop a good proxy for income      |
+|               |     level ( see for instance: PPI,                   |
+|               |     <https://www.povertyindex.org/>)                 |
+|               |                                                      |
+|               | -   Monitoring expenditures, since income in rural   |
+|               |     areas is often composed of the market and non    |
+|               |     market sales, and self-consumption.              |
++---------------+------------------------------------------------------+
+| [Note to me:  | PPI, <https://www.povertyindex.org/>)                |
+| add these to  |                                                      |
+| zotero]{.     | IDH Sustainable Trade. (2024). *Income measurement   |
+| comment-start | survey user guide* \[PDF\]. Retrieved from           |
+| id="128"      | <ht                                                  |
+| author="J     | tps://www.idhsustainabletrade.com/uploaded/2024/05/A |
+| ones, Sarah ( | nnex-1_Income-Measurement-Survey_IDH_User-Guide.pdf> |
+| Alliance Biov |                                                      |
+| ersity-CIAT)" | Angel, S., Disslbacher, F., Humer, S., & Schnetzer,  |
+| d             | M. (2019). What did you really earn last year?:      |
+| ate="2025-12- | explaining measurement error in survey income data.  |
+| 05T12:06:00Z" | *Journal of the Royal Statistical Society Series A:  |
+| }References[] | Statistics in Society*, *182*(4), 1411-1437.         |
+| {.comment-end |                                                      |
+| id="128"}     | Carletto, G., Covarrubias, K., Davis, B., Krausova,  |
+|               | M., & Winters, P. (2007). Rural Income Generating    |
+|               | Activities Study: Methodological note on the         |
+|               | construction of income aggregates. *Agricultural     |
+|               | Sector in Economic Development Service, Food and     |
+|               | Agriculture Organization*.                           |
+|               |                                                      |
+|               | Gero Carletto, Marco Tiberti, Alberto Zezza, Measure |
+|               | for Measure: Comparing Survey Based Estimates of     |
+|               | Income and Consumption for Rural Households, *The    |
+|               | World Bank Research Observer*, Volume 37, Issue 1,   |
+|               | February 2022, Pages 1--38,                          |
+|               | <https://doi.org/10.1093/wbro/lkab009>               |
+|               |                                                      |
+|               | Parvathi, P., & Nguyen, T. T. (2018). Is             |
+|               | environmental income reporting evasive in household  |
+|               | surveys? Evidence from rural poor in Laos.           |
+|               | *Ecological Economics*, *143*, 218-226.              |
+|               |                                                      |
+|               | Markowitz, 1952. Portfolio Selection. *The Journal   |
+|               | of Finance*, Vol. 7, No. 1, pp. 77-91.               |
+|               |                                                      |
+|               | PPI, <https://www.povertyindex.org/>)                |
++---------------+------------------------------------------------------+

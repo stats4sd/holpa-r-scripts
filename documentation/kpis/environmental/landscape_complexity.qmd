@@ -1,0 +1,160 @@
+# 1.3 Landscape complexity
+
++---------------+------------------------------------------------------+
+| **Indicator** | **Landscape complexity**                             |
++===============+======================================================+
+| Theme         | Biodiversity                                         |
++---------------+------------------------------------------------------+
+| Purpose of    | Relevant for the post-2020 Global Biodiversity       |
+| indicator     | Framework Goal B on conserving services provided by  |
+|               | ecosystems and Target 10 on 'Proportion of           |
+|               | agricultural area under productive and sustainable   |
+|               | agriculture' (CBD/COP/15/L.26). Aligns with SDG      |
+|               | indicators 2.4.1 and 15.3.1 on proportion of         |
+|               | agricultural area under productive and sustainable   |
+|               | agriculture. Maintaining at least 20% natural and    |
+|               | semi-natural habitat in agricultural landscapes is   |
+|               | important for safeguarding food security,            |
+|               | biodiversity, and ecosystem services (Garibaldi et   |
+|               | al. 2020).                                           |
++---------------+------------------------------------------------------+
+| Data source   | Satellite data, or direct measurement by walking     |
+|               | around natural or semi-natural features on-farm with |
+|               | a GPS. In both cases, the field or farm boundary     |
+|               | needs delineating.                                   |
++---------------+------------------------------------------------------+
+| Measurement   | Percentage of farmland area that is covered with     |
+|               | natural or semi-natural vegetation.                  |
++---------------+------------------------------------------------------+
+| Measurement   | Percentage cover, disaggregated by type of feature   |
+| units         |                                                      |
++---------------+------------------------------------------------------+
+| Guidance on   | We discuss three options for measurement, i) farmer  |
+| measurement   | estimates validated through field surveys (default   |
+|               | option in HOLPA), ii) using satellite imagery, iii)  |
+|               | direct measurement.                                  |
+|               |                                                      |
+|               | ***Farmer estimates***                               |
+|               |                                                      |
+|               | A simplistic and rapid way to assess this indicator  |
+|               | is to ask respondents to estimate the proportion of  |
+|               | their farmland covered by natural or semi-natural    |
+|               | vegetation (e.g. bushland, fallow land, hedgerows,   |
+|               | natural grassland, ponds, lakes, forest patches).    |
+|               | This can be validated by assessing the proportion of |
+|               | natural vegetation contained within three 10x10m     |
+|               | plots sampled on the farm, taking a GPS point to     |
+|               | allow for satellite-based analysis of the proportion |
+|               | of natural vegetation at larger spatial scales.      |
+|               |                                                      |
+|               | ***Satellite imagery***                              |
+|               |                                                      |
+|               | Natural or semi-natural features on farmland (see    |
+|               | Definitions) are often visible on high resolution    |
+|               | (\<50m and ideally \<10m) satellite imagery, such as |
+|               | Google Earth imagery. In a GIS, import the boundary  |
+|               | of the field or farm of interest (see Definitions).  |
+|               | If no boundary is available, generate a 1km diameter |
+|               | circular plot around each fieldwork plot, using a    |
+|               | GPS point collected at the centre of the plot on the |
+|               | ground. In Google Earth Engine, digitise all visible |
+|               | natural or semi-natural features within the area of  |
+|               | interest. Calculate the area of land with natural or |
+|               | semi-natural features to obtain an estimate of the   |
+|               | share of land covered with natural or semi-natural   |
+|               | features. Where possible this should be verified on  |
+|               | the ground.                                          |
+|               |                                                      |
+|               | Examples:                                            |
+|               |                                                      |
+|               | ![A computer screen shot of a field Description      |
+|               | automatically                                        |
+|               | gene                                                 |
+|               | rated](media/image1.png){width="4.385416666666667in" |
+|               | height="3.28125in"}                                  |
+|               |                                                      |
+|               | ![A screenshot of a computer Description             |
+|               | automatically                                        |
+|               | gene                                                 |
+|               | rated](media/image2.png){width="4.427083333333333in" |
+|               | height="3.28125in"}                                  |
+|               |                                                      |
+|               | *Known problems:*                                    |
+|               |                                                      |
+|               | -   Distinguishing between tree canopies and shade   |
+|               |     can be difficult.                                |
+|               |                                                      |
+|               | -   Determining what is farmland and what is natural |
+|               |     land can be difficult.                           |
+|               |                                                      |
+|               | -   Distinguishing between grass and shrubs is not   |
+|               |     always easy.                                     |
+|               |                                                      |
+|               | -   The condition of the vegetation is an unknown    |
+|               |     but important variable.                          |
+|               |                                                      |
+|               | ***Direct measurement***                             |
+|               |                                                      |
+|               | Natural or semi-natural features coverage can be     |
+|               | determined by walking around the field or farm of    |
+|               | interest including all natural or semi-natural       |
+|               | features, recording the boundaries with a handheld   |
+|               | GPS. These areas can be imported into a GIS and used |
+|               | to obtain an estimate of the percentage of farmland  |
+|               | covered with natural or semi-natural features.       |
+|               |                                                      |
+|               | **Definitions:**                                     |
+|               |                                                      |
+|               | ***Farmland*** includes areas delineated with        |
+|               | generally linear boundaries and inside which there   |
+|               | are one of the following:                            |
+|               |                                                      |
+|               | 1.  Regular rows of woody or herbaceous crops        |
+|               |                                                      |
+|               | 2.  Visible tractor tracks                           |
+|               |                                                      |
+|               | 3.  Visible rows of tilled soil                      |
+|               |                                                      |
+|               | 4.  Evidence of irrigation, e.g. area is much        |
+|               |     greener than surrounding land, or visible        |
+|               |     sprinkler system                                 |
+|               |                                                      |
+|               | 5.  Hay bales in field                               |
+|               |                                                      |
+|               | ***Natural or semi-natural features*** on farmland   |
+|               | includes linear or areal features on farmland        |
+|               | comprising:                                          |
+|               |                                                      |
+|               | -   Single or small groups of trees or shrubs not    |
+|               |     regularly arranged within the field. These       |
+|               |     include woodlots, forest remnants.               |
+|               |                                                      |
+|               | -   Narrow strips of trees, shrubs or other          |
+|               |     vegetation along field edge that have no visible |
+|               |     management, e.g., are not arranged in rows, no   |
+|               |     signs of tractor or tillage activity, irregular  |
+|               |     shape. These include hedgerows, flower strips,   |
+|               |     grass borders.                                   |
+|               |                                                      |
+|               | -   Other natural or semi-natural features,          |
+|               |     including long-term (\>6 month) fallow land,     |
+|               |     rivers, ponds.                                   |
+|               |                                                      |
+|               | This list of natural or semi-natural features should |
+|               | be discussed and adjusted with local communities     |
+|               | and/or based on expert knowledge of the context      |
++---------------+------------------------------------------------------+
+| Guidance on   | Record which natural or semi-natural features were   |
+| data entry    | detected, e.g. hedgerows, flower strip. For fallow   |
+| and reporting | land, record how long the land has been in fallow.   |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | Garibaldi et al. (2020), Mohamed et al. (2024)^5,6^  |
++---------------+------------------------------------------------------+

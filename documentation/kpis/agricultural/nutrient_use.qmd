@@ -1,0 +1,49 @@
+# 2.4 Nutrient use
+
+## Indicator
+
+**Nutrient use**
+
+## Theme
+
+Nutrient management
+
+## Purpose of indicator
+
+Nutrient use per unit area provides information on the under or over-use of fertilizers, which has implications for crop productivity, economic viability, and environmental sustainability. By monitoring nutrient applications, farmers and agronomists can determine if the current inputs are meeting or exceeding the nutrient needs of the crop and if adjustments are needed to optimize input use and reduce nutrient losses to the environment. This indicator is related to a number of Sustainable Development Goals (SDG) e.g., SDG 2 on zero hunger and SDG 15 life on land.
+
+## Data source
+
+Field measurements, household survey
+
+## Measurement
+
+Fertilizer applications in the production system
+
+## Measurement units
+
+Fertilizer input (kg) per hectare per year, disaggregated by organic and chemical inputs. Can be presented as a ratio of recommended fertilizer input intensity in the landscape obtained from extension services and literature.
+
+## Guidance on measurement
+
+Nutrient use can be determined at the three levels i.e. plot level (the level of individual crops), farm level (the level of a whole farm and its cropping system), and landscape level (a larger area e.g. region or watershed).
+
+At all scales, it is important to consider all possible sources of inputs into the system to avoid under or overestimation of nutrient use.
+
+Specific survey questions should address the following:
+
+-   What is the amount of nutrient input, such as nitrogen (N), phosphorus (P), or potassium (K), added to the farm system through fertilization or other means per year?
+-   What proportion of these nutrients come from each source (chemical, organic plant, manure)?
+
+## Guidance on data entry and reporting
+
+Uniform data entry and conversion of inputs to kg ha^-1^ yr^-1^.
+
+## Indicator interpretation and threshold setting
+
+## Limitations
+
+## References
+
+-   Dobermann, (2007)^21^
+-   European Union Nitrogen Use Efficiency (2016)^22^

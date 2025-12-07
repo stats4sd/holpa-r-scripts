@@ -1,0 +1,64 @@
+# 1.2 Insect, mammal and tree diversity
+
++---------------+------------------------------------------------------+
+| **Indicator** | **Insect, mammal and tree diversity**                |
++===============+======================================================+
+| Theme         | Biodiversity                                         |
++---------------+------------------------------------------------------+
+| Purpose of    | Relevant for global climate mitigation targets (the  |
+| indicator     | Paris Agreement) and the post-2020 Global            |
+|               | Biodiversity Framework Target 10 on 'Proportion of   |
+|               | agricultural area under productive and sustainable   |
+|               | agriculture'. Biodiversity indicators selected to be |
+|               | easy to use and scalable, in line with Essential     |
+|               | Biodiversity Variables 2020 initiative               |
+|               | recommendations.                                     |
++---------------+------------------------------------------------------+
+| Data source   | Household survey, field survey                       |
++---------------+------------------------------------------------------+
+| Measurement   | Diversity of insect, mammal and tree species per     |
+|               | hectare of farmland, measured using data on          |
+|               | richness, abundance, and density, and standardised   |
+|               | to a scale of 0 to 100 to enable data aggregation.   |
++---------------+------------------------------------------------------+
+| Measurement   | Count with associated production area recorded in    |
+| units         | hectares, disaggregated by insect/mammal/tree        |
+|               | species, tree maturity, and local/exotic origin.     |
++---------------+------------------------------------------------------+
+| Guidance on   | This indicator can be calculated by collecting data  |
+| measurement   | on the:                                              |
+|               |                                                      |
+|               | -   Richness and abundance of mammals, insects and   |
+|               |     trees                                            |
+|               |                                                      |
+|               | These data can be collected as part of household and |
+|               | field surveys.                                       |
+|               |                                                      |
+|               | To enable more indepth tree data analysis, e.g. to   |
+|               | support efforts to monitor native species, ancient   |
+|               | specimens, and carbon sequestration on-farm,         |
+|               | additional data can be collected on:                 |
+|               |                                                      |
+|               | -   Proportion of native tree species                |
+|               |                                                      |
+|               | -   Proportion of mature trees (\>50cm diameter at   |
+|               |     breast height, or height \>10m)                  |
++---------------+------------------------------------------------------+
+| Guidance on   | Species names (if available) should be stored in the |
+| data entry    | local language and also using their scientific and   |
+| and reporting | English names to enable comparisons across sites.    |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | Landmann et al. (2023)^3^, Navarro et al. (2017)^4^, |
+|               | GEO-BON^5^                                           |
++---------------+------------------------------------------------------+
+
+: Table 8: Method for converting key performance indicators from their
+original formats to a standardized 0 to 100 scale

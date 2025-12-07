@@ -1,0 +1,76 @@
+# 2.2 Animal health
+
+## Indicator
+
+**Animal health**
+
+## Theme
+
+Animal health
+
+## Purpose of indicator
+
+Maintaining healthy and diverse stocks of animals on-farm contributes to overall agroecosystem functioning for more sustainable farming systems (SDG2, GBF Target 10). Keeping animals in poor health increases the spread of zoonoses, food-borne disease, and livestock mortalities, with associated negative consequences on human health (SDG2 and 3) and livelihoods (SDG1). Healthier animals have a smaller environmental footprint (SDG12 and 13).
+
+## Data source
+
+Household survey with farm transect
+
+## Measurement
+
+Qualitative measure of livestock disease and losses. Alternative: Health and welfare of farm animals, measured using the welfare outcome assessment tool as applied to each livestock species.
+
+## Measurement units
+
+Various (e.g. number of animals in each welfare category, number of mortalities per 100 animals)
+
+## Guidance on measurement
+
+We discuss two measures of animal health: i) qualitative welfare assessment, ii) (optional) full welfare assessment.
+
+**Qualitative asessment**
+
+Likert score (1 to 4) based on the following questions:
+
+What was the extent of injury, illness, or death of livestock due to diseases in the last 12 months?
+
+1.  None
+2.  Low
+3.  Medium
+4.  High
+
+What was the extent of injury, illness or death of fish due to diseases in the last 12 months?
+
+1.  None
+2.  Low
+3.  Medium
+4.  High
+
+**Full welfare assessment (optional)**
+
+The welfare outcome assessment tool is a practical and scientifically informed way of assessing and measuring animal welfare. It aims to provide an objective, accurate and direct picture of animal welfare.
+
+The assessment measures the impact of farm inputs (e.g. housing, space, feed, veterinary care, management) on the health, physical condition and behaviour of the animals themselves. There are different assessment approaches for each livestock species: laying hens, dairy cows, pigs, broiler hens, beef cattle, sheep. The method was developed by Assurewel and is implemented by the UK Soil Association and RSPCA: http://www.assurewel.org/aboutassurewel/aboutwelfareoutcomeassessment.html.
+
+The assessment of one livestock species takes around 30 mins per farm. The researcher will need to complete, with the farmer, the AssureWel simple scoresheet for each livestock produced on the farm. For example, for dairy cattle, this includes documenting:
+
+-   Mobility (good, impaired, severely impaired)
+-   Body condition (thin, moderate, fat)
+-   Cleanliness (clean to very dirty)
+-   Hair loss, lesions and swellings
+-   Number of cows with broken tails
+-   Number of cows needing further care
+-   Farmer records of mobility, mastitis, calf and heifer survivability, cull and casualty cows.
+
+## Guidance on data entry and reporting
+
+## Indicator interpretation and threshold setting
+
+## Limitations
+
+## References
+
+-   ^14^ -- assessment protocol for dairy cattle
+-   ^15^ -- scoresheet for dairy cattle
+-   ^16^ -- explanation of measures for dairy cattle
+-   See <http://www.assurewel.org> for protocols, scoresheets and explanations for laying hens, pigs, broiler hens, beef cattle, and sheep.

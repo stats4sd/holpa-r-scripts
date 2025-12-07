@@ -1,0 +1,90 @@
+# 2.3 Soil health
+
+## Purpose of indicator
+
+Soil organic carbon or organic matter (SOC or SOM) is a key indicator of soil health, supporting vegetation growth, soil stability, soil fertility and other vital ecosystem services.  SOC/SOM assessment is relevant for assessing carbon emission and sequestration, and soil health, under local and international commitments. This indicator is relevant to global climate mitigation goals (Paris Agreement) and the post-2020 Global Biodiversity Framework Target 10 on ‘Proportion of agricultural area under productive and sustainable agriculture’, where changes in soil organic carbon stocks is a complementary indicator (CBD/COP/15/L.26). In resource-constrained projects, it can be challenging to collect soil samples and run laboratory analyses to calculate SOC. We propose using simple qualitative measures of soil erosion and fertility o provide an alternative, rapid assessment of soil health in cases where SOC is unattainable.
+
+## Data source
+
+Soil samples collected on-site (alternative: household survey)
+
+## Measurement
+
+Laboratory measurement of % soil organic carbon, or % soil organic matter (alternative: qualitative assessment of erosion and fertility through household survey)
+
+## Measurement units
+
+% (alternative: Likert-scale score)
+
+## Guidance on measurement
+
+We discuss two options for the measurement of soil health: i) soil organic carbon calculated in a laboratory from soil samples, ii) qualitative measure of soil health.
+
+
+
+**Soil organic carbon**
+
+Soil samples should be taken randomly, in a W-shaped pattern, from 5 points per plot, for three 10x10m plots per farm.
+
+After collecting the soil samples, a standard laboratory procedure should be used to determine the carbon content of the sample. The loss-on-ignition method17 can be used to estimate the SOC/SOM using the following steps.
+
+Air-dry the soil samples after collection, and grind fine enough to sieve through a mesh <2 mm or smaller.
+
+Oven dry each sample at 105°C for 24 hours.
+
+Weigh 5.000g ±0.001g of each oven-dried sample and place each into a crucible. This will be the pre-ignition weight of the sample.
+
+Heat the sample in a muffle furnace at 375°C for 16 hours or overnight
+
+Weigh the sample after the ignition and this will be the post-ignition weight
+
+Calculate percentage SOC/SOM using the following equation:
+
+SOC\ \left(SOM\right)\left(\%\right)=\frac{pre\ ignition\ weight\ \left(g\right)-post\ ignition\ weight\ \left(g\right)}{pre\ ignition\ weight\ (g)}
+
+Alternatively, a Carbon Nitrogen (CN) Elemental Analyser can be used to estimate soil organic carbon content. The C-N elemental analyser provides a quantitative measurement of SOC and N content based on the amount of C and N produced after combustion of products in a sample.
+
+
+Alternatively, the Walkey Black method can be used to estimate soil organic matter content. Walkey Black provides a qualitative measurement of SOM after oxidising the soil with potassium dichromate and H2SO4 and measuring the color change; which is proportionate to the organic matter available in the soil. A conversion factor can be used to convert either SOC to SOM or vice versa.
+
+**Qualitative measure of soil health**
+
+To complement SOC data, and to allow for a basic assessment of soil health in cases where neither soil organic carbon data or SOCLA (see Complementary indicators) can be collected (e.g. to due to resource constraints), HOLPA includes two standard questions on farmer perceptions of soil health. Farmer perceptions of soil fertility and erosion are gathered using a simple Likert scale, based on the following two questions:
+
+
+
+How would you describe the fertility of your soil on your farmland?
+
+    - Highly fertile (score 5)
+    - Moderately fertile (score 3.66)
+    - Low fertility (score 2.33)
+    - Infertile (score 1).
+
+
+
+How would you describe the level of soil erosion problems on your farmland?
+
+    - Soil erosion is not a problem on my farm (score 5)
+    - Soil erosion is a minor problem on my farm (score 3)
+    - Soil erosion is a major problem on my farm (score 1).
+
+
+These perception questions can be used to assign a soil health score from 1 (infertile and major soil erosion) to 3 (highly fertile with no soil erosion), by taking the median across the fertility and erosion responses.
+
+## Guidance on data entry and reporting
+
+Report the SOC content as a volume-based concentration (i.e. %)
+
+## Indicator interpretation and threshold setting
+
+## Limitations
+
+## References
+
+Bahadori, M., & Tofighi, H. (2016). A modified Walkley-Black method based on spectrophotometric procedure. Communications in Soil Science and Plant Analysis, 47(2), 213-220. 18
+
+Gelman, F., Binstock, R., & Halicz, L. (2012). Application of the Walkley–Black titration for the organic carbon quantification in organic rich sedimentary rocks. Fuel, 96, 608-610.19
+
+Nelson, D.W., and Sommers, L.E. (1996). Total Carbon, Organic Carbon, and Organic Matter. In Methods of Soil Analysis (John Wiley & Sons, Ltd), pp. 961–1010. https://doi.org/10.2136/sssabookser5.3.c34.17
+
+Walkley, A. and I.A. Black. 1934. An examination of the Degtjareff method for determining soil organic matter and a proposed modification of the chromic acid titration method. Soil Sci. 37:29-38.20

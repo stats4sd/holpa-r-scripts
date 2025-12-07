@@ -1,0 +1,68 @@
+# 2.1 Crop health
+
+## Indicator
+
+**Crop health**
+
+## Theme
+
+Crop health
+
+## Purpose of indicator
+
+Crop and pasture health can influence agricultural productivity and resilience of plants to stress, pests and competition. Crop health can be affected by any biological, chemical, or physical factors that may affect plant physiology and crop performance, impacting food production (SDG2) and the spread of food-borne diseases with consequences for human health (SDG3).
+
+## Data source
+
+Household survey, field measurements
+
+## Measurement
+
+\% crop losses, and SOCLA indicators of crop health
+
+## Measurement units
+
+Score from 1 to 10, representing the mean indicator value across 10 indicators
+
+## Guidance on measurement
+
+We propose two complementary measures of crop health: i) Qualitative based on household survey responses, ii) Qualitative based on field observations.
+
+**Household survey based**
+
+A simple measure of crop health can be provided by collecting responses on: What percentage of the total crop production was lost or damaged in the last 12 months?
+
+**Field based**
+
+More detailed data on crop health can be determined through field measurements interpreted jointly by farmers and researchers. Field measurements to collect data on each crop health indicator should be conducted every 50m along a transect of approximately 150m (this may vary depending on the farm size), to collect data on all 10 crop health indicators at three sampling sites per farm. Crop health should be assessed for only the main crop(s) grown on the farm to keep the task manageable.
+
+At three 10x10m square plots per farm, observe the crops and/or pasture present in the plot and jointly with the respondent record the responses to the indicators with the respondent. Refer to the example images provided in the field survey (Appendix 7.1.3.3 Crop and pasture health) to determine the most appropriate responses crop health related questions.
+
+The proposed indicators were developed by the Latin American Society for Agroecology (SOCLA) and described in Nicholls et al. (2004)^12^. The SOCLA 10 indicators of crop health are:
+
+1.  Appearance
+2.  Crop growth
+3.  Disease incidence
+4.  Insect pest incidence
+5.  Natural enemy abundance and diversity
+6.  Weed competition and pressure
+7.  Actual or potential yield
+8.  Vegetational diversity
+9.  Natural surrounding vegetation
+10. Management system
+
+Each indicator is scored from 1 to 10 based on the following guidelines (from Nicholls et al. 2004, Table 1):
+
+![](media/image3.png)
+
+## Guidance on data entry and reporting
+
+Record the crop species and variety in the system assessed. Be sure to take a GPS point and keep a record of the geographic coordinates where crop health was assessed to allow follow-up surveys in the same locations.
+
+## Indicator interpretation and threshold setting
+
+## Limitations
+
+## References
+
+Nicholls et al. (2004), FAO (2019) ^13^, ^1^

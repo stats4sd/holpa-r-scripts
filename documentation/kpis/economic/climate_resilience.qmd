@@ -1,0 +1,287 @@
+# 4.4 Climate resilience 
+
++---------------+------------------------------------------------------+
+| Indicator     | Resilience score                                     |
++===============+======================================================+
+| Theme         | [World Bank: resilient futures project\              |
+|               | Maybe have indicators that we can calculate using    |
+|               | the data we collected?\                              |
+|               | Carlo also has some ideas on simple outcome          |
+|               | indicators we might be able to use]{.comment-start   |
+|               | id="136"                                             |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-11-28T09:39:00Z"}[Comparison paper:       |
+|               | [http                                                |
+|               | s://www.sciencedirect.com/science/article/pii/S03043 |
+|               | 8782200044X](../customXml/item2.xml)]{.comment-start |
+|               | id="137"                                             |
+|               | author="Jones, Sarah (Alliance Bioversity-CIAT)"     |
+|               | date="2025-11-28T10:21:00Z"}Climate                  |
+|               | resilience[[]{.comment-end id="137"}]{.comment-end   |
+|               | id="136"}                                            |
++---------------+------------------------------------------------------+
+| Purpose of    | Climate change is affecting food systems around the  |
+| indicator     | world, with temperatures and precipitation anomalies |
+|               | and extreme events leading to crop/livestock losses, |
+|               | altering species ranges, creating agricultural water |
+|               | stress, altering working conditions and triggering   |
+|               | human migration. Building farm and food system       |
+|               | resilience to climate change and other major         |
+|               | stressors (e.g. pandemics, war) is fundamental to    |
+|               | prevent food and livelihood insecurity (SDG 1, 2),   |
+|               | and avoidable loss of life (SDG 3, 15).              |
++---------------+------------------------------------------------------+
+| Data source   | Household survey                                     |
++---------------+------------------------------------------------------+
+| Measurement   | Resilience score adapted from RIMA                   |
++---------------+------------------------------------------------------+
+| Measurement   | [The RIMA methodology has been subject to severe     |
+| units         | criticism and scrutiny. The list of component        |
+|               | variables is completely arbitrary and the final RIMA |
+|               | value is not a measure of realized resilience, but   |
+|               | rather a measure of wellbeing that might or might    |
+|               | not be correlated to actual household resilience to  |
+|               | shocks, The four pillars represent a grouping of     |
+|               | variables proxies of welfare and the resulting       |
+|               | indicator is again a welfare proxy, which has little |
+|               | conceptual relationship with resilience. Of course,  |
+|               | household with higher values in the component        |
+|               | variables could likely be associated to higher       |
+|               | resilience to weather shocks, but only through their |
+|               | higher welfare. It could very well be called a proxy |
+|               | indicator of multidimensional                        |
+|               | poverty.]{.comment-start id="138"                    |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-28T00:10:00Z"}Score [this scale is too |
+|               | wide]{.comment-start id="139"                        |
+|               | author="Mupangwa, Walter (IWMI)"                     |
+|               | date="2025-11-28T11:29:00Z"}0-20[[]{.comment-end     |
+|               | id="139"}]{.comment-end id="138"}                    |
++---------------+------------------------------------------------------+
+| Guidance on   | Resilience is the capacity of socioeconomic systems  |
+| measurement   | (e.g., households) to withstand shocks through       |
+|               | adaptation and transformation.                       |
+|               |                                                      |
+|               | FAO's Resilience Index Measurement and Analysis      |
+|               | (RIMA) is one way to measure resilience. FAO         |
+|               | computes a Resilience Capacity Index (RCI) based on  |
+|               | data collected across four pillars:                  |
+|               |                                                      |
+|               | 1.  Access to basic services (ABS)                   |
+|               |                                                      |
+|               | 2.  Assets (AST)                                     |
+|               |                                                      |
+|               | 3.  Social safety nets (SSN)                         |
+|               |                                                      |
+|               | 4.  Adaptive capacity (AC)                           |
+|               |                                                      |
+|               | FAO calculates the RCI using structural equation     |
+|               | modelling (SEM), combining Confirmatory Factor       |
+|               | Analysis and Path Analysis. There are two steps: 1)  |
+|               | estimate resilience of each pillar through Factor    |
+|               | Analysis (FA), 2) calculate a resilience index from  |
+|               | the pillars, using Ordinary Least Squares with the   |
+|               | outcome variable being a food security indicator(s)  |
+|               | such as dietary diversity score. The benefit of this |
+|               | approach is that is possible to quantify the         |
+|               | contribution of each pillar to the overall           |
+|               | resilience. The limitation is that the RCI depends   |
+|               | heavily on which indicator is used as the outcome    |
+|               | variable which does not capture the variation across |
+|               | the four pillars.                                    |
+|               |                                                      |
+|               | For HOLPA, we adapt the FAO approach to directly     |
+|               | combine the data from the four pillars into a        |
+|               | measure of resilience scaled from 0-20. This can be  |
+|               | done by assigning scores of 0-5 to all responses,    |
+|               | then taking the mean within each pillar, and summing |
+|               | scores across the four pillars according to the      |
+|               | following table:                                     |
+|               |                                                      |
+|               | +----+--------------------------+---------------+    |
+|               | | ** | **Question**             | **Score       |    |
+|               | | Pi |                          | assigned to   |    |
+|               | | ll |                          | response**    |    |
+|               | | ar |                          |               |    |
+|               | | ** |                          |               |    |
+|               | +====+==========================+===============+    |
+|               | | A  | Does your farm/household | 5: 3 or more  |    |
+|               | | BS | have the following       |               |    |
+|               | |    | services: 1) Drinking    | 2.5: 1-2      |    |
+|               | |    | water piped to the       |               |    |
+|               | |    | household, 2) Toilet     | 0: None       |    |
+|               | |    | with piped sewer or      |               |    |
+|               | |    | septic tank, 3)          |               |    |
+|               | |    | Electrical energy, 4)    |               |    |
+|               | |    | Waste (rubbish)          |               |    |
+|               | |    | collection service, 5)   |               |    |
+|               | |    | Mobile phone reception,  |               |    |
+|               | |    | 6) Internet. \[Count     |               |    |
+|               | |    | services\]               |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | A  | How far (one way) is the | For each      |    |
+|               | | BS | household from the       | service:      |    |
+|               | |    | closest accessible and   |               |    |
+|               | |    | functioning service in   | 5: \<5 mins   |    |
+|               | |    | minutes (walking): 1)    |               |    |
+|               | |    | Freshwater source, 2)    | 2.5: 5-20     |    |
+|               | |    | primary school, 3)       | mins          |    |
+|               | |    | public hospital or       |               |    |
+|               | |    | health facility, 4)      | 0: \> 20 mins |    |
+|               | |    | livestock market 5)      |               |    |
+|               | |    | agricultural/crops       |               |    |
+|               | |    | market, 6) public means  |               |    |
+|               | |    | of transport, 7)         |               |    |
+|               | |    | well-maintained road     |               |    |
+|               | |    | suitable for cars.       |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | A  | How many of the          | 5: 5 or more  |    |
+|               | | ST | following assets do      | distinct      |    |
+|               | |    | household members        | asset types   |    |
+|               | |    | own: 1) Car, 2)          |               |    |
+|               | |    | Motorbike, 3) Bicycle,   | 2.5: 2-4      |    |
+|               | |    | 4) Gas or electric       |               |    |
+|               | |    | cooker, 5) Mobile phone, | 0: 0-1        |    |
+|               | |    | 6) Ox-plough, 7)         |               |    |
+|               | |    | Tractor, 8) Machete.     |               |    |
+|               | |    | \[Count assets\]         |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | S  | On average, how many     | 5: 5 meal     |    |
+|               | | SN | school meals have the    |               |    |
+|               | |    | children living in the   | 4: 4 meal     |    |
+|               | |    | household received per   |               |    |
+|               | |    | week, during the last    | 3: 3 meal     |    |
+|               | |    | month of attending       |               |    |
+|               | |    | school?                  | 2: 2 meal     |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 1: 1 meal     |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 0: 0 meals    |    |
+|               | +----+--------------------------+---------------+    |
+|               | | S  | Would any of the         | 5: 3 or more  |    |
+|               | | SN | following individuals or |               |    |
+|               | |    | organisations provide    | 2.5: 1-2      |    |
+|               | |    | your household support   |               |    |
+|               | |    | in case of need: 1)      | 0: None       |    |
+|               | |    | local farmer             |               |    |
+|               | |    | associations or          |               |    |
+|               | |    | cooperatives, 2) other   |               |    |
+|               | |    | local associations (e.g. |               |    |
+|               | |    | women support groups,    |               |    |
+|               | |    | youth groups), 3)        |               |    |
+|               | |    | individuals from my      |               |    |
+|               | |    | community, 4)            |               |    |
+|               | |    | individuals from a       |               |    |
+|               | |    | different community, 5)  |               |    |
+|               | |    | community leaders, 6)    |               |    |
+|               | |    | NGOs 8) local            |               |    |
+|               | |    | government, 9) national  |               |    |
+|               | |    | government, 10) other    |               |    |
+|               | |    | (please specify).        |               |    |
+|               | |    | \[Count sources\]        |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | Can the head of          | 5: Can read   |    |
+|               | |    | household read and write | and write     |    |
+|               | |    | in any language?         |               |    |
+|               | |    |                          | 2.5: Can read |    |
+|               | |    |                          | or write      |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 0: Cannot     |    |
+|               | |    |                          | read or       |    |
+|               | |    |                          | write, or     |    |
+|               | |    |                          | prefer not to |    |
+|               | |    |                          | say           |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | On average, how many     | 5: ≥7         |    |
+|               | |    | years have the household | (Secondary or |    |
+|               | |    | members of working age   | higher)       |    |
+|               | |    | (\>14 and \<65 years     |               |    |
+|               | |    | old) attended formal     | 2.5:\<7       |    |
+|               | |    | school?                  | (Primary      |    |
+|               | |    |                          | only)         |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 0:0 (None)    |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | Has any household member | 5: Y          |    |
+|               | |    | received training in the |               |    |
+|               | |    | last 12 months?          | 0: N          |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | In the past 12 months,   | 5: 3 or more  |    |
+|               | |    | what were all the        | sources       |    |
+|               | |    | household's sources of   |               |    |
+|               | |    | income: : 1)             | 2.5: 2        |    |
+|               | |    | Agriculture, animal      | sources       |    |
+|               | |    | breeding, fishing, 2)    |               |    |
+|               | |    | Other family business,   | 0: 1 source   |    |
+|               | |    | 3) Government salary, 4) |               |    |
+|               | |    | private sector salary,   |               |    |
+|               | |    | 5) Cash transfers (e.g.  |               |    |
+|               | |    | transfers from absent    |               |    |
+|               | |    | family members,          |               |    |
+|               | |    | donations), 6) Other     |               |    |
+|               | |    | (please specify) \[count |               |    |
+|               | |    | sources\]                |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | In the past 7 days, what | 5: 0-25%      |    |
+|               | |    | percentage of the        |               |    |
+|               | |    | household\'s income was  | 3.33: 26-50%  |    |
+|               | |    | used for buying food     |               |    |
+|               | |    |                          | 1.66: 51-75%  |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 0: 76-100%    |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | In the past 5 years, has | 5:Y           |    |
+|               | |    | your farm/household had  |               |    |
+|               | |    | access to credit to      | 0:N, or I     |    |
+|               | |    | support investment in    | don't know    |    |
+|               | |    | your farming business.   |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | How do you feel about    | 5: Full       |    |
+|               | |    | your farm/household\'s   | repayments    |    |
+|               | |    | ability to meet credit   |               |    |
+|               | |    | repayments now and until | 3.33:         |    |
+|               | |    | the loans are fully      | Uncertain     |    |
+|               | |    | repaid?                  | future        |    |
+|               | |    |                          | repayments    |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 1.66:         |    |
+|               | |    |                          | Uncertain     |    |
+|               | |    |                          | current       |    |
+|               | |    |                          | repayments    |    |
+|               | |    |                          |               |    |
+|               | |    |                          | 0: Uncertain  |    |
+|               | |    |                          | current and   |    |
+|               | |    |                          | future        |    |
+|               | |    |                          | repayments    |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | Do you have access to    | 5:Y           |    |
+|               | |    | crop insurance? If yes,  |               |    |
+|               | |    | what is covered, e.g.    | 0:N           |    |
+|               | |    | losses from weather      |               |    |
+|               | |    | events, pest outbreaks   |               |    |
+|               | |    | market shocks?           |               |    |
+|               | +----+--------------------------+---------------+    |
+|               | | AC | Do you have access to    | 5:Y           |    |
+|               | |    | subsidies for            |               |    |
+|               | |    | agricultural inputs? If  | 0:N           |    |
+|               | |    | yes, which inputs        |               |    |
+|               | +----+--------------------------+---------------+    |
+|               |                                                      |
+|               | Additionally, HOLPA collects data on household       |
+|               | exposure to shocks over the last 12 months and any   |
+|               | coping mechanisms employed.                          |
++---------------+------------------------------------------------------+
+| Guidance on   |                                                      |
+| data entry    |                                                      |
+| and reporting |                                                      |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | FAO (2016) RIMA^34^                                  |
++---------------+------------------------------------------------------+

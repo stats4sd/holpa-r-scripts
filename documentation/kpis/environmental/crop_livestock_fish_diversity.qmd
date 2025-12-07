@@ -1,0 +1,60 @@
+# 1.1 Crop, livestock and fish diversity
+
++---------------+------------------------------------------------------+
+| **Indicator** | **Crop, livestock and fish diversity**               |
++===============+======================================================+
+| Theme         | Agrobiodiversity                                     |
++---------------+------------------------------------------------------+
+| Purpose of    | Relevant for the post-2020 Global Biodiversity       |
+| indicator     | Framework Target 10 on 'Proportion of agricultural   |
+|               | area under productive and sustainable agriculture',  |
+|               | where the Agrobiodiversity Index is a complementary  |
+|               | indicator (CBD/COP/15/L.26). The Agrobiodiversity    |
+|               | Index includes various measures of agrobiodiversity, |
+|               | including crop and livestock diversity.              |
++---------------+------------------------------------------------------+
+| Data source   | Household survey                                     |
++---------------+------------------------------------------------------+
+| Measurement   | Diversity of crop varieties (or species) and fish    |
+|               | and livestock breeds (or species) on the farm,       |
+|               | measured using data on richness and area coverage.   |
++---------------+------------------------------------------------------+
+| Measurement   | Count with associated production area recorded in    |
+| units         | hectares, disaggregated by crop and animal species   |
+|               | and ideally also variety/breed                       |
++---------------+------------------------------------------------------+
+| Guidance on   | This indicator can be calculated by collecting data  |
+| measurement   | on the:                                              |
+|               |                                                      |
+|               | -   Count of crop varieties and species, and the     |
+|               |     relative area occupied.                          |
+|               | -   Count of livestock breeds and species.           |
+|               | -   Count of fish breeds and species.                |
+|               |                                                      |
+|               | These data can be collected as part of a household   |
+|               | survey. To verify the data, and if time allows, the  |
+|               | researcher and farmer could conduct a transect of    |
+|               | the farm and discuss and record where different      |
+|               | crops are planted.                                   |
++---------------+------------------------------------------------------+
+| Guidance on   | Be sure to use the same area units for all           |
+| data entry    | species/varieties/breeds, so that diversity indices  |
+| and reporting | can be calculated. Crop and livestock                |
+|               | varieties/breeds and species names should be stored  |
+|               | in the local language and also using their           |
+|               | scientific and English names to enable comparisons   |
+|               | across sites. A local agronomist may need to help    |
+|               | identify the scientific and English names.           |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | FAO (2019), Jones et al. (2021) ^1,2^                |
++---------------+------------------------------------------------------+
+
+: Table 7: Method for calculating key performance indicators

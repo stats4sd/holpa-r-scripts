@@ -1,0 +1,182 @@
+# 3.4 Human well-being 
+
++---------------+------------------------------------------------------+
+| Indicator     | Personal Wellbeing Index                             |
++===============+======================================================+
+| Theme         | Human well-being                                     |
++---------------+------------------------------------------------------+
+| Purpose of    | This indicator aligns with SDG 3 "Ensure healthy     |
+| indicator     | lives and promote well-being for all at all ages".   |
++---------------+------------------------------------------------------+
+| Data source   | Household survey                                     |
++---------------+------------------------------------------------------+
+| Measurement   | OECD Personal Wellbeing Index evaluation questions   |
++---------------+------------------------------------------------------+
+| Measurement   | [I would drop this indicator, which is tailored to   |
+| units         | individuals in developed countries. Subjective       |
+|               | wellbeing indicators need to be anchored to some     |
+|               | frame-of-references, which are other individuals in  |
+|               | the community to which the individual situation      |
+|               | should be compared.]{.comment-start id="63"          |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:24:00Z"}[I agree\--these         |
+|               | questions seem to be from the OECD tool\--which I    |
+|               | assume are targeted towards wealthy OECD countries   |
+|               | with predominantly urban population]{.comment-start  |
+|               | id="64" author="Alvi, Muzna (IFPRI-India)"           |
+|               | date="2025-12-02T15:25:00Z"}[instead consider        |
+|               | Generalized self-efficacy score used in Pro-WEAI. I  |
+|               | cope text below from                                 |
+|               | [https://weai.ifpri.info/files/                      |
+|               | 2023/07/Pro-WEAI-Guide.pdf](../customXml/item1.xml)\ |
+|               | The NGSE is a cross-culturally validated scale to    |
+|               | measure self-efficacy, or a person's perception of   |
+|               | their capabilities and ability to reach their goals  |
+|               | (Chen et al., 2001). We ask respondents to think     |
+|               | about how each statement relates to their life and   |
+|               | indicate if they strongly disagree, disagree,        |
+|               | neither agree nor disagree, agree or strongly agree  |
+|               | with the statement. The four statements are: 2) When |
+|               | facing difficult tasks, I am certain that I will     |
+|               | accomplish them, 3) In general, I think that I can   |
+|               | obtain outcomes that are important to me, 6) I am 9  |
+|               | confident that I can perform effectively on many     |
+|               | different tasks, and 8) Even when things are tough,  |
+|               | I can perform quite well.5 For each statement that   |
+|               | an individual strongly disagrees with they are given |
+|               | a score of 1. If they disagree, they are given a     |
+|               | score of 2, neither agree nor disagree receives a    |
+|               | score of 3, agree receives a score of 4 and strongly |
+|               | agree receives a score of 5. The scores for each of  |
+|               | the 4 statements are then summed to get the final    |
+|               | score. For example, if an individual strongly agrees |
+|               | with all 4 statements they will have a score of 20   |
+|               | (4x5). In order to be adequate in self efficacy a    |
+|               | respondent must have a New General Self-Efficacy     |
+|               | Scale score of at least 16. This is equivalent to an |
+|               | average response across the statements of            |
+|               | "agree.\"]{.comment-start id="65"                    |
+|               | author="Alvi, Muzna (IFPRI-India)"                   |
+|               | date="2025-12-02T15:25:00Z"}Likert scale             |
+|               | (0-10)[[[]{.comment-end id="65"}]{.comment-end       |
+|               | id="64"}]{.comment-end id="63"}                      |
++---------------+------------------------------------------------------+
+| Guidance on   | Human well-being encompasses quality of life and the |
+| measurement   | ability of people and societies to contribute to the |
+|               | world with a sense of meaning and purpose. It        |
+|               | encompasses a broad range of factors, including      |
+|               | material well-being and emotional, physical, and     |
+|               | social health^28^. While people's living conditions  |
+|               | (e.g., housing, income, employment) are important    |
+|               | contributors to well-being, measuring living         |
+|               | conditions (i.e. material well-being) alone fails to |
+|               | capture what people think and feel about their lives |
+|               | -- i.e., their subjective well-being.                |
+|               |                                                      |
+|               | OECD's Personal Wellbeing Index is computed based on |
+|               | responses to the following questions^29^:            |
+|               |                                                      |
+|               | 1.  Thinking about your own life and personal        |
+|               |     circumstances, how satisfied are you with your   |
+|               |     life as a whole? \[0-10\]                        |
+|               |                                                      |
+|               | 2.  How satisfied are you with your standard of      |
+|               |     living? \[Standard of Living\] \[0-10\]          |
+|               |                                                      |
+|               | 3.  How satisfied are you with your health?          |
+|               |     \[Personal Health\] \[0-10\]                     |
+|               |                                                      |
+|               | 4.  How satisfied are you with what you are          |
+|               |     achieving in life? \[Achieving in Life\]         |
+|               |     \[0-10\]                                         |
+|               |                                                      |
+|               | 5.  How satisfied are you with your personal         |
+|               |     relationships? \[Personal Relationships\]        |
+|               |     \[0-10\]                                         |
+|               |                                                      |
+|               | 6.  How satisfied are you with how safe you feel?    |
+|               |     \[Personal Safety\] \[0-10\]                     |
+|               |                                                      |
+|               | 7.  How satisfied are you with feeling part of your  |
+|               |     community? \[Community-Connectedness\] \[0-10\]  |
+|               |                                                      |
+|               | 8.  How satisfied are you with your future security? |
+|               |     \[Future Security\] \[0-10\]                     |
+|               |                                                      |
+|               | 9.  How satisfied are you with the amount of time    |
+|               |     you have to do the things that you like doing?   |
+|               |     \[0-10\]                                         |
+|               |                                                      |
+|               | 10. How satisfied are you with the quality of your   |
+|               |     local environment? \[0-10\]                      |
+|               |                                                      |
+|               | 11. For respondents who are employed only: How       |
+|               |     satisfied are you with your job? \[0-10\]        |
++---------------+------------------------------------------------------+
+| Guidance on   | Key issues include the need to be careful with       |
+| data entry    | question wording, use consistent scales, and         |
+| and reporting | appropriate question ordering.                       |
+|               |                                                      |
+|               | 1\. Question wording                                 |
+|               |                                                      |
+|               | "Because question wording matters to how people      |
+|               | respond to questions on subjective well-being, the   |
+|               | translation of questions is of high importance.      |
+|               | Potential issues arising from translation cannot be  |
+|               | eliminated, but they can be managed through an       |
+|               | effective translation process. A robust translation  |
+|               | process, including back translation, is therefore    |
+|               | essential" ^29^.                                     |
+|               |                                                      |
+|               | 2\. Scale design                                     |
+|               |                                                      |
+|               | "Variation in response formats can affect data       |
+|               | quality and comparability. In the case of evaluative |
+|               | measures, there is empirical support for using a     |
+|               | 0-10 point numerical scale, anchored by verbal       |
+|               | labels which represent conceptual absolutes (such as |
+|               | completely satisfied/completely dissatisfied). On    |
+|               | balance, it is preferable to label scale interval    |
+|               | points (between the anchors) with numerical, rather  |
+|               | than with verbal, labels" ^29^.                      |
+|               |                                                      |
+|               | 3\. Question order                                   |
+|               |                                                      |
+|               | [Replies are strongly affected by individual         |
+|               | perceptions about own status compared to neighbors\' |
+|               | or friends\', so they are expression on a relative   |
+|               | -not absolute- condition.]{.comment-start id="66"    |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:27:00Z"}Subjective well-being    |
+|               | questions are influenced by context []{.comment-end  |
+|               | id="66"}and thus need to be asked in the right place |
+|               | so as not to be influenced by previous questions.    |
+|               | [Also cons]{.insertion                               |
+|               | author="Alvi, Muzna (IFPRI-India)"                   |
+|               | date="2025-12-02T09:50:00Z"}[ider randomizing the    |
+|               | order in which the well-being questions are asked to |
+|               | reduce ordering-bias.]{.insertion                    |
+|               | author="Alvi, Muzna (IFPRI-India)"                   |
+|               | date="2025-12-02T09:51:00Z"}                         |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | WHO (2024), Promoting well-being,                    |
+|               | <h                                                   |
+|               | ttps://www.who.int/activities/promoting-well-being>, |
+|               | accessed 1 July 2024^28^                             |
+|               |                                                      |
+|               | OECD (2013), OECD Guidelines on Measuring Subjective |
+|               | Well-being, OECD Publishing.                         |
+|               | <http://dx.doi.org/10.1787/9789264191655-en>^29^     |
+|               |                                                      |
+|               | International Wellbeing Group (2006), Personal       |
+|               | Wellbeing Index, 4th edition, Melbourne, Australian  |
+|               | Centre on Quality of Life, Deakin University.^30^    |
++---------------+------------------------------------------------------+

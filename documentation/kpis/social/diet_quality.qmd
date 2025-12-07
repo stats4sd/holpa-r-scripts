@@ -1,0 +1,188 @@
+# 3.1 Diet quality 
+
++------------+---------------------------------------------------------+
+| **I        | **Diet quality**                                        |
+| ndicator** |                                                         |
++============+=========================================================+
+| Theme      | Nutrition                                               |
++------------+---------------------------------------------------------+
+| Purpose of | Eradicating food insecurity and malnutrition is a       |
+| indicator  | sustainable development goal (SDG2). Nutritious diets   |
+|            | are a prerequisite to achieving this goal.              |
++------------+---------------------------------------------------------+
+| Data       | Household and individual survey using the **Diet        |
+| source     | Quality Questionnaire (DQQ)**, developed by the Global  |
+|            | Diet Quality Project                                    |
++------------+---------------------------------------------------------+
+| M          | Diet quality from 24-hour food consumption recalls,     |
+| easurement | calculated from the number of food groups consumed per  |
+|            | individual and household, from 29 food groups.          |
++------------+---------------------------------------------------------+
+| M          | Raw measurement: Y/N for consumption of each food group |
+| easurement | together with (optional) food group source (own         |
+| units      | production, purchased, borrowed, food aid, other).      |
+|            |                                                         |
+|            | Final measurement:                                      |
+|            |                                                         |
+|            | -   Household Food Group Diversity Score (FGDS) (0-10)  |
+|            |     (**this measurement is the default KPI**)           |
+|            |                                                         |
+|            | -   Minimum Dietary Diversity for Women of Reproductive |
+|            |     Age (MDD-W) (0/1)                                   |
+|            |                                                         |
+|            | -   All-5 recommended food groups consumed (0/1)        |
+|            |                                                         |
+|            | -   Non-Communicable Disease (NDC) Protect (0-9), which |
+|            |     is an indicator of dietary factors that protect     |
+|            |     against NDCs according to the World Health          |
+|            |     Organisation (WHO)                                  |
+|            |                                                         |
+|            | -   NDC-Risk (0-9), which is an indicator of dietary    |
+|            |     factors increasing the risk of NCDs according to    |
+|            |     WHO                                                 |
+|            |                                                         |
+|            | -   Global Dietary Recommendations (GDR) Score (0 to    |
+|            |     18), which indicates level of adherence to global   |
+|            |     dietary recommendations for a healthy diet          |
+|            |     according to WHO                                    |
+|            |                                                         |
+|            | -   (Optional) Proportion of food that is produced      |
+|            |     on-farm                                             |
++------------+---------------------------------------------------------+
+| Guidance   | The **Diet Quality Questionnaire (DQQ)** is a           |
+| on         | standardized tool to collect indicators of ***dietary   |
+| m          | adequacy***, including the minimum dietary diversity    |
+| easurement | for women (MDD-W) indicator, and All-5, as well as      |
+|            | indicators of ***protection of health against           |
+|            | noncommunicable diseases (NCDs)***, including           |
+|            | NCD-Protect, NCD-Risk, and the global dietary           |
+|            | recommendations score (GDR). It is a low-burden tool    |
+|            | for collecting valid, comparable food group consumption |
+|            | data in populations.                                    |
+|            |                                                         |
+|            | The DQQ is two-pages long and includes 29 multiple      |
+|            | choice questions corresponding to the 29 DQQ food       |
+|            | groups. Each question asks the respondent if they       |
+|            | consumed a specific DQQ food groups with yes/no         |
+|            | responses. The questionnaire takes approximately 5      |
+|            | minutes to complete per individual.                     |
+|            |                                                         |
+|            | The survey should be completed for the adult household  |
+|            | members, including men and women. Researchers can       |
+|            | optionally add one column asking, for each food group,  |
+|            | the source: own production, purchased, borrowed, food   |
+|            | aid, other. This will allow calculation of the          |
+|            | proportion of consumed food that is from each source.   |
+|            |                                                         |
+|            | Note that the timing of survey affects results. Try to  |
+|            | collect data from all farms at a period when food       |
+|            | supplies are adequate, rather than when some farms are  |
+|            | more likely to suffer shortages (e.g. end of dry        |
+|            | season, or after a drought season).                     |
+|            |                                                         |
+|            | **DQQ Food Groups:**                                    |
+|            |                                                         |
+|            | 1\. Foods made from grains                              |
+|            |                                                         |
+|            | 2\. Whole grains                                        |
+|            |                                                         |
+|            | 3\. White roots, tubers, and plantains                  |
+|            |                                                         |
+|            | 4\. Pulses                                              |
+|            |                                                         |
+|            | 5\. Vitamin A-rich orange vegetables                    |
+|            |                                                         |
+|            | 6\. Dark green leafy vegetables                         |
+|            |                                                         |
+|            | 7\. Other vegetables                                    |
+|            |                                                         |
+|            | 8\. Vitamin A-rich fruits                               |
+|            |                                                         |
+|            | 9\. Citrus                                              |
+|            |                                                         |
+|            | 10\. Other fruits                                       |
+|            |                                                         |
+|            | 11\. Baked / grain-based sweets                         |
+|            |                                                         |
+|            | 12\. Other sweets                                       |
+|            |                                                         |
+|            | 13\. Eggs                                               |
+|            |                                                         |
+|            | 14\. Cheese                                             |
+|            |                                                         |
+|            | 15\. Yogurt                                             |
+|            |                                                         |
+|            | 16\. Processed meats                                    |
+|            |                                                         |
+|            | 17\. Unprocessed red meat (ruminant)                    |
+|            |                                                         |
+|            | 18\. Unprocessed red meat (non-ruminant)                |
+|            |                                                         |
+|            | 19\. Poultry                                            |
+|            |                                                         |
+|            | 20\. Fish and seafood                                   |
+|            |                                                         |
+|            | 21\. Nuts and seeds                                     |
+|            |                                                         |
+|            | 22\. Packaged ultra-processed salty snacks              |
+|            |                                                         |
+|            | 23\. Instant noodles                                    |
+|            |                                                         |
+|            | 24\. Deep fried foods                                   |
+|            |                                                         |
+|            | 25\. Fluid milk                                         |
+|            |                                                         |
+|            | 26\. Sweet tea / coffee / cocoa                         |
+|            |                                                         |
+|            | 27\. Fruit juice and fruit-flavored drinks              |
+|            |                                                         |
+|            | 28\. Sugar-sweetened beverages (soft drinks, energy     |
+|            | drinks, sports drinks)                                  |
+|            |                                                         |
+|            | 29\. Fast food                                          |
+|            |                                                         |
+|            | **Examples of how the final scores are calculated**:    |
+|            |                                                         |
+|            | ![A table with numbers and text Description             |
+|            | automatically                                           |
+|            | g                                                       |
+|            | enerated](media/image4.png){width="4.760699912510936in" |
+|            | height="2.4700207786526684in"}                          |
+|            |                                                         |
+|            | ![A white sheet with black text Description             |
+|            | automatically                                           |
+|            | g                                                       |
+|            | enerated](media/image5.png){width="5.162251749781277in" |
+|            | height="0.992419072615923in"}                           |
++------------+---------------------------------------------------------+
+| Guidance   |                                                         |
+| on data    |                                                         |
+| entry and  |                                                         |
+| reporting  |                                                         |
++------------+---------------------------------------------------------+
+| Indicator  |                                                         |
+| inte       |                                                         |
+| rpretation |                                                         |
+| and        |                                                         |
+| threshold  |                                                         |
+| setting    |                                                         |
++------------+---------------------------------------------------------+
+| L          |                                                         |
+| imitations |                                                         |
++------------+---------------------------------------------------------+
+| References | Global Diet Quality Project resources^23^:              |
+|            |                                                         |
+|            | -   <https://www.globaldietquality.org/dqq>             |
+|            |                                                         |
+|            | -   [DQQ Food Group                                     |
+|            |     Descriptions](https://drive.google.com/fil          |
+|            | e/d/1glD4SAdYKKCfTE2fWfr0VsZwpYC3L-3G/view?usp=sharing) |
+|            |                                                         |
+|            | -   [Diet Quality Questionnaire (DQQ) Indicator         |
+|            |     Guide](https://docs.google.com/document/d/1RGwNit   |
+|            | itbYqSrGpUXhQs7mHWgLIgOxAlN5N0AOZN3qc/edit?usp=sharing) |
+|            |                                                         |
+|            | Diet Quality Questionnaires are adapted to each         |
+|            | country, downloadable from the Global Diet Quality      |
+|            | Project website and translated into many languages.     |
++------------+---------------------------------------------------------+

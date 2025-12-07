@@ -1,0 +1,176 @@
+# 4.1 Agricultural productivity
+
++---------------+------------------------------------------------------+
+| **Indicator** | **Crop and livestock productivity**                  |
++===============+======================================================+
+| Theme         | Agricultural productivity                            |
++---------------+------------------------------------------------------+
+| Purpose of    | Ensuring productivity and closing yield gaps is a    |
+| indicator     | primary goal in agricultural systems and vital for   |
+|               | achieving global food security (SDG2), and securing  |
+|               | livelihoods (SDG1).                                  |
++---------------+------------------------------------------------------+
+| Data source   | Household survey (farmer recall)                     |
++---------------+------------------------------------------------------+
+| Measurement   | For crops: kg/ha (dry weight) of [Why                |
+|               | \"harvestable\" and not                              |
+|               | \"harvested\"?]{.comment-start id="75"               |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:29:00Z"}[totally agreed - we     |
+|               | have to be specific]{.comment-start id="76"          |
+|               | author="Mupangwa, Walter (IWMI)"                     |
+|               | date="2025-11-28T11:21:00Z"}[Also is \"dry-weight\"  |
+|               | needed? For example: maize etc consumed as corn on   |
+|               | the cob, dry weight is not relevant, but maize used  |
+|               | as feed might use dry-weight?]{.comment-start        |
+|               | id="77" author="Alvi, Muzna (IFPRI-India)"           |
+|               | date="2025-12-02T15:40:00Z"}[I think harvestable is  |
+|               | to qualify that this is non-spoilt/infected crop.    |
+|               | Perhaps a better qualifier is                        |
+|               | consumable/usable/sellable crop?]{.comment-start     |
+|               | id="78" author="Alvi, Muzna (IFPRI-India)"           |
+|               | date="2025-12-02T15:52:00Z"}harvestable              |
+|               | [[[[]{.comment-end id="78"}]{.comment-end            |
+|               | id="77"}]{.comment-end id="76"}]{.comment-end        |
+|               | id="75"}produce; land equivalent ratio for           |
+|               | intercropped and agroforestry systems (0 to          |
+|               | infinity)                                            |
+|               |                                                      |
+|               | For livestock: \## animals slaughtered for           |
+|               | consumption/sale/gifts, kg meat/animal, litres       |
+|               | (milk)/animal [eggs/chicken,                         |
+|               | manure/animal]{.insertion                            |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T22:30:00Z"}[,                       |
+|               | wool/animal,]{.insertion                             |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T22:35:00Z"} []{.deletion            |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T22:35:00Z"}[skin/animal]{.insertion |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T22:35:00Z"}                         |
++---------------+------------------------------------------------------+
+| Measurement   | Kg/ha; kg/animal; l/animal; land equivalent area     |
+| units         |                                                      |
++---------------+------------------------------------------------------+
+| Guidance on   | **[Crop productivity through farmer                  |
+| measurement   | recall]{.underline}**                                |
+|               |                                                      |
+|               | Harvestable production per unit land area (kg/ha)    |
+|               | for at least [Why only three main crops? And main    |
+|               | based on land area, sales, quantity harvested,       |
+|               | or\...?]{.comment-start id="83"                      |
+|               | author="Azzarri, Carlo (IFPRI-Italy)"                |
+|               | date="2025-11-27T23:34:00Z"}[agree - each crop grown |
+|               | by each household has some importance - why then     |
+|               | limit the farmer - if they can recall info for all   |
+|               | crops, we should allow it.]{.comment-start id="84"   |
+|               | author="Mupangwa, Walter (IWMI)"                     |
+|               | date="2025-11-28T11:25:00Z"}[It says minimum 3, not  |
+|               | maximum. We have to make tradeoffs based on length   |
+|               | of survey and respondent fatigue.\                   |
+|               | Farmers usually know what their \"main crops\" are   |
+|               | when you ask them\--usually based on economic        |
+|               | importance to the HHs, not necessarily quantity or   |
+|               | land (though most times it is                        |
+|               | correlated)]{.comment-start id="85"                  |
+|               | author="Alvi, Muzna (IFPRI-India)"                   |
+|               | date="2025-12-02T15:54:00Z"}the three main           |
+|               | crops[[[]{.comment-end id="85"}]{.comment-end        |
+|               | id="84"}]{.comment-end id="83"}, based on farmer     |
+|               | recall for all produce harvested over the past 12    |
+|               | months. In the case of intercropped or agroforestry  |
+|               | systems, collect data for all crops present in the   |
+|               | plot and compute the land equivalent ratio (LER).    |
+|               |                                                      |
+|               | **[Livestock productivity]{.underline}**             |
+|               |                                                      |
+|               | Production of animal products per unit livestock,    |
+|               | for at least the three main livestock species        |
+|               | (including fish), based on farmer recall of all      |
+|               | products consumed, sold or gifted over the last 12   |
+|               | months.                                              |
+|               |                                                      |
+|               | Desirable additional data:                           |
+|               |                                                      |
+|               | -   Population growth rate: ratio between the        |
+|               |     production in number of animals and the initial  |
+|               |     population size                                  |
+|               | -   Total annual livestock production = (stock       |
+|               |     variation +offtake-Intake)/ Initial size         |
+|               | -   Production of milk : av. production per female   |
+|               |     (/day)\* number of reproductive female\* milking |
+|               |     period                                           |
+|               | -   Skin & hides (from offtake)                      |
+|               | -   Wool : total production per year                 |
+|               | -   Manure : total production (can be collected in   |
+|               |     declarative)                                     |
+|               | -   Productivity indicators: 1) Number of new        |
+|               |     sub-adults produced per reproductive female per  |
+|               |     year 2) Number of new adults produced per        |
+|               |     reproductive female and year                     |
+|               |                                                      |
+|               | **[Crop productivity - detailed measurements (beyond |
+|               | the scope of HOLPA)]{.underline}**                   |
+|               |                                                      |
+|               | For crops see FAO (2017):                            |
+|               | https://www.fao.org/3/ca6514en/ca6514en.pdf.         |
+|               |                                                      |
+|               | For livestock see FAO (2018):                        |
+|               | https://www.fao.org/3/ca6400en/ca6400en.pdf.         |
+|               |                                                      |
+|               | Summary for crop yield: Yields of all crops should   |
+|               | be measured by randomly demarcating at least three   |
+|               | same-size plots in a field, harvesting all produce,  |
+|               | then drying the produce and weighing it to determine |
+|               | its dry weight. If possible take into account        |
+|               | harvest losses (proportion of diseased, rotten or    |
+|               | otherwise unusable produce). Alternatively, yields   |
+|               | can be measured based on farmer recall particularly  |
+|               | where farmers keep good records, but note that in    |
+|               | many cases this method is inaccurate. Alternatively, |
+|               | farmers can be asked to keep crop diaries and record |
+|               | all harvested produce over the cropping season,      |
+|               | which produced reliable results for the LSMS but is  |
+|               | unsuitable for illiterate farmers. See guide for     |
+|               | further details on calculating yields in mixed       |
+|               | cropping systems.                                    |
+|               |                                                      |
+|               | Crop and pasture areas should be estimated by        |
+|               | walking along the perimeter of the farmed areas with |
+|               | a GPS (preferred method) or using the                |
+|               | rope-and-compass method (see                         |
+|               | https://www.fao.org/3/ca6514en/ca6514en.pdf). Areas  |
+|               | of additional plots that are far away or difficult   |
+|               | to access can be estimated by farmers, and verified  |
+|               | on Google Earth imagery if possible. Asking farmers  |
+|               | to estimate the area of their fields can work well   |
+|               | for small parcel sizes in some contexts, but is      |
+|               | often unreliable e.g. when farmers are not familiar  |
+|               | with the units of measurement or if farmers have     |
+|               | incentives to misreport crop area (see               |
+|               | https://www.fao.org/3/ca6514en/ca6514en.pdf).        |
++---------------+------------------------------------------------------+
+| Guidance on   |                                                      |
+| data entry    |                                                      |
+| and reporting |                                                      |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | Dutilly C., Alary V., Bonnet P., Lesnoff M., Fandamu |
+|               | P., De Haan Cees, 2020. Multi-scale assessment of    |
+|               | the livestock sector for policy design in Zambia.    |
+|               | Journal of Policy Modeling 42 (2): 401-418.          |
+|               | <https://doi.org/10.1016/j.jpolmod.2019.07.004>^31^  |
+|               |                                                      |
+|               | Alary, V., Lasseur, J., Frija, A., & Gautier, D.     |
+|               | (2022). Assessing the sustainability of livestock    |
+|               | socio-ecosystems in the drylands through a set of    |
+|               | indicators. Agricultural Systems, 198, 103389.^32^   |
++---------------+------------------------------------------------------+

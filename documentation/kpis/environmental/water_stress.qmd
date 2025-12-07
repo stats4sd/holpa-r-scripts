@@ -1,0 +1,117 @@
+# 1.4 Water stress
+
++---------------+------------------------------------------------------+
+| **Indicator** | **Water stress**                                     |
++===============+======================================================+
+| Theme         | Water                                                |
++---------------+------------------------------------------------------+
+| Purpose of    | Aligns to SDG 6.4.2 on level of water stress, and    |
+| indicator     | SDG 6.6.1 on extent of water-related ecosystems.     |
++---------------+------------------------------------------------------+
+| Data source   | Household survey                                     |
++---------------+------------------------------------------------------+
+| Measurement   | Proportion of months with agricultural water         |
+|               | shortages per year, for all agriculturally active    |
+|               | months                                               |
++---------------+------------------------------------------------------+
+| Measurement   | \%                                                   |
+| units         |                                                      |
++---------------+------------------------------------------------------+
+| Guidance on   | This indicator can be calculated by collecting data  |
+| measurement   | on the:                                              |
+|               |                                                      |
+|               | -   Number of months for which a household           |
+|               |     experienced water shortages in the last 12       |
+|               |     months, in relation to crop, livestock, fish or  |
+|               |     other agricultural activities (ideally           |
+|               |     disaggregated).                                  |
+|               |                                                      |
+|               | The indicator is calculated by summing the number of |
+|               | months of water stress and dividing this by 12, and  |
+|               | then taking the inverse (1/x) so that higher values  |
+|               | indicate less water stress.                          |
+|               |                                                      |
+|               | Additional data can be collected on water sources    |
+|               | (disaggregated by rainwater, water storage on-farm,  |
+|               | water storage off-farm, flood water, piped water,    |
+|               | other) to distinguish rainfed water stress versus    |
+|               | irrigated water stress, and whether water harvesting |
+|               | measures are used.                                   |
+|               |                                                      |
+|               | These data can be collected as part of a household   |
+|               | survey.                                              |
++---------------+------------------------------------------------------+
+| Guidance on   | Collect data by asking which months (Jan, Feb, Mar,  |
+| data entry    | etc) water is needed per activity, and then which    |
+| and reporting | months there are water shortages per activity, to    |
+|               | ensure alignment between the two responses.          |
++---------------+------------------------------------------------------+
+| Indicator     | This indicator presents the percentage of months in  |
+| i             | a year with water stress. Lower values indicate less |
+| nterpretation | stress, while high values indicate more stress.      |
+| and threshold | Therefore the indicator values should be inversed    |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   | Key limitations of the measurement approach for this |
+|               | indicator include:                                   |
+|               |                                                      |
+|               | -   Water quality is not accounted for.              |
+|               |                                                      |
+|               | -   Water storage and delivery infrastructure are    |
+|               |     not considered.                                  |
+|               |                                                      |
+|               | Alternatives to consider for future surveys include  |
+|               | the \'\'Agricultural Water Scarcity Index\'\' which  |
+|               | is a dimensionless index; or \'\'Water               |
+|               | Productivity\'\' (kg produced/m3 water consumed); or |
+|               | Quantify freshwater (rainfall, groundwater and       |
+|               | surface water) supplied to different agricultural    |
+|               | enterprises on the farm during the month or year.    |
+|               | For the latter, users should:                        |
+|               |                                                      |
+|               | -   Estimate amount of water (m3/year) required by   |
+|               |     crop, livestock, fish or other agricultural      |
+|               |     enterprises (disaggregated) on the farm.         |
+|               |                                                      |
+|               | -   Estimate the amount of water (m3/year) supplied  |
+|               |     to each agricultural enterprise on the farm.     |
+|               |                                                      |
+|               | -   Calculate: Water Stress (%) = (Total freshwater  |
+|               |     supplied **/** Available freshwater resources) × |
+|               |     100.                                             |
+|               |                                                      |
+|               | -   Classify water stress (%) into the following     |
+|               |     categories:                                      |
+|               |                                                      |
+|               |     -   No stress = \<10. Low water demand relative  |
+|               |         to water supply.                             |
+|               |                                                      |
+|               |     -   Low stress = 10-20. Moderate demand --       |
+|               |         sustainable status.                          |
+|               |                                                      |
+|               |     -   Medium stress = 20-40. Significant pressure  |
+|               |         on water resources.                          |
+|               |                                                      |
+|               |     -   High stress = 40-80. Strong competition for  |
+|               |         water -- management is critical.             |
+|               |                                                      |
+|               |     -   Critical stress = \>80. Unsustainable water  |
+|               |         extraction for agriculture.                  |
++---------------+------------------------------------------------------+
+| [Note to me:  | 1.  Biancalani, R., & Marinelli, M. (2021).          |
+| add these to  |     Assessing SDG indicator 6.4.2 \"level of water   |
+| zotero]{.     |     stress\" at major basins level. *UCL Open        |
+| comment-start |     Environment*.                                    |
+| id="17"       |                                                      |
+| author="J     | 2.  Food and Agriculture Organization (FAO). (2021). |
+| ones, Sarah ( |     *SDG Indicator 6.4.2 -- Level of water stress:   |
+| Alliance Biov |     Methodology*. United Nations FAO.                |
+| ersity-CIAT)" |     (<http://www.fao.org/aquastat>).                 |
+| d             |                                                      |
+| ate="2025-12- | 3.  van Vliet, M. T. H., Jones, E. R., et al.        |
+| 05T11:56:00Z" |     (2021). Global water scarcity including surface  |
+| }References[] |     water quality and expansions of clean water      |
+| {.comment-end |     technologies. *Environmental Research Letters*,  |
+| id="17"}      |     16(2), 024020.                                   |
+|               |     <https://doi.org/10.1088/1748-9326/ABBFC3>       |
++---------------+------------------------------------------------------+

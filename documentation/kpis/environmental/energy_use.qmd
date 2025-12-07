@@ -1,0 +1,180 @@
+# 1.5 [Energy use]{.mark}
+
++---------------+------------------------------------------------------+
+| **Indicator** | [Sustainable energy security aims to meet present    |
+|               | energy needs without compromising the ability of     |
+|               | future generations to meet their own needs. This     |
+|               | requires a transition to cleaner energy sources,     |
+|               | improved energy efficiency, and the development of   |
+|               | more sustainable patterns of consumption.            |
+|               | (https://e                                           |
+|               | nergy.sustainability-directory.com/question/what-are |
+|               | -key-indicators-of-energy-security/)]{.comment-start |
+|               | id="19"                                              |
+|               | author                                               |
+|               | ="CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)" |
+|               | date="2025-11-26T10:21:00Z"}[Renewable Energy Share  |
+|               | -Percentage of energy supply from renewable          |
+|               | sources]{.comment-start id="20"                      |
+|               | author                                               |
+|               | ="CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)" |
+|               | date="2025-11-26T10:32:00Z"}[This will be hard to    |
+|               | measure\--how do we define energy share without      |
+|               | measuring hours of use, energy efficiency level etc, |
+|               | and some estimate of KJ used per source? For         |
+|               | example: one hour of LPG use is very different from  |
+|               | 1 hour of bio-mass burning stoves.]{.comment-start   |
+|               | id="21" author="Alvi, Muzna (IFPRI-India)"           |
+|               | date="2025-12-02T14:54:00Z"}**Sustainable energy     |
+|               | use**[[[]{.comment-end id="21"}]{.comment-end        |
+|               | id="20"}]{.comment-end id="19"}                      |
++===============+======================================================+
+| Theme         | Energy use                                           |
++---------------+------------------------------------------------------+
+| Purpose of    | [we need to consider that most of the global south   |
+| indicator     | is affected by energy poverty and are not the main   |
+|               | consumers of fossil fuels for energy. another point  |
+|               | to consider some energy sources which can be         |
+|               | considered green energy - e.g. biogas digestors      |
+|               | contribute to GHG emissions when they                |
+|               | leak.]{.comment-start id="22"                        |
+|               | author                                               |
+|               | ="CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)" |
+|               | date="2025-11-26T09:24:00Z"}Fossil fuels and other   |
+|               | non-renewable energy sources[]{.comment-end id="22"} |
+|               | contribute to global greenhouse gas emissions,       |
+|               | exacerbating global warming. Increasing the share of |
+|               | renewable energy sources while reducing overall      |
+|               | energy consumption contributes to net zero emissions |
+|               | targets (Paris Agreement, SDG 13), while self- and   |
+|               | locally produced energy helps ensure an affordable   |
+|               | and reliable energy supply (SDG 7).                  |
++---------------+------------------------------------------------------+
+| Data source   | Household survey                                     |
++---------------+------------------------------------------------------+
+| [Can we       | -   Proportion of energy sources that are from       |
+| define this   |     renewable sources (energy produced from solar    |
+| as a binary   |     panels, wind turbines, hydropower or other       |
+| variable\     |     renewable sources).                              |
+| 1- use only   |                                                      |
+| clean energy  | -   Proportion of consumed energy that is produced   |
+| sources for   |     on-farm or by local suppliers.                   |
+| domestic use  |                                                      |
+| (LPG/Electric |                                                      |
+| for cooking,  |                                                      |
+| e             |                                                      |
+| lectric/solar |                                                      |
+| for heating   |                                                      |
+| and           |                                                      |
+| lighting)\    |                                                      |
+| 0-use unclean |                                                      |
+| or mix of     |                                                      |
+| clean and     |                                                      |
+| unclean       |                                                      |
+| sources\      |                                                      |
+| Likewise for  |                                                      |
+| on-farm       |                                                      |
+| use\--1 if    |                                                      |
+| using         |                                                      |
+| electric,     |                                                      |
+| solar or      |                                                      |
+| manual        |                                                      |
+| tools         |                                                      |
+| /equipment]{. |                                                      |
+| comment-start |                                                      |
+| id="23"       |                                                      |
+| author="      |                                                      |
+| Alvi, Muzna ( |                                                      |
+| IFPRI-India)" |                                                      |
+| da            |                                                      |
+| te="2025-12-0 |                                                      |
+| 2T14:56:00Z"} |                                                      |
+| Measurement[] |                                                      |
+| {.comment-end |                                                      |
+| id="23"}      |                                                      |
++---------------+------------------------------------------------------+
+| Measurement   | \%                                                   |
+| units         |                                                      |
++---------------+------------------------------------------------------+
+| Guidance on   | This indicator can be calculated by collecting data  |
+| measurement   | on:                                                  |
+|               |                                                      |
+|               | -   Sources of energy , disaggregated by renewable   |
+|               |     and non-renewable, per activity (cooking,        |
+|               |     irrigation, tillage, and other                   |
+|               |     food-related/agricultural activities)[. Used to  |
+|               |     provide a Likert scale measure of clean          |
+|               |     energy:]{.insertion                              |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |                                                      |
+|               |  date="2025-12-05T10:14:00Z"}[]{.paragraph-insertion |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |     date="2025-12-05T10:14:00Z"}                     |
+|               |                                                      |
+|               |     -   [Totall]{.insertion                          |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:14:00Z"}[y]{.insertion   |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:15:00Z"} [clean: 100%    |
+|               |         renewable energy sources]{.insertion         |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |                                                      |
+|               |  date="2025-12-05T10:14:00Z"}[]{.paragraph-insertion |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:14:00Z"}                 |
+|               |                                                      |
+|               |     -   [Partially clean:]{.insertion                |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:14:00Z"}                 |
+|               |         [1-99]{.insertion                            |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:15:00Z"}[%]{.insertion   |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |                                                      |
+|               |  date="2025-12-05T10:14:00Z"}[]{.paragraph-insertion |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:14:00Z"}                 |
+|               |                                                      |
+|               |     -   [Not clean: 0%]{.insertion                   |
+|               |                                                      |
+|               |     author="Jones, Sarah (Alliance Bioversity-CIAT)" |
+|               |         date="2025-12-05T10:15:00Z"}                 |
+|               |                                                      |
+|               | -   Proportion of energy used that is produced       |
+|               |     on-farm, by the community, or purchased from     |
+|               |     other sources                                    |
+|               |                                                      |
+|               | Data on the proportion of renewable and locally      |
+|               | produced energy sources can be combined to provide a |
+|               | Likert-scale measure of the sustainability of energy |
+|               | use.                                                 |
++---------------+------------------------------------------------------+
+| Guidance on   | [[Record the energy sources in the system            |
+| data entry    | assessed.]{.mark}]{.insertion                        |
+| and reporting | author                                               |
+|               | ="CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)" |
+|               | date="2025-11-26T07:33:00Z"}                         |
++---------------+------------------------------------------------------+
+| Indicator     |                                                      |
+| i             |                                                      |
+| nterpretation |                                                      |
+| and threshold |                                                      |
+| setting       |                                                      |
++---------------+------------------------------------------------------+
+| Limitations   |                                                      |
++---------------+------------------------------------------------------+
+| References    | [[https://ener                                       |
+|               | gy.sustainability-directory.com/question/what-are-ke |
+|               | y-indicators-of-energy-security/]{.mark}]{.insertion |
+|               | author                                               |
+|               | ="CHIMONYO, Vimbayi Grace Petrova (CIMMYT-Zimbabwe)" |
+|               | date="2025-11-26T08:22:00Z"}                         |
++---------------+------------------------------------------------------+

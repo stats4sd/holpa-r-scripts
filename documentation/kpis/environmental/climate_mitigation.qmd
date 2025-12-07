@@ -1,0 +1,329 @@
+# 1.6 Climate mitigation
+
++----------+-----------------------------------------------------------+
+| **Ind    | **Net greenhouse gas emissions**                          |
+| icator** |                                                           |
++==========+===========================================================+
+| Theme    | Climate mitigation                                        |
++----------+-----------------------------------------------------------+
+| Purpose  | Globally, the agriculture and land use sector contributes |
+| of       | approximately 18% of total greenhouse gas emissions,      |
+| i        | rising to nearly 60% of GHG emissions in parts of the     |
+| ndicator | developing world where agriculture dominates the economy. |
+|          | With the world set to exceed the emissions threshold for  |
+|          | keeping warming below 1.5^o^C in less than 10 years^7^,   |
+|          | mitigation from all sectors is a top global priority.     |
+|          |                                                           |
+|          | This indicator is relevant for global climate mitigation  |
+|          | goals (Paris Agreement) and nationally determined         |
+|          | contributions (NDCs). It is also relevant for the         |
+|          | post-2020 Global Biodiversity Framework Target 10 on      |
+|          | 'Proportion of agricultural area under productive and     |
+|          | sustainable agriculture', where changes in soil organic   |
+|          | carbon stocks is a complementary indicator                |
+|          | (CBD/COP/15/L.26).                                        |
++----------+-----------------------------------------------------------+
+| Data     | Farmer survey, literature review, and/or field            |
+| source   | measurements                                              |
++----------+-----------------------------------------------------------+
+| Mea      | Qualitative score of net greenhouse gas emissions         |
+| surement |                                                           |
+|          | (alternative: carbon storage in soil and above-ground     |
+|          | biomass)                                                  |
++----------+-----------------------------------------------------------+
+| Mea      | 5-point Likert scale (alternative: t C ha^−1^ yr^−1^)     |
+| surement |                                                           |
+| units    |                                                           |
++----------+-----------------------------------------------------------+
+| Guidance | We discuss two options for measurement of net greenhouse  |
+| on       | gas emissions: i) qualitative assessment of climate       |
+| mea      | mitigation potential of on-farm practices, ii)            |
+| surement | quantitative assessment of carbon storage and             |
+|          | sequestration only, based on soil organic carbon (SOC)    |
+|          | and estimates of carbon stored in live woody biomass.     |
+|          |                                                           |
+|          | **Qualitative assessment**                                |
+|          |                                                           |
+|          | Given the importance of climate change mitigation and the |
+|          | relative difficulty of accurately quantifying net GHG     |
+|          | emissions from smallholder agriculture across diverse     |
+|          | country contexts, we propose a qualitative approach for   |
+|          | integration of mitigation into all performance            |
+|          | assessments.                                              |
+|          |                                                           |
+|          | Measurement involves:                                     |
+|          |                                                           |
+|          | -   Classifying farming practices according to their net  |
+|          |     emissions: 1,2,3,4,5, where 1 represents high         |
+|          |     emitting and low sequestrating practices, and 5       |
+|          |     represents low emitting and high sequestrating        |
+|          |     practices.                                            |
+|          |                                                           |
+|          | -   Collecting household survey data on the share of      |
+|          |     cropland under each practice.                         |
+|          |                                                           |
+|          | -   Calculating a weighted average score for all          |
+|          |     practices found on the farm, using the share of       |
+|          |     cropland as weights.                                  |
+|          |                                                           |
+|          | Note that the final score could instead be weighted by    |
+|          | productivity for an emissions intensity estimate, if      |
+|          | practice data are collected for each main                 |
+|          | crop/livestock/fish.                                      |
+|          |                                                           |
+|          | Locally relevant farming practices need to be identified  |
+|          | and classified into a net emissions category. The         |
+|          | classification can be done through literature review and  |
+|          | local experts.                                            |
+|          |                                                           |
+|          | Some qualitative assessments/reviews of mitigation        |
+|          | potential of agricultural practices already exist. We use |
+|          | one such review by Bell et al. (2018) to provide an       |
+|          | example scoring of practices by emission category. The    |
+|          | overall score is an average of the component score. In    |
+|          | the overall score, 1 represents high emitting and low     |
+|          | sequestrating practices, and 5 represents low emitting    |
+|          | and high sequestrating practices.                         |
+|          |                                                           |
+|          |   ---------------------------------                       |
+|          | --------------------------------------------------------- |
+|          |   **Practices**   **Carbon                                |
+|          |  **Carbon        **Avoided GHG **Overall   **References** |
+|          |                   s                                       |
+|          | equestration   sequestration   emissions**   score**      |
+|          |                   i                                       |
+|          | n soils**      in biomass**                               |
+|          |   --------------- --------------- -                       |
+|          | -------------- ------------- ----------- ---------------- |
+|          |   ***Cropping                                             |
+|          |                                                           |
+|          |   systems***                                              |
+|          |                                                           |
+|          |                                                           |
+|          |   Agroforestry    5                                       |
+|          |     5               4             4.66        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Biochar         3                                       |
+|          |     3               2             2.66        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Crop rotation   3                                       |
+|          |     3               3             3           Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Drip irrigation 3                                       |
+|          |     3               2             2.66        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Embedded        4                                       |
+|          |     5               4             4.33        Bell et al. |
+|          |   natural                                                 |
+|          |                                                    (2018) |
+|          |   (hedgerows)                                             |
+|          |                                                           |
+|          |                                                           |
+|          |   Green manure    4                                       |
+|          |     3               2             3           Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Intercropping   5                                       |
+|          |     3               5             4.33        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Microdosing     3                                       |
+|          |     3               2             2.66        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Mulching        4                                       |
+|          |     3               3             3.33        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Reduced tillage 4                                       |
+|          |     3               4             3.66        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   ***Lowland rice                                         |
+|          |                                                           |
+|          |   systems***                                              |
+|          |                                                           |
+|          |                                                           |
+|          |   Biochar         4                                       |
+|          |     4               2             3.33        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Green manure    4                                       |
+|          |     4               4             4           Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Microdosing     4                                       |
+|          |     4               2             3.33        Bell et al. |
+|          |                                                           |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Rice-fish       3                                       |
+|          |     3               4             3.33        Bell et al. |
+|          |   integration                                             |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Alternate       3                                       |
+|          |     3               4             3.33        Bell et al. |
+|          |   wetting and                                             |
+|          |                                                    (2018) |
+|          |   drying                                                  |
+|          |                                                           |
+|          |                                                           |
+|          |   ***Livestock                                            |
+|          |                                                           |
+|          |   systems***                                              |
+|          |                                                           |
+|          |                                                           |
+|          |   Improved feed   4                                       |
+|          |     4               4             4           Bell et al. |
+|          |   quality                                                 |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   Planting        4                                       |
+|          |     3               3             3.33        Bell et al. |
+|          |   N-fixing                                                |
+|          |                                                    (2018) |
+|          |   legumes                                                 |
+|          |                                                           |
+|          |                                                           |
+|          |   Rotational      4                                       |
+|          |     3               3             3.33        Bell et al. |
+|          |   grazing                                                 |
+|          |                                                    (2018) |
+|          |                                                           |
+|          |   ***Fish                                                 |
+|          |                                                           |
+|          |   systems***                                              |
+|          |                                                           |
+|          |                                                           |
+|          |   Improved feed   3                                       |
+|          |     3               3             3           Bell et al. |
+|          |   quality                                                 |
+|          |                                                    (2018) |
+|          |   ---------------------------------                       |
+|          | --------------------------------------------------------- |
+|          |                                                           |
+|          | **Quantitative assessment**                               |
+|          |                                                           |
+|          | Measurement involves collecting data on tree diameter at  |
+|          | breast height (dbh), tree height, number of trees, and    |
+|          | collecting data on soil organic carbon through laboratory |
+|          | analysis of soil samples.                                 |
+|          |                                                           |
+|          | Carbon storage and sequestration in woody biomass:        |
+|          |                                                           |
+|          | -   Get on-farm tree count for trees with dbh \> 50cm or  |
+|          |     \>10m in height                                       |
+|          |                                                           |
+|          | -   Convert above and below-ground biomass to t/ha using  |
+|          |     IPCC conversion factors.                              |
+|          |                                                           |
+|          | Soil carbon storage:                                      |
+|          |                                                           |
+|          | -   Use the median SOC in the 0-20cm zone from across the |
+|          |     three plots per farm (see Soil Health indicator).     |
+|          |                                                           |
+|          | **Additional GHG measurement options (beyond the scope of |
+|          | the standard HOLPA tool, see Complementary Indicators)**  |
+|          |                                                           |
+|          | The most precise, quantitative measurements of GHG        |
+|          | emissions are obtained through field measurements of GHG  |
+|          | fluxes, either through collection of gas samples and      |
+|          | later analysis in a gas chromatography lab (e.g. for      |
+|          | ruminant methane emission), or through real-time          |
+|          | measurement of gas fluxes using an infrared gas analyzer  |
+|          | (e.g. leaf photosynthesis and respiration, soil           |
+|          | respiration, or landscape eddy covariance). These methods |
+|          | require costly equipment and/or laboratory analysis, as   |
+|          | well as expert technicians to collect and analyze the     |
+|          | samples. Further details on the procedures are provided   |
+|          | in the section on Complementary Indicators.               |
+|          |                                                           |
+|          | In lieu of direct measurement, all other approaches to    |
+|          | quantifying GHG emissions from agriculture rely on        |
+|          | collecting activity data and using emissions factors to   |
+|          | convert activities into emissions levels (e.g. from       |
+|          | IPCC). Activity data is a description of the farm         |
+|          | practices and areas (or number of livestock) over which   |
+|          | they are practiced. Activity data can be collected via    |
+|          | household surveys, potentially supplemented with          |
+|          | measurement of farm sizes. Higher levels of detail in the |
+|          | activity data (amounts of inputs used, crops and crop     |
+|          | varieties, soil types, feed formulations, tree species in |
+|          | agroforestry systems, etc.) generally allow for more      |
+|          | precise estimation of emissions. However, conversion of   |
+|          | activity data into quantitative emissions relies on the   |
+|          | use of emissions factors. Most widely available emissions |
+|          | factors (e.g. Tier 1 Approach) are based on data from     |
+|          | temperate countries ([Ogle et al.                         |
+|          | 2013                                                      |
+|          | ](https://onlinelibrary.wiley.com/doi/10.1111/gcb.12361); |
+|          | Albanito et al. 2017) and may not be appropriate for      |
+|          | estimating GHG emissions from agricultural activities in  |
+|          | tropical countries.                                       |
+|          |                                                           |
+|          | Models of GHG emissions also rely on collection of        |
+|          | activity data and emissions factors, but many can account |
+|          | for local conditions, such as soil types, livestock       |
+|          | breeds, climate, etc to produce more appropriate          |
+|          | emissions estimates for tropical or developing countries  |
+|          | not well represented in the Tier 1 approach. Several      |
+|          | models are available for calculating emissions, including |
+|          | the Ex-Ante Carbon Balance Tool                           |
+|          | ([EXACT](https://www.fao.o                                |
+|          | rg/in-action/epic/ex-act-tool/suite-of-tools/ex-act/en/)) |
+|          | and the [Cool Farm Tool](https://coolfarmtool.org/),      |
+|          | however use of these models requires a degree of          |
+|          | technical expertise.                                      |
++----------+-----------------------------------------------------------+
+| Guidance |                                                           |
+| on data  |                                                           |
+| entry    |                                                           |
+| and      |                                                           |
+| r        |                                                           |
+| eporting |                                                           |
++----------+-----------------------------------------------------------+
+| I        |                                                           |
+| ndicator |                                                           |
+| interp   |                                                           |
+| retation |                                                           |
+| and      |                                                           |
+| t        |                                                           |
+| hreshold |                                                           |
+| setting  |                                                           |
++----------+-----------------------------------------------------------+
+| Lim      |                                                           |
+| itations |                                                           |
++----------+-----------------------------------------------------------+
+| Re       | -   Thornton et al. 2018. A qualitative evaluation of CSA |
+| ferences |     options in mixed crop-livestock systems in developing |
+|          |     countries.^8^                                         |
+|          |                                                           |
+|          | -   Bell et al. 2018. A Practical Guide to Climate Smart  |
+|          |     Agricultural Technologies in Africa. *CCAFS Working   |
+|          |     Paper No. 224*.^9^                                    |
+|          |                                                           |
+|          | -   Anuga et al. 2020. Towards low carbon agriculture:    |
+|          |     Systematic narratives of climate-smart agriculture    |
+|          |     mitigation potential in Africa. *Current Research in  |
+|          |     Environmental Sustainability*.^10^                    |
+|          |                                                           |
+|          | -   MacLeod et al. 2020. Quantifying greenhouse gas       |
+|          |     emissions from global aquaculture*. Scientific        |
+|          |     Reports*.^11^                                         |
++----------+-----------------------------------------------------------+
