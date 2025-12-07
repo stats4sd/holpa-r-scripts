@@ -1,7 +1,7 @@
 project:
   type: book
+  output-dir: docs
 
-theme: flatly
 toc: true
 number-sections: false
 book:
@@ -56,10 +56,7 @@ bibliography: references.bib
 format:
   html:
     theme:
-      - cosmo
-      - brand
-  pdf:
-    documentclass: scrreprt
+      - flatly
 
 
 
