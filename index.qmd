@@ -1,3 +1,5 @@
 # Welcome {.unnumbered}
 
 This is the homepage for the HOLPA Key Performance and Agroecological Indicator Protocols.
+
+> This document is currently a **draft** and is under active development. Once it is finalised, it will be published as part of the https:://holpa.org website and made available in multiple formats.

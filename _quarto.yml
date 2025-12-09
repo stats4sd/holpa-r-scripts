@@ -2,13 +2,21 @@ project:
   type: book
   output-dir: docs
 
+filters:
+   - include-code-files
+
 toc: true
 number-sections: false
 book:
-  title: "HOLPA Key Performance and Agroecological Indicator Protocols"
+  title: "DRAFT: HOLPA Key Performance and Agroecological Indicator Protocols"
   author: "Sarah K. Jones,a,* Andrea Cecilia Sánchez,a,b,c, Chris Dickensd, Matthias S. Gecke, Chaturangi Wickramaratned, Veronique Alaryf,g, Peter Boloh, Dennis Junior Chorumai, Somphasith Douangsavanhj, Modou Gueye Fallk, Gatien Falconnierl,m,n,o, Shweta Guptap,q, Chris Kettler, Smitha Krishnans, Sylvia Nyawirah, Guillermo Orjuela-Ramirezt, Boko Michel Orounladjiu, Piedad Parejav, Telma Sibandal, Christine Lamannae,1 "
   date: "12/5/2025"
   status: "Draft"
+
+  sidebar:
+    style: "docked"
+    search: true
+
   chapters:
     - index.qmd
     - intro.qmd
@@ -55,9 +63,9 @@ book:
 bibliography: references.bib
 
 format:
-  html:
-    theme:
-      - flatly
+  bookup-html:
+        toc: true
+        toc-depth: 3
 
 
 

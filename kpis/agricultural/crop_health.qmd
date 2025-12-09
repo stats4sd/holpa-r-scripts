@@ -1,38 +1,34 @@
 # 2.1 Crop health
 
-## Indicator
-
-**Crop health**
-
-## Theme
-
-Crop health
-
 ## Purpose of indicator
 
 Crop and pasture health can influence agricultural productivity and resilience of plants to stress, pests and competition. Crop health can be affected by any biological, chemical, or physical factors that may affect plant physiology and crop performance, impacting food production (SDG2) and the spread of food-borne diseases with consequences for human health (SDG3).
 
-## Data source
 
-Household survey, field measurements
+## Key Metadata
 
-## Measurement
+| Metadata Item                     | Description                                                                                   |
+|----------------------------------|-----------------------------------------------------------------------------------------------|
+| Indicator Name                   | Crop Health                                                                                   |
+| Theme                            | Crop Health                                                                                |
+| SDGs Targeted                    | SDG 2: Zero Hunger, SDG 3: Good Health and Well-being                                         |
+| Data Source                     | Household survey, field measurements                                                          |
+| Measurement                      | \% crop losses, and SOCLA indicators of crop health                                           |
+| Measurement Units                | Score from 1 to 10, representing the mean indicator value across
 
-\% crop losses, and SOCLA indicators of crop health
-
-## Measurement units
-
-Score from 1 to 10, representing the mean indicator value across 10 indicators
 
 ## Guidance on measurement
 
-We propose two complementary measures of crop health: i) Qualitative based on household survey responses, ii) Qualitative based on field observations.
+We propose two complementary measures of crop health:
 
-**Household survey based**
+i) Qualitative based on household survey responses,
+ii) Qualitative based on field observations.
+
+### Household survey based
 
 A simple measure of crop health can be provided by collecting responses on: What percentage of the total crop production was lost or damaged in the last 12 months?
 
-**Field based**
+### Field based
 
 More detailed data on crop health can be determined through field measurements interpreted jointly by farmers and researchers. Field measurements to collect data on each crop health indicator should be conducted every 50m along a transect of approximately 150m (this may vary depending on the farm size), to collect data on all 10 crop health indicators at three sampling sites per farm. Crop health should be assessed for only the main crop(s) grown on the farm to keep the task manageable.
 
@@ -53,16 +49,108 @@ The proposed indicators were developed by the Latin American Society for Agroeco
 
 Each indicator is scored from 1 to 10 based on the following guidelines (from Nicholls et al. 2004, Table 1):
 
-![](media/image3.png)
+| Indicator | Score | Description |
+|-----------|-------|-------------|
+| Appearance | 1 | Chlorotic, discolored follage with deficiency signs |
+|  | 5 | Light green foliage with some discoloring |
+|  | 10 | Dark green foliage, no signs of deficiency |
+| Crop growth | 1 | Uneven stand: short and thin branches; limited new growth |
+|   | 5 | Denser but not uniform stand; thicker branches; some new growth |
+|   | 10 | Abundant branches and follage, vigorous growth |
+| Disease incidence | 1 | Susceptible, more than 50% of plants with damaged leaves and/or fruits |
+|  | 5 | Between 25-45% plants with damage |
+|  | 10 | Resistant, with less than 20% of plants with light damage |
+| Insect pest incidence | 1 | More than 15 leafhopper nymphs per leaf, or more than 85% damaged leaves |
+|  | 5 | Between 5-14 leafhopper nymphs per leaf, or 30-40% damaged leaves |
+|  | 10 | Less than 5 leafhopper nymphs per leaf, and less than 30% damaged leave |
+| Natural enemy abundance and diversity | 1 | No presence of predators/parasitic wasps detected in 50 random leaf sampled |
+|  | 5 | At least one individual of one or two beneficial species |
+|  | 10 | At least two individuals of one or two beneficial species |
+| Weed competition and pressure | 1 | Crops stressed, overwhelmed by weeds |
+|  | 5 | Medium presence of weeds, some level of competition |
+|  | 10 | Vigorous crop, overcomes weeds |
+| Actual or potential yield | 1 | Low in relation to local average |
+|  | 5 | Medium, acceptable |
+|  | 10 | Good or high |
+| Vegetational diversity | 1 | Monoculture |
+|  | 5 | A few weeds present or uneven cover crop |
+|  | 10 | With dense cover crop or weedy background |
+| Natural surrounding vegetation | 1 | Surrounded by other crops, no natural vegetation |
+|  | 5 | Adjacent to natural vegetation on at least one side |
+|  | 10 | Surrounded by natural vegetation on at least two sides |
+| Management system | 1 | Conventional |
+|  | 5 | In transition to organic with IPM or input substitution |
+|  | 10 | Organic, diversified with low external biological inputs |
+
+: Nicolls et al. 2004, Table 1. {.striped .hover tbl-colwidths="[20,10,70]"}
 
 ## Guidance on data entry and reporting
 
 Record the crop species and variety in the system assessed. Be sure to take a GPS point and keep a record of the geographic coordinates where crop health was assessed to allow follow-up surveys in the same locations.
 
+
+## Calculation method
+
+### 1.1 Household survey based
+
+- **Question:** What percentage of the total crop production was lost or damaged in the last 12 months?
+- **Variable name:** `crop_loss_perc`
+- **Response type:** Numeric (0-100)
+- **Indicator calculation:** Crop health score = 100 - % crop losses reported by the household
+
+
+**R Function:**
+```{.r include="../../r-project/data_processing/key_performance_indicators.R" start-line=33 end-line=46 .code-overflow-wrap}
+
+```
+
+### 1.2 Field based
+
+**Question:** How would you describe crop health from a score of 1 (lowest) to 5 (highest), for each of the following indicators?
+
+  - Appearance
+  - Crop growth
+  - Disease incidence
+  - Insect pest incidence
+  - Natural enemy abundance and diversity
+  - Weed competition and pressure
+  - Actual or potential yield
+  - Vegetational diversity
+  - Natural surrounding vegetation
+  - Management system
+
+**Variable names:**
+
+- `appearance_description`
+- `growth`
+- `disease_incidence`
+- `insect_incidence`
+- `enemy_abundance`
+- `weeds`
+- `__variable_missing_from_survey__`
+- `__variable_missing_from_survey__`
+- `natural_vegetation`
+- `management`
+
+
+**Reponse type:** Likert Scale (1-5) for each crop health indicator.
+
+**Indicator calculation:** Crop health score = Median of the 10 crop health indicator scores recorded at the farm level.
+
+
+```{.r include="../../r-project/data_processing/key_performance_indicators.R" start-line=49 end-line=86 .code-overflow-wrap}
+
+```
+
+
 ## Indicator interpretation and threshold setting
+
+No information available.
 
 ## Limitations
 
+No information available.
+
 ## References
 
-Nicholls et al. (2004), FAO (2019) ^13^, ^1^
+[@nicholls2004rapid]

@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "HOLPA Key Performance and Agroecological Indicator Protocols",
+    "title": "DRAFT: HOLPA Key Performance and Agroecological Indicator Protocols",
     "section": "",
-    "text": "Welcome\nThis is the homepage for the HOLPA Key Performance and Agroecological Indicator Protocols.",
+    "text": "Welcome\nThis is the homepage for the HOLPA Key Performance and Agroecological Indicator Protocols.\n\nThis document is currently a draft and is under active development. Once it is finalised, it will be published as part of the https:://holpa.org website and made available in multiple formats.",
     "crumbs": [
       "Welcome"
     ]
@@ -90,28 +90,6 @@
     "href": "kpis/agricultural/crop_health.html",
     "title": "2.1 Crop health",
     "section": "",
-    "text": "Indicator\nCrop health",
-    "crumbs": [
-      "2. Agricultural KPIs",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
-    ]
-  },
-  {
-    "objectID": "kpis/agricultural/crop_health.html#theme",
-    "href": "kpis/agricultural/crop_health.html#theme",
-    "title": "2.1 Crop health",
-    "section": "Theme",
-    "text": "Theme\nCrop health",
-    "crumbs": [
-      "2. Agricultural KPIs",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
-    ]
-  },
-  {
-    "objectID": "kpis/agricultural/crop_health.html#purpose-of-indicator",
-    "href": "kpis/agricultural/crop_health.html#purpose-of-indicator",
-    "title": "2.1 Crop health",
-    "section": "Purpose of indicator",
     "text": "Purpose of indicator\nCrop and pasture health can influence agricultural productivity and resilience of plants to stress, pests and competition. Crop health can be affected by any biological, chemical, or physical factors that may affect plant physiology and crop performance, impacting food production (SDG2) and the spread of food-borne diseases with consequences for human health (SDG3).",
     "crumbs": [
       "2. Agricultural KPIs",
@@ -119,33 +97,11 @@
     ]
   },
   {
-    "objectID": "kpis/agricultural/crop_health.html#data-source",
-    "href": "kpis/agricultural/crop_health.html#data-source",
+    "objectID": "kpis/agricultural/crop_health.html#key-metadata",
+    "href": "kpis/agricultural/crop_health.html#key-metadata",
     "title": "2.1 Crop health",
-    "section": "Data source",
-    "text": "Data source\nHousehold survey, field measurements",
-    "crumbs": [
-      "2. Agricultural KPIs",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
-    ]
-  },
-  {
-    "objectID": "kpis/agricultural/crop_health.html#measurement",
-    "href": "kpis/agricultural/crop_health.html#measurement",
-    "title": "2.1 Crop health",
-    "section": "Measurement",
-    "text": "Measurement\n% crop losses, and SOCLA indicators of crop health",
-    "crumbs": [
-      "2. Agricultural KPIs",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
-    ]
-  },
-  {
-    "objectID": "kpis/agricultural/crop_health.html#measurement-units",
-    "href": "kpis/agricultural/crop_health.html#measurement-units",
-    "title": "2.1 Crop health",
-    "section": "Measurement units",
-    "text": "Measurement units\nScore from 1 to 10, representing the mean indicator value across 10 indicators",
+    "section": "Key Metadata",
+    "text": "Key Metadata\n\n\n\n\n\n\n\nMetadata Item\nDescription\n\n\n\n\nIndicator Name\nCrop Health\n\n\nTheme\nCrop Health\n\n\nSDGs Targeted\nSDG 2: Zero Hunger, SDG 3: Good Health and Well-being\n\n\nData Source\nHousehold survey, field measurements\n\n\nMeasurement\n% crop losses, and SOCLA indicators of crop health\n\n\nMeasurement Units\nScore from 1 to 10, representing the mean indicator value across",
     "crumbs": [
       "2. Agricultural KPIs",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
@@ -156,7 +112,7 @@
     "href": "kpis/agricultural/crop_health.html#guidance-on-measurement",
     "title": "2.1 Crop health",
     "section": "Guidance on measurement",
-    "text": "Guidance on measurement\nWe propose two complementary measures of crop health: i) Qualitative based on household survey responses, ii) Qualitative based on field observations.\nHousehold survey based\nA simple measure of crop health can be provided by collecting responses on: What percentage of the total crop production was lost or damaged in the last 12 months?\nField based\nMore detailed data on crop health can be determined through field measurements interpreted jointly by farmers and researchers. Field measurements to collect data on each crop health indicator should be conducted every 50m along a transect of approximately 150m (this may vary depending on the farm size), to collect data on all 10 crop health indicators at three sampling sites per farm. Crop health should be assessed for only the main crop(s) grown on the farm to keep the task manageable.\nAt three 10x10m square plots per farm, observe the crops and/or pasture present in the plot and jointly with the respondent record the responses to the indicators with the respondent. Refer to the example images provided in the field survey (Appendix 7.1.3.3 Crop and pasture health) to determine the most appropriate responses crop health related questions.\nThe proposed indicators were developed by the Latin American Society for Agroecology (SOCLA) and described in Nicholls et al. (2004)12. The SOCLA 10 indicators of crop health are:\n\nAppearance\nCrop growth\nDisease incidence\nInsect pest incidence\nNatural enemy abundance and diversity\nWeed competition and pressure\nActual or potential yield\nVegetational diversity\nNatural surrounding vegetation\nManagement system\n\nEach indicator is scored from 1 to 10 based on the following guidelines (from Nicholls et al. 2004, Table 1):",
+    "text": "Guidance on measurement\nWe propose two complementary measures of crop health:\n\nQualitative based on household survey responses,\nQualitative based on field observations.\n\n\nHousehold survey based\nA simple measure of crop health can be provided by collecting responses on: What percentage of the total crop production was lost or damaged in the last 12 months?\n\n\nField based\nMore detailed data on crop health can be determined through field measurements interpreted jointly by farmers and researchers. Field measurements to collect data on each crop health indicator should be conducted every 50m along a transect of approximately 150m (this may vary depending on the farm size), to collect data on all 10 crop health indicators at three sampling sites per farm. Crop health should be assessed for only the main crop(s) grown on the farm to keep the task manageable.\nAt three 10x10m square plots per farm, observe the crops and/or pasture present in the plot and jointly with the respondent record the responses to the indicators with the respondent. Refer to the example images provided in the field survey (Appendix 7.1.3.3 Crop and pasture health) to determine the most appropriate responses crop health related questions.\nThe proposed indicators were developed by the Latin American Society for Agroecology (SOCLA) and described in Nicholls et al. (2004)12. The SOCLA 10 indicators of crop health are:\n\nAppearance\nCrop growth\nDisease incidence\nInsect pest incidence\nNatural enemy abundance and diversity\nWeed competition and pressure\nActual or potential yield\nVegetational diversity\nNatural surrounding vegetation\nManagement system\n\nEach indicator is scored from 1 to 10 based on the following guidelines (from Nicholls et al. 2004, Table 1):\n\nNicolls et al. 2004, Table 1.\n\n\n\n\n\n\n\nIndicator\nScore\nDescription\n\n\n\n\nAppearance\n1\nChlorotic, discolored follage with deficiency signs\n\n\n\n5\nLight green foliage with some discoloring\n\n\n\n10\nDark green foliage, no signs of deficiency\n\n\nCrop growth\n1\nUneven stand: short and thin branches; limited new growth\n\n\n\n5\nDenser but not uniform stand; thicker branches; some new growth\n\n\n\n10\nAbundant branches and follage, vigorous growth\n\n\nDisease incidence\n1\nSusceptible, more than 50% of plants with damaged leaves and/or fruits\n\n\n\n5\nBetween 25-45% plants with damage\n\n\n\n10\nResistant, with less than 20% of plants with light damage\n\n\nInsect pest incidence\n1\nMore than 15 leafhopper nymphs per leaf, or more than 85% damaged leaves\n\n\n\n5\nBetween 5-14 leafhopper nymphs per leaf, or 30-40% damaged leaves\n\n\n\n10\nLess than 5 leafhopper nymphs per leaf, and less than 30% damaged leave\n\n\nNatural enemy abundance and diversity\n1\nNo presence of predators/parasitic wasps detected in 50 random leaf sampled\n\n\n\n5\nAt least one individual of one or two beneficial species\n\n\n\n10\nAt least two individuals of one or two beneficial species\n\n\nWeed competition and pressure\n1\nCrops stressed, overwhelmed by weeds\n\n\n\n5\nMedium presence of weeds, some level of competition\n\n\n\n10\nVigorous crop, overcomes weeds\n\n\nActual or potential yield\n1\nLow in relation to local average\n\n\n\n5\nMedium, acceptable\n\n\n\n10\nGood or high\n\n\nVegetational diversity\n1\nMonoculture\n\n\n\n5\nA few weeds present or uneven cover crop\n\n\n\n10\nWith dense cover crop or weedy background\n\n\nNatural surrounding vegetation\n1\nSurrounded by other crops, no natural vegetation\n\n\n\n5\nAdjacent to natural vegetation on at least one side\n\n\n\n10\nSurrounded by natural vegetation on at least two sides\n\n\nManagement system\n1\nConventional\n\n\n\n5\nIn transition to organic with IPM or input substitution\n\n\n\n10\nOrganic, diversified with low external biological inputs",
     "crumbs": [
       "2. Agricultural KPIs",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
@@ -174,11 +130,22 @@
     ]
   },
   {
+    "objectID": "kpis/agricultural/crop_health.html#calculation-method",
+    "href": "kpis/agricultural/crop_health.html#calculation-method",
+    "title": "2.1 Crop health",
+    "section": "Calculation method",
+    "text": "Calculation method\n\n1.1 Household survey based\n\nQuestion: What percentage of the total crop production was lost or damaged in the last 12 months?\nVariable name: crop_loss_perc\nResponse type: Numeric (0-100)\nIndicator calculation: Crop health score = 100 - % crop losses reported by the household\n\nR Function:\n# KPI 1a Crop health - farmer reported\n\n## Add kpi1a_crop_health to performance_indicators dataframe\n\n## kp1a_crop_health is 100 - crop_loss_perc to reflect percentage of crop retained (NOT lost)\nperformance_indicators &lt;- performance_indicators%&gt;%\n  left_join(main_surveys%&gt;%\n              select(\n                farm_id,\n                owner_id,\n                submission_id,\n                \"kpi1a_crop_health\" = crop_loss_perc\n              )%&gt;%\n              mutate(kpi1a_crop_health = 100 - kpi1a_crop_health))\n\n\n1.2 Field based\nQuestion: How would you describe crop health from a score of 1 (lowest) to 5 (highest), for each of the following indicators?\n\nAppearance\nCrop growth\nDisease incidence\nInsect pest incidence\nNatural enemy abundance and diversity\nWeed competition and pressure\nActual or potential yield\nVegetational diversity\nNatural surrounding vegetation\nManagement system\n\nVariable names:\n\nappearance_description\ngrowth\ndisease_incidence\ninsect_incidence\nenemy_abundance\nweeds\n__variable_missing_from_survey__\n__variable_missing_from_survey__\nnatural_vegetation\nmanagement\n\nReponse type: Likert Scale (1-5) for each crop health indicator.\nIndicator calculation: Crop health score = Median of the 10 crop health indicator scores recorded at the farm level.\n# KPI 1b Crop health - fieldwork assessed\n\n## Ensure the required variables are numeric in the sites dataframe.\n\nvar_list = c(\n  \"appearance_description\",\n  \"growth\",\n  \"disease_incidence\",\n  \"insect_incidence\",\n  \"enemy_abundance\",\n  \"weeds\",\n  \"natural_vegetation\",\n  \"management\"\n) ## There are 8 here, but 10 questions? Check source\n\nsites &lt;- sites %&gt;%\n  mutate_at(vars(var_list), ~na_if(as.numeric(.), 99)) %&gt;%\n  mutate_at(vars(var_list), as.numeric) %&gt;%\n\n  ## Turn into a rowwise tibble to allow calculation per row\n  rowwise()%&gt;%\n\n  ## Calculate the site-level median score across all crop health fieldwork variables\n  mutate(kpi1b_crop_health_fieldwork = median(\n    c_across(var_list),\n    na.rm = TRUE\n    ))%&gt;%\n\n  ## Group by farm, owner, submission to get one value per farm\n  group_by(farm_id,owner_id,submission_id)%&gt;%\n\n  ## Calculate the median across all 'sites' surveyed on the farm\n  summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))\n\n## Add kpi1b_crop_health_fieldwork to performance_indicators dataframe\nperformance_indicators &lt;- performance_indicators%&gt;%\n  left_join(tmp%&gt;%select(farm_id, owner_id, kpi1b_crop_health_fieldwork))",
+    "crumbs": [
+      "2. Agricultural KPIs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
+    ]
+  },
+  {
     "objectID": "kpis/agricultural/crop_health.html#indicator-interpretation-and-threshold-setting",
     "href": "kpis/agricultural/crop_health.html#indicator-interpretation-and-threshold-setting",
     "title": "2.1 Crop health",
     "section": "Indicator interpretation and threshold setting",
-    "text": "Indicator interpretation and threshold setting",
+    "text": "Indicator interpretation and threshold setting\nNo information available.",
     "crumbs": [
       "2. Agricultural KPIs",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
@@ -189,7 +156,7 @@
     "href": "kpis/agricultural/crop_health.html#limitations",
     "title": "2.1 Crop health",
     "section": "Limitations",
-    "text": "Limitations",
+    "text": "Limitations\nNo information available.",
     "crumbs": [
       "2. Agricultural KPIs",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"
@@ -200,7 +167,7 @@
     "href": "kpis/agricultural/crop_health.html#references",
     "title": "2.1 Crop health",
     "section": "References",
-    "text": "References\nNicholls et al. (2004), FAO (2019) 13, 1",
+    "text": "References\n(nicholls2004rapid?)",
     "crumbs": [
       "2. Agricultural KPIs",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>2.1 Crop health</span>"

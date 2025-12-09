@@ -30,29 +30,57 @@ for(i in required_vars){
 
 }
 
-#Household
+# KPI 1a Crop health - farmer reported
+
+## Add kpi1a_crop_health to performance_indicators dataframe
+
+## kp1a_crop_health is 100 - crop_loss_perc to reflect percentage of crop retained (NOT lost)
 performance_indicators <- performance_indicators%>%
   left_join(main_surveys%>%
-              select(farm_id, owner_id, submission_id, "kpi1a_crop_health" = crop_loss_perc)%>%
-              mutate(kpi1a_crop_health = 100 - kpi1a_crop_health)) # reverse to reflect percentage of crop retained (NOT lost)
+              select(
+                farm_id,
+                owner_id,
+                submission_id,
+                "kpi1a_crop_health" = crop_loss_perc
+              )%>%
+              mutate(kpi1a_crop_health = 100 - kpi1a_crop_health))
 
-#Fieldwork
-tmp <- sites%>%
-  mutate_at(
-    vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-         weeds, natural_vegetation, management),
-    function(x) as.numeric(x)
-  )%>%
-  mutate_at(
-    vars(appearance_description, growth, disease_incidence, insect_incidence, enemy_abundance,
-         weeds, natural_vegetation, management),
-    function(x) na_if(x, 99)
-  )%>%
+
+# KPI 1b Crop health - fieldwork assessed
+
+## Ensure the required variables are numeric in the sites dataframe.
+
+var_list = c(
+  "appearance_description",
+  "growth",
+  "disease_incidence",
+  "insect_incidence",
+  "enemy_abundance",
+  "weeds",
+  "natural_vegetation",
+  "management"
+) ## There are 8 here, but 10 questions? Check source
+
+sites <- sites %>%
+  mutate_at(vars(var_list), ~na_if(as.numeric(.), 99)) %>%
+  mutate_at(vars(var_list), as.numeric) %>%
+
+  ## Turn into a rowwise tibble to allow calculation per row
   rowwise()%>%
-  mutate(kpi1b_crop_health_fieldwork = median(c_across(appearance_description:management), na.rm = TRUE))%>%
+
+  ## Calculate the site-level median score across all crop health fieldwork variables
+  mutate(kpi1b_crop_health_fieldwork = median(
+    c_across(var_list),
+    na.rm = TRUE
+    ))%>%
+
+  ## Group by farm, owner, submission to get one value per farm
   group_by(farm_id,owner_id,submission_id)%>%
+
+  ## Calculate the median across all 'sites' surveyed on the farm
   summarise(kpi1b_crop_health_fieldwork = median(kpi1b_crop_health_fieldwork, na.rm = TRUE))
 
+## Add kpi1b_crop_health_fieldwork to performance_indicators dataframe
 performance_indicators <- performance_indicators%>%
   left_join(tmp%>%select(farm_id, owner_id, kpi1b_crop_health_fieldwork))
 
