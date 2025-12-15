@@ -74,7 +74,7 @@
     },
     "RMariaDB": {
       "Package": "RMariaDB",
-      "Version": "1.3.3",
+      "Version": "1.3.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
