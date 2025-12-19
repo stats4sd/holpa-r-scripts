@@ -12,7 +12,8 @@ library(tidyverse)
 bfa_data_filename <- 'bfa_holpa_household_survey_clean.xlsx'
 
 
-load_bfa_data <- function() {
+### Import and convert the 'main survey' data (not repeat groups)
+load_bfa_main_survey_data <- function() {
   bfa_household_data <- read_excel(
     paste0('existing_data/', bfa_data_filename),
     sheet = 'HOLPA_global_household_survey'
@@ -23,6 +24,7 @@ load_bfa_data <- function() {
 
   required_vars <- c(
     ## Context Variables
+    "kobo_submission_id",
     "household_id",
     "latitude",
     "longitude",
@@ -189,6 +191,7 @@ load_bfa_data <- function() {
 
   required_original_vars <- c(
     ## Context
+    "_id",
     "__1_3_latitude",
     "__1_3_longitude",
     "_1_2_1_1",
@@ -423,6 +426,7 @@ load_bfa_data <- function() {
   bfa_household_data2 <- bfa_household_data %>%
     mutate(
       ## Context Variables
+      kobo_submission_id = `_id`,
       latitude = `__1_3_latitude`,
       longitude = `__1_3_longitude`,
       sector = `_1_2_1_1`,
@@ -431,14 +435,14 @@ load_bfa_data <- function() {
       age = 2024 - as.numeric(birth_year), ## Age at time of survey, approx;
 
       ### 1_recycling
-      seed_source = `_2_8_1_1`,
-      organic_fert_source = `_2_8_2_1`,
-      livestock_source = `_2_8_3_1`,
-      spawn_source = `_2_8_5_1`,
-      energy_source = `_2_8_4_5`,
+      seed_source = as.numeric(`_2_8_1_1`),
+      organic_fert_source = as.numeric(`_2_8_2_1`),
+      livestock_source = as.numeric(`_2_8_3_1`),
+      spawn_source = as.numeric(`_2_8_5_1`),
+      energy_source = as.numeric(`_2_8_4_5`),
 
       ### 2_input_reduction
-      dry_feed = `_3_4_4_2`, ## NOTE - this seems to not be used in the calculations.
+      dry_feed = as.numeric(`_3_4_4_2`),
 
       sf_methods_1 = `_1_4_3_1/1`,
       sf_methods_2 = `_1_4_3_1/2`,
@@ -476,7 +480,7 @@ load_bfa_data <- function() {
       sf_practices_count = `_2_9_1_1`,
 
       ### 4_animal_health:
-      animal_health = `_2_10_1_1`,
+      animal_health = as.numeric(`_2_10_1_1`),
 
       animal_health_management_count = `_2_10_1_2`,
       fish_land_practice_count = `_3_3_3_4`,
@@ -491,9 +495,21 @@ load_bfa_data <- function() {
       woodlots_diversity = `_3_3_1_2_8`,
       tree_diversity = `_3_3_1_6`,
 
-      livestock_count = `_3_4_3_3_1`,
-      crops_count = `_3_4_3_1_1`, ## Was originally listed as: `_3_4_3_1_1_2`, but that is a text inside a repeat for the name of crop grown
-      fish_count = `_3_4_3_4_2`,
+      livestock_count = as.numeric(`_3_4_3_3_1/Cattle`) +
+        as.numeric(`_3_4_3_3_1/Sheep`) +
+        as.numeric(`_3_4_3_3_1/Goats`) +
+        as.numeric(`_3_4_3_3_1/Horses`) +
+        as.numeric(`_3_4_3_3_1/Donkeys`) +
+        as.numeric(`_3_4_3_3_1/Mules`) +
+        as.numeric(`_3_4_3_3_1/Camels`) +
+        as.numeric(`_3_4_3_3_1/Chickens`) +
+        as.numeric(`_3_4_3_3_1/Ducks`) +
+        as.numeric(`_3_4_3_3_1/Beehives`) +
+        as.numeric(`_3_4_3_3_1/other`),
+      ## In the BFA data, there are 2 cases of "other" and only a single "other" animal was listed, so we can skip counting the number of other animals.
+
+      crops_count = as.numeric(`_3_4_3_1_1`), ## Was originally listed as: `_3_4_3_1_1_2`, but that is a text inside a repeat for the name of crop grown
+      fish_count = as.numeric(`_3_4_3_4_2`), ## Skipped in the BFA data; no farms farmed fish.
 
       ### 6- synergy:
       ## TODO: get from _3_3_3_2_begin_repeat worksheet
@@ -574,18 +590,18 @@ load_bfa_data <- function() {
       share_researchers = `_2_1_1_7`,
 
       ### 9_social_values:
-      access_healthy_food = `_2_5_1_1`,
-      access_diverse_food = `_2_5_1_2`,
-      access_seasonal_food = `_2_5_1_3`,
-      access_traditional_food = `_2_5_1_4`,
+      access_healthy_food = as.numeric(`_2_5_1_1`),
+      access_diverse_food = as.numeric(`_2_5_1_2`),
+      access_seasonal_food = as.numeric(`_2_5_1_3`),
+      access_traditional_food = as.numeric(`_2_5_1_4`),
 
       ### 10_fairness:
-      crop_fair_price = `_2_6_1_4_1`,
-      livestock_fair_price = `_2_6_1_4_2`,
-      fish_fair_price = `_2_6_1_4_3`,
-      trees_fair_price = `_2_6_1_4_4`,
-      honey_fair_price = `_2_6_1_4_5`,
-      other_fair_price = `_2_6_1_4_6`,
+      crop_fair_price = as.numeric(`_2_6_1_4_1`),
+      livestock_fair_price = as.numeric(`_2_6_1_4_2`),
+      fish_fair_price = as.numeric(`_2_6_1_4_3`),
+      trees_fair_price = as.numeric(`_2_6_1_4_4`),
+      honey_fair_price = as.numeric(`_2_6_1_4_5`),
+      other_fair_price = as.numeric(`_2_6_1_4_6`),
 
       ### 11_connectivity:
       crop_sell_to = `_2_7_1_1`,
@@ -650,3 +666,6 @@ load_bfa_data <- function() {
       all_of(required_vars)
     )
 }
+
+
+load_bfa_products_data <- function() {}

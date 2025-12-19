@@ -1,7 +1,7 @@
 library(tidyverse)
 library(jsonlite)
 library(httr)
-
+library(openxlsx)
 
 ################################################################################
 # IMPORT main_surveys FROM DATABASE
@@ -10,22 +10,33 @@ library(httr)
 #
 ################################################################################
 
-
 source("existing-holpa-data/migrate_bfa_to_new_format.R")
 source("existing-holpa-data/helper_functions.R")
 
-main_surveys <- load_bfa_data()
-agroecology_scores <- main_surveys %>% select(household_id)
+main_surveys <- load_bfa_main_survey_data()
+agroecology_scores <- main_surveys %>%
+  select(
+    household_id,
+    kobo_submission_id,
+    latitude,
+    longitude,
+    sector,
+    gender,
+    birth_year,
+    age
+  )
 
 ################################################################################
 # RECYCLING
 ################################################################################
 
-
 recylcing_scores <- function() {
   required_vars <- c(
-    "seed_source", "organic_fert_source", "livestock_source",
-    "spawn_source", "energy_source"
+    "seed_source",
+    "organic_fert_source",
+    "livestock_source",
+    "spawn_source",
+    "energy_source"
   )
 
   for (i in required_vars) {
@@ -37,7 +48,8 @@ recylcing_scores <- function() {
   tmp <- main_surveys %>%
     mutate(
       recycling_1_score = seed_source, # 1
-      recycling_1_label = factor( # 2
+      recycling_1_label = factor(
+        # 2
         seed_source,
         levels = c(1:5),
         labels = c(
@@ -49,7 +61,8 @@ recylcing_scores <- function() {
         )
       ),
       recycling_2_score = organic_fert_source, # 3
-      recycling_2_label = factor( # 4
+      recycling_2_label = factor(
+        # 4
         organic_fert_source,
         levels = c(1:5),
         labels = c(
@@ -61,7 +74,8 @@ recylcing_scores <- function() {
         )
       ),
       recycling_3_score = livestock_source, # 5
-      recycling_3_label = factor( # 6
+      recycling_3_label = factor(
+        # 6
         livestock_source,
         levels = c(1:5),
         labels = c(
@@ -73,7 +87,8 @@ recylcing_scores <- function() {
         )
       ),
       recycling_4_score = spawn_source, # 7
-      recycling_4_label = factor( # 8
+      recycling_4_label = factor(
+        # 8
         spawn_source,
         levels = c(1:5),
         labels = c(
@@ -85,7 +100,8 @@ recylcing_scores <- function() {
         )
       ),
       recycling_5_score = energy_source, # 9
-      recycling_5_label = factor( # 10
+      recycling_5_label = factor(
+        # 10
         energy_source,
         levels = c(1:5),
         labels = c(
@@ -114,18 +130,32 @@ recylcing_scores <- function() {
 
 input_reduction_scores <- function() {
   required_vars <- c(
-    "sf_methods", "sf_methods_2", "sf_methods_3",
+    "sf_methods",
+    "sf_methods_2",
+    "sf_methods_3",
     "sf_methods_1",
-    "pest_methods", "pest_methods_2", "pest_methods_3",
+    "pest_methods",
+    "pest_methods_2",
+    "pest_methods_3",
     "pest_methods_1",
     "dry_feed",
-    "fish_feed_type", "fish_feed_type_2", "fish_feed_type_3",
+    "fish_feed_type",
+    "fish_feed_type_2",
+    "fish_feed_type_3",
     "fish_feed_type_1",
-    "disease_management", "disease_management_1", "disease_management_2",
-    "disease_management_3", "disease_management_4", "disease_management_5",
+    "disease_management",
+    "disease_management_1",
+    "disease_management_2",
+    "disease_management_3",
+    "disease_management_4",
+    "disease_management_5",
     "disease_management_6",
-    "fish_disease_management", "fish_disease_management_1", "fish_disease_management_2",
-    "fish_disease_management_3", "fish_disease_management_4", "fish_disease_management_5",
+    "fish_disease_management",
+    "fish_disease_management_1",
+    "fish_disease_management_2",
+    "fish_disease_management_3",
+    "fish_disease_management_4",
+    "fish_disease_management_5",
     "fish_disease_management_6"
   )
 
@@ -138,7 +168,8 @@ input_reduction_scores <- function() {
 
   tmp <- main_surveys %>%
     mutate(
-      input_reduction_1_score = case_when( # 11
+      input_reduction_1_score = case_when(
+        # 11
         sf_methods == 3 ~ 5,
         sf_methods == 2 |
           (sf_methods_2 == 1 & sf_methods_3 == 1 & sf_methods_1 == 0) ~ 4,
@@ -148,7 +179,8 @@ input_reduction_scores <- function() {
         sf_methods == 1 ~ 1,
         sf_methods == 0 ~ 5
       ),
-      input_reduction_1_label = case_when( # 12
+      input_reduction_1_label = case_when(
+        # 12
         sf_methods == 0 ~ "No ecological practices, chemical or organic fertilizer were applied",
         sf_methods == 3 ~ "Only ecological practices are applied",
         input_reduction_1_score == 4 ~ "Combination of ecological practices and organic fertilizers or manure are applied/ Only organic fertilizers or manure are applied",
@@ -156,7 +188,8 @@ input_reduction_scores <- function() {
         input_reduction_1_score == 2 ~ "Combination of chemical fertilizers and organic fertilizers or manure are applied",
         input_reduction_1_score == 1 ~ "Only chemical fertilizers applied"
       ),
-      input_reduction_2_score = case_when( # 13
+      input_reduction_2_score = case_when(
+        # 13
         pest_methods == 3 ~ 5,
         pest_methods == 2 |
           (pest_methods_2 == 1 & pest_methods_3 == 1 & pest_methods_1 == 0) ~ 4,
@@ -166,7 +199,8 @@ input_reduction_scores <- function() {
         pest_methods == 1 ~ 1,
         pest_methods == 0 ~ 5
       ),
-      input_reduction_2_label = case_when( # 14
+      input_reduction_2_label = case_when(
+        # 14
         sf_methods == 0 ~ "No ecological practices, chemical or non-chemical pestices were applied",
         sf_methods == 3 ~ "Only ecological practices are applied",
         input_reduction_2_score == 4 ~ "Combination of ecological practices and non-chemical fungicides/pesticides/herbicides /  Only non-chemical fungicides/pesticides/herbicides area applied",
@@ -175,7 +209,8 @@ input_reduction_scores <- function() {
         input_reduction_2_score == 1 ~ "Only chemical fungicides/pesticides/herbicides are applied"
       ),
       input_reduction_3_score = dry_feed, # 15
-      inptu_reduction_3_label = factor( # 16
+      inptu_reduction_3_label = factor(
+        # 16
         dry_feed,
         levels = c(1:5),
         labels = c(
@@ -186,37 +221,52 @@ input_reduction_scores <- function() {
           "Never"
         )
       ),
-      input_reduction_4_score = case_when( # 17
+      input_reduction_4_score = case_when(
+        # 17
         fish_feed_type == 1 ~ 5,
         fish_feed_type == 2 |
-          (fish_feed_type_1 == 1 & fish_feed_type_2 == 1 & fish_feed_type_3 == 0) ~ 4,
-        (fish_feed_type_1 == 1 & fish_feed_type_2 == 1 & fish_feed_type_3 == 1) ~ 3,
-        (fish_feed_type_1 == 0 & fish_feed_type_2 == 1 & fish_feed_type_3 == 1) |
-          (fish_feed_type_1 == 1 & fish_feed_type_2 == 0 & fish_feed_type_3 == 1) ~ 2, # CHECK WITH HOLPA ON THE COMBINATION OF NATURAL AND CHEMICAL
+          (fish_feed_type_1 == 1 &
+            fish_feed_type_2 == 1 &
+            fish_feed_type_3 == 0) ~ 4,
+        (fish_feed_type_1 == 1 &
+          fish_feed_type_2 == 1 &
+          fish_feed_type_3 == 1) ~ 3,
+        (fish_feed_type_1 == 0 &
+          fish_feed_type_2 == 1 &
+          fish_feed_type_3 == 1) |
+          (fish_feed_type_1 == 1 &
+            fish_feed_type_2 == 0 &
+            fish_feed_type_3 == 1) ~ 2, # CHECK WITH HOLPA ON THE COMBINATION OF NATURAL AND CHEMICAL
         fish_feed_type == 3 ~ 1
       ),
-      input_reduction_4_label = case_when( # 18
+      input_reduction_4_label = case_when(
+        # 18
         input_reduction_4_score == 5 ~ "Only natural feeds used",
         input_reduction_4_score == 4 ~ "Combination of natural and prepared organic feed used. Or only organic",
         input_reduction_4_score == 3 ~ "Combination of natural, preprepared organic feeds and prepared chemical feeds used",
         input_reduction_4_score == 2 ~ "Combination of prepared organic and chemical feeds used",
         input_reduction_4_score == 1 ~ "Only chemical feeds used"
       ),
-      input_reduction_5_score = case_when( # 19
+      input_reduction_5_score = case_when(
+        # 19
         # =0
         disease_management == 0 ~ 5,
         # 5 or 6
         (disease_management_5 == 1 | disease_management_6 == 1) &
-          (disease_management_1 == 0 & disease_management_2 == 0 &
-            disease_management_3 == 0 & disease_management_4 == 0) ~ 5,
+          (disease_management_1 == 0 &
+            disease_management_2 == 0 &
+            disease_management_3 == 0 &
+            disease_management_4 == 0) ~ 5,
         #  3 or 4 & 5 or 6
         ((disease_management_1 == 0 & disease_management_2 == 0) &
           ((disease_management_3 == 1 | disease_management_4 == 1) &
             (disease_management_5 == 1 | disease_management_6 == 1))) ~ 4,
         # 3 or 4
         (disease_management_3 == 1 | disease_management_4 == 1) &
-          (disease_management_1 == 0 & disease_management_2 == 0 &
-            disease_management_5 == 0 & disease_management_6 == 0) ~ 4,
+          (disease_management_1 == 0 &
+            disease_management_2 == 0 &
+            disease_management_5 == 0 &
+            disease_management_6 == 0) ~ 4,
         #  1 or 2 & 5 or 6
         ((disease_management_3 == 0 & disease_management_4 == 0) &
           ((disease_management_1 == 1 | disease_management_2 == 1) &
@@ -226,61 +276,81 @@ input_reduction_scores <- function() {
           (disease_management_3 == 1 | disease_management_4 == 1) &
           (disease_management_1 == 1 | disease_management_2 == 1) ~ 3,
         # 1 or 2 & 3 or 4
-        disease_management_5 == 0 & disease_management_6 == 0 &
+        disease_management_5 == 0 &
+          disease_management_6 == 0 &
           ((disease_management_1 == 1 | disease_management_2 == 1) &
             (disease_management_3 == 1 | disease_management_4 == 1)) ~ 2,
         #  1 or 2
         (disease_management_1 == 1 | disease_management_2 == 1) &
-          (disease_management_5 == 0 & disease_management_6 == 0 &
-            disease_management_3 == 0 & disease_management_4 == 0) ~ 1
+          (disease_management_5 == 0 &
+            disease_management_6 == 0 &
+            disease_management_3 == 0 &
+            disease_management_4 == 0) ~ 1
       ),
-      input_reduction_5_label = case_when( # 20
+      input_reduction_5_label = case_when(
+        # 20
         disease_management == 0 ~ "No action taken",
         (disease_management_5 == 1 | disease_management_6 == 1) &
-          (disease_management_1 == 0 & disease_management_2 == 0 &
-            disease_management_3 == 0 & disease_management_4 == 0) ~ "Only ecological practices/treatments",
+          (disease_management_1 == 0 &
+            disease_management_2 == 0 &
+            disease_management_3 == 0 &
+            disease_management_4 == 0) ~ "Only ecological practices/treatments",
         input_reduction_5_score == 4 ~ "Combination of ecological practices/treatments and organic inputs.OR only organic inputs",
         input_reduction_5_score == 3 ~ "Combination of ecological practices/treatments, and chemical and/or organic inputs",
         input_reduction_5_score == 2 ~ "Combination of chemical and organic inputs",
         input_reduction_5_score == 1 ~ "Only chemical inputs"
       ),
-      input_reduction_6_score = case_when( # 21
+      input_reduction_6_score = case_when(
+        # 21
         # =0
         fish_disease_management == 0 ~ 5,
         # 5 or 6
         (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
-          (fish_disease_management_1 == 0 & fish_disease_management_2 == 0 &
-            fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ 5,
+          (fish_disease_management_1 == 0 &
+            fish_disease_management_2 == 0 &
+            fish_disease_management_3 == 0 &
+            fish_disease_management_4 == 0) ~ 5,
         #  3 or 4 & 5 or 6
         ((fish_disease_management_1 == 0 & fish_disease_management_2 == 0) &
           ((fish_disease_management_3 == 1 | fish_disease_management_4 == 1) &
-            (fish_disease_management_5 == 1 | fish_disease_management_6 == 1))) ~ 4,
+            (fish_disease_management_5 == 1 |
+              fish_disease_management_6 == 1))) ~ 4,
         # 3 or 4
         (fish_disease_management_3 == 1 | fish_disease_management_4 == 1) &
-          (fish_disease_management_1 == 0 & fish_disease_management_2 == 0 &
-            fish_disease_management_5 == 0 & fish_disease_management_6 == 0) ~ 4,
+          (fish_disease_management_1 == 0 &
+            fish_disease_management_2 == 0 &
+            fish_disease_management_5 == 0 &
+            fish_disease_management_6 == 0) ~ 4,
         #  1 or 2 & 5 or 6
         ((fish_disease_management_3 == 0 & fish_disease_management_4 == 0) &
           ((fish_disease_management_1 == 1 | fish_disease_management_2 == 1) &
-            (fish_disease_management_5 == 1 | fish_disease_management_6 == 1))) ~ 3,
+            (fish_disease_management_5 == 1 |
+              fish_disease_management_6 == 1))) ~ 3,
         # 1 or 2 & 3 or 4 & 5 or 6
         (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
           (fish_disease_management_3 == 1 | fish_disease_management_4 == 1) &
           (fish_disease_management_1 == 1 | fish_disease_management_2 == 1) ~ 3,
         # 1 or 2 & 3 or 4
-        fish_disease_management_5 == 0 & fish_disease_management_6 == 0 &
+        fish_disease_management_5 == 0 &
+          fish_disease_management_6 == 0 &
           ((fish_disease_management_1 == 1 | fish_disease_management_2 == 1) &
-            (fish_disease_management_3 == 1 | fish_disease_management_4 == 1)) ~ 2,
+            (fish_disease_management_3 == 1 |
+              fish_disease_management_4 == 1)) ~ 2,
         #  1 or 2
         (fish_disease_management_1 == 1 | fish_disease_management_2 == 1) &
-          (fish_disease_management_5 == 0 & fish_disease_management_6 == 0 &
-            fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ 1
+          (fish_disease_management_5 == 0 &
+            fish_disease_management_6 == 0 &
+            fish_disease_management_3 == 0 &
+            fish_disease_management_4 == 0) ~ 1
       ),
-      input_reduction_6_label = case_when( # 22
+      input_reduction_6_label = case_when(
+        # 22
         fish_disease_management == 0 ~ "No action taken",
         (fish_disease_management_5 == 1 | fish_disease_management_6 == 1) &
-          (fish_disease_management_1 == 0 & fish_disease_management_2 == 0 &
-            fish_disease_management_3 == 0 & fish_disease_management_4 == 0) ~ "Only ecological practices/treatments",
+          (fish_disease_management_1 == 0 &
+            fish_disease_management_2 == 0 &
+            fish_disease_management_3 == 0 &
+            fish_disease_management_4 == 0) ~ "Only ecological practices/treatments",
         input_reduction_6_score == 4 ~ "Combination of ecological practices/treatments and organic inputs.OR only organic inputs",
         input_reduction_6_score == 3 ~ "Combination of ecological practices/treatments, and chemical and/or organic inputs",
         input_reduction_6_score == 2 ~ "Combination of chemical and organic inputs",
@@ -313,14 +383,16 @@ soil_health_score <- function() {
 
   tmp <- main_surveys %>%
     mutate(
-      soil_health_score = case_when( # 23
+      soil_health_score = case_when(
+        # 23
         sf_practices_count >= 4 ~ 5,
         sf_practices_count == 3 ~ 4,
         sf_practices_count == 2 ~ 3,
         sf_practices_count == 1 ~ 2,
         sf_practices_count == 0 ~ 1,
       ),
-      soil_health_label = case_when( # 24
+      soil_health_label = case_when(
+        # 24
         soil_health_score == 5 ~ "Implementing 4 or more practices",
         soil_health_score == 4 ~ "Implementing 3 practices",
         soil_health_score == 3 ~ "Implementing 2 practices",
@@ -343,7 +415,11 @@ soil_health_score <- function() {
 ################################################################################
 
 animal_health_scores <- function() {
-  required_vars <- c("animal_health", "animal_health_management_count", "fish_land_practice_count")
+  required_vars <- c(
+    "animal_health",
+    "animal_health_management_count",
+    "fish_land_practice_count"
+  )
 
   for (i in required_vars) {
     if (i %!in% colnames(main_surveys)) {
@@ -355,7 +431,8 @@ animal_health_scores <- function() {
   tmp <- main_surveys %>%
     mutate(
       animal_health_1_score = animal_health, # 25
-      animal_health_1_label = factor( # 26
+      animal_health_1_label = factor(
+        # 26
         animal_health,
         levels = c(1:5),
         labels = c(
@@ -366,28 +443,32 @@ animal_health_scores <- function() {
           "Animals do not suffer from stress, hunger, thirst, pain, or diseases, and are slaughtered in a way to avoid unnecessary pain"
         )
       ),
-      animal_health_2_score = case_when( # 27
+      animal_health_2_score = case_when(
+        # 27
         animal_health_management_count >= 4 ~ 5,
         animal_health_management_count == 3 ~ 4,
         animal_health_management_count == 2 ~ 3,
         animal_health_management_count == 1 ~ 2,
         animal_health_management_count == 0 ~ 1,
       ),
-      animal_health_2_label = case_when( # 28
+      animal_health_2_label = case_when(
+        # 28
         animal_health_2_score == 5 ~ "Implementing 4 or more practices",
         animal_health_2_score == 4 ~ "Implementing 3 practices",
         animal_health_2_score == 3 ~ "Implementing 2 practices",
         animal_health_2_score == 2 ~ "Implementing 1 practice",
         animal_health_2_score == 1 ~ "Not implementing any practice"
       ),
-      animal_health_3_score = case_when( # 29
+      animal_health_3_score = case_when(
+        # 29
         fish_land_practice_count >= 4 ~ 5,
         fish_land_practice_count == 3 ~ 4,
         fish_land_practice_count == 2 ~ 3,
         fish_land_practice_count == 1 ~ 2,
         fish_land_practice_count == 0 ~ 1,
       ),
-      animal_health_3_label = case_when( # 30
+      animal_health_3_label = case_when(
+        # 30
         animal_health_3_score == 5 ~ "Implementing 4 or more practices",
         animal_health_3_score == 4 ~ "Implementing 3 practices",
         animal_health_3_score == 3 ~ "Implementing 2 practices",
@@ -411,10 +492,17 @@ animal_health_scores <- function() {
 
 div_score <- function(var) {
   required_vars <- c(
-    "crops_count", "livestock_count", "fish_count",
-    "tree_diversity", "bushland_diversity", "fallow_land_diversity",
-    "hedgerows_diversity", "grassland_diversity", "forest_patches_diversity",
-    "wetlands_diversity", "woodlots_diversity"
+    "crops_count",
+    "livestock_count",
+    "fish_count",
+    "tree_diversity",
+    "bushland_diversity",
+    "fallow_land_diversity",
+    "hedgerows_diversity",
+    "grassland_diversity",
+    "forest_patches_diversity",
+    "wetlands_diversity",
+    "woodlots_diversity"
   )
 
   for (i in required_vars) {
@@ -424,17 +512,15 @@ div_score <- function(var) {
     }
   }
 
-
   scores <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} == "high" ~ 5,
-          {{ var }} == "medium" ~ 3.67,
-          {{ var }} == "low" ~ 2.33,
-          {{ var }} == "none" ~ 1
-        )
+      {{ var }} := case_when(
+        {{ var }} == "high" ~ 5,
+        {{ var }} == "medium" ~ 3.67,
+        {{ var }} == "low" ~ 2.33,
+        {{ var }} == "none" ~ 1
+      )
     )
 
   return(scores[[1]])
@@ -442,10 +528,17 @@ div_score <- function(var) {
 
 div_labels <- function(var) {
   required_vars <- c(
-    "crops_count", "livestock_count", "fish_count",
-    "tree_diversity", "bushland_diversity", "fallow_land_diversity",
-    "hedgerows_diversity", "grassland_diversity", "forest_patches_diversity",
-    "wetlands_diversity", "woodlots_diversity"
+    "crops_count",
+    "livestock_count",
+    "fish_count",
+    "tree_diversity",
+    "bushland_diversity",
+    "fallow_land_diversity",
+    "hedgerows_diversity",
+    "grassland_diversity",
+    "forest_patches_diversity",
+    "wetlands_diversity",
+    "woodlots_diversity"
   )
 
   for (i in required_vars) {
@@ -455,17 +548,15 @@ div_labels <- function(var) {
     }
   }
 
-
   labels <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} == "high" ~ "High: five or more species with different heights, woodiness or flowering seasons",
-          {{ var }} == "medium" ~ "Medium: two to four species",
-          {{ var }} == "low" ~ "Low: only one species",
-          {{ var }} == "none" ~ "None"
-        )
+      {{ var }} := case_when(
+        {{ var }} == "high" ~ "High: five or more species with different heights, woodiness or flowering seasons",
+        {{ var }} == "medium" ~ "Medium: two to four species",
+        {{ var }} == "low" ~ "Low: only one species",
+        {{ var }} == "none" ~ "None"
+      )
     )
 
   return(labels[[1]])
@@ -473,10 +564,17 @@ div_labels <- function(var) {
 
 biodiversity_scores <- function() {
   required_vars <- c(
-    "crops_count", "livestock_count", "fish_count",
-    "tree_diversity", "bushland_diversity", "fallow_land_diversity",
-    "hedgerows_diversity", "grassland_diversity", "forest_patches_diversity",
-    "wetlands_diversity", "woodlots_diversity"
+    "crops_count",
+    "livestock_count",
+    "fish_count",
+    "tree_diversity",
+    "bushland_diversity",
+    "fallow_land_diversity",
+    "hedgerows_diversity",
+    "grassland_diversity",
+    "forest_patches_diversity",
+    "wetlands_diversity",
+    "woodlots_diversity"
   )
 
   for (i in required_vars) {
@@ -486,16 +584,20 @@ biodiversity_scores <- function() {
     }
   }
 
+  print(main_surveys$crops_count)
+
   tmp <- main_surveys %>%
     mutate(
-      biodiversity_1_score = case_when( # 31
+      biodiversity_1_score = case_when(
+        # 31
         crops_count <= quantile(crops_count, 0.2, na.rm = TRUE) ~ 1,
         crops_count <= quantile(crops_count, 0.4, na.rm = TRUE) ~ 2,
         crops_count <= quantile(crops_count, 0.6, na.rm = TRUE) ~ 3,
         crops_count <= quantile(crops_count, 0.8, na.rm = TRUE) ~ 4,
         crops_count > quantile(crops_count, 0.8, na.rm = TRUE) ~ 5
       ),
-      biodiversity_1_label = factor( # 32
+      biodiversity_1_label = factor(
+        # 32
         biodiversity_1_score,
         levels = c(1:5),
         labels = c(
@@ -506,14 +608,16 @@ biodiversity_scores <- function() {
           "81st - 100th percentile (high diversity)"
         )
       ),
-      biodiversity_2_score = case_when( # 33
+      biodiversity_2_score = case_when(
+        # 33
         livestock_count <= quantile(livestock_count, 0.2, na.rm = TRUE) ~ 1,
         livestock_count <= quantile(livestock_count, 0.4, na.rm = TRUE) ~ 2,
         livestock_count <= quantile(livestock_count, 0.6, na.rm = TRUE) ~ 3,
         livestock_count <= quantile(livestock_count, 0.8, na.rm = TRUE) ~ 4,
         livestock_count > quantile(livestock_count, 0.8, na.rm = TRUE) ~ 5
       ),
-      biodiversity_2_label = factor( # 34
+      biodiversity_2_label = factor(
+        # 34
         biodiversity_2_score,
         levels = c(1:5),
         labels = c(
@@ -524,14 +628,16 @@ biodiversity_scores <- function() {
           "81st - 100th percentile (high diversity)"
         )
       ),
-      biodiversity_3_score = case_when( # 35
+      biodiversity_3_score = case_when(
+        # 35
         fish_count <= quantile(fish_count, 0.2, na.rm = TRUE) ~ 1,
         fish_count <= quantile(fish_count, 0.4, na.rm = TRUE) ~ 2,
         fish_count <= quantile(fish_count, 0.6, na.rm = TRUE) ~ 3,
         fish_count <= quantile(fish_count, 0.8, na.rm = TRUE) ~ 4,
         fish_count > quantile(fish_count, 0.8, na.rm = TRUE) ~ 5
       ),
-      biodiversity_3_label = factor( # 36
+      biodiversity_3_label = factor(
+        # 36
         biodiversity_3_score,
         levels = c(1:5),
         labels = c(
@@ -575,8 +681,12 @@ biodiversity_scores <- function() {
 
 syn_score <- function(var) {
   required_vars <- c(
-    "ecological_practices_count", "sf_practices_count", "pd_practices_count",
-    "grazing_practice_count", "fish_land_practice_count", "relationship_actions_count"
+    "ecological_practices_count",
+    "sf_practices_count",
+    "pd_practices_count",
+    "grazing_practice_count",
+    "fish_land_practice_count",
+    "relationship_actions_count"
   )
 
   for (i in required_vars) {
@@ -589,14 +699,13 @@ syn_score <- function(var) {
   scores <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} >= 4 ~ 5,
-          {{ var }} == 3 ~ 4,
-          {{ var }} == 2 ~ 3,
-          {{ var }} == 1 ~ 2,
-          {{ var }} == 0 ~ 1,
-        )
+      {{ var }} := case_when(
+        {{ var }} >= 4 ~ 5,
+        {{ var }} == 3 ~ 4,
+        {{ var }} == 2 ~ 3,
+        {{ var }} == 1 ~ 2,
+        {{ var }} == 0 ~ 1,
+      )
     )
 
   return(scores[[1]])
@@ -604,8 +713,12 @@ syn_score <- function(var) {
 
 syn_labels <- function(var) {
   required_vars <- c(
-    "ecological_practices_count", "sf_practices_count", "pd_practices_count",
-    "grazing_practice_count", "fish_land_practice_count", "relationship_actions_count"
+    "ecological_practices_count",
+    "sf_practices_count",
+    "pd_practices_count",
+    "grazing_practice_count",
+    "fish_land_practice_count",
+    "relationship_actions_count"
   )
 
   for (i in required_vars) {
@@ -618,14 +731,13 @@ syn_labels <- function(var) {
   labels <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} >= 4 ~ "Implementing 4 or more practices",
-          {{ var }} == 3 ~ "Implementing 3 practices",
-          {{ var }} == 2 ~ "Implementing 2 practices",
-          {{ var }} == 1 ~ "Implementing 1 practice",
-          {{ var }} == 0 ~ "Not implementing any practice"
-        )
+      {{ var }} := case_when(
+        {{ var }} >= 4 ~ "Implementing 4 or more practices",
+        {{ var }} == 3 ~ "Implementing 3 practices",
+        {{ var }} == 2 ~ "Implementing 2 practices",
+        {{ var }} == 1 ~ "Implementing 1 practice",
+        {{ var }} == 0 ~ "Not implementing any practice"
+      )
     )
 
   return(labels[[1]])
@@ -633,8 +745,12 @@ syn_labels <- function(var) {
 
 synergy_scores <- function() {
   required_vars <- c(
-    "ecological_practices_count", "sf_practices_count", "pd_practices_count",
-    "grazing_practice_count", "fish_land_practice_count", "relationship_actions_count"
+    "ecological_practices_count",
+    "sf_practices_count",
+    "pd_practices_count",
+    "grazing_practice_count",
+    "fish_land_practice_count",
+    "relationship_actions_count"
   )
 
   for (i in required_vars) {
@@ -685,22 +801,22 @@ economic_div_score <- function() {
 
   tmp <- main_surveys %>%
     mutate(
-      economic_diversification_score = # 65
-        case_when(
-          income_count >= 5 ~ 5,
-          income_count == 4 ~ 4,
-          income_count == 3 ~ 3,
-          income_count == 2 ~ 2,
-          income_count == 1 ~ 1
-        ),
-      economic_diversification_label = # 66
-        case_when(
-          income_count >= 5 ~ "Five or more methods of income generation",
-          income_count == 4 ~ "Four methods of income generation",
-          income_count == 3 ~ "Three methods of income generation",
-          income_count == 2 ~ "Two methods of income generation",
-          income_count == 1 ~ "One method of income generation"
-        )
+      # 65
+      economic_diversification_score = case_when(
+        income_count >= 5 ~ 5,
+        income_count == 4 ~ 4,
+        income_count == 3 ~ 3,
+        income_count == 2 ~ 2,
+        income_count == 1 ~ 1
+      ),
+      # 66
+      economic_diversification_label = case_when(
+        income_count >= 5 ~ "Five or more methods of income generation",
+        income_count == 4 ~ "Four methods of income generation",
+        income_count == 3 ~ "Three methods of income generation",
+        income_count == 2 ~ "Two methods of income generation",
+        income_count == 1 ~ "One method of income generation"
+      )
     ) %>%
     select(household_id, starts_with("economic_diversification"))
 
@@ -718,8 +834,13 @@ economic_div_score <- function() {
 
 cck_score <- function(var) {
   required_vars <- c(
-    "share_extension_workers", "share_consumers", "share_traders",
-    "share_govt", "share_ngos", "share_farmers", "share_researchers"
+    "share_extension_workers",
+    "share_consumers",
+    "share_traders",
+    "share_govt",
+    "share_ngos",
+    "share_farmers",
+    "share_researchers"
   )
 
   for (i in required_vars) {
@@ -732,14 +853,13 @@ cck_score <- function(var) {
   scores <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} >= 5 ~ 5,
-          {{ var }} == 4 ~ 4,
-          {{ var }} %in% c(2, 3) ~ 3,
-          {{ var }} == 1 ~ 2,
-          {{ var }} == 0 ~ 1,
-        )
+      {{ var }} := case_when(
+        {{ var }} >= 5 ~ 5,
+        {{ var }} == 4 ~ 4,
+        {{ var }} %in% c(2, 3) ~ 3,
+        {{ var }} == 1 ~ 2,
+        {{ var }} == 0 ~ 1,
+      )
     )
 
   return(scores[[1]])
@@ -747,8 +867,13 @@ cck_score <- function(var) {
 
 cck_labels <- function(var) {
   required_vars <- c(
-    "share_extension_workers", "share_consumers", "share_traders",
-    "share_govt", "share_ngos", "share_farmers", "share_researchers"
+    "share_extension_workers",
+    "share_consumers",
+    "share_traders",
+    "share_govt",
+    "share_ngos",
+    "share_farmers",
+    "share_researchers"
   )
 
   for (i in required_vars) {
@@ -761,14 +886,13 @@ cck_labels <- function(var) {
   labels <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} >= 5 ~ "5 or more times per year",
-          {{ var }} == 4 ~ "4 times per year",
-          {{ var }} %in% c(2, 3) ~ "2 to 3 times per year",
-          {{ var }} == 1 ~ "1 time per year",
-          {{ var }} == 0 ~ "Never"
-        )
+      {{ var }} := case_when(
+        {{ var }} >= 5 ~ "5 or more times per year",
+        {{ var }} == 4 ~ "4 times per year",
+        {{ var }} %in% c(2, 3) ~ "2 to 3 times per year",
+        {{ var }} == 1 ~ "1 time per year",
+        {{ var }} == 0 ~ "Never"
+      )
     )
 
   return(labels[[1]])
@@ -776,8 +900,13 @@ cck_labels <- function(var) {
 
 cc_knowledge_scores <- function() {
   required_vars <- c(
-    "share_extension_workers", "share_consumers", "share_traders",
-    "share_govt", "share_ngos", "share_farmers", "share_researchers"
+    "share_extension_workers",
+    "share_consumers",
+    "share_traders",
+    "share_govt",
+    "share_ngos",
+    "share_farmers",
+    "share_researchers"
   )
 
   for (i in required_vars) {
@@ -820,8 +949,10 @@ cc_knowledge_scores <- function() {
 
 diet_labels <- function(var) {
   required_vars <- c(
-    "access_healthy_food", "access_diverse_food",
-    "access_seasonal_food", "access_traditional_food"
+    "access_healthy_food",
+    "access_diverse_food",
+    "access_seasonal_food",
+    "access_traditional_food"
   )
 
   for (i in required_vars) {
@@ -834,14 +965,13 @@ diet_labels <- function(var) {
   labels <- main_surveys %>%
     select({{ var }}) %>%
     mutate(
-      {{ var }} :=
-        case_when(
-          {{ var }} == 5 ~ "Good access",
-          {{ var }} == 4 ~ "Fairly good",
-          {{ var }} == 3 ~ "Moderate access",
-          {{ var }} == 2 ~ "Limited access",
-          {{ var }} == 1 ~ "No access at all"
-        )
+      {{ var }} := case_when(
+        {{ var }} == 5 ~ "Good access",
+        {{ var }} == 4 ~ "Fairly good",
+        {{ var }} == 3 ~ "Moderate access",
+        {{ var }} == 2 ~ "Limited access",
+        {{ var }} == 1 ~ "No access at all"
+      )
     )
 
   return(labels[[1]])
@@ -849,8 +979,10 @@ diet_labels <- function(var) {
 
 diet_scores <- function() {
   required_vars <- c(
-    "access_healthy_food", "access_diverse_food",
-    "access_seasonal_food", "access_traditional_food"
+    "access_healthy_food",
+    "access_diverse_food",
+    "access_seasonal_food",
+    "access_traditional_food"
   )
 
   for (i in required_vars) {
@@ -869,7 +1001,7 @@ diet_scores <- function() {
       social_values_diet_3_score = access_seasonal_food, # 85
       social_values_diet_3_label = diet_labels(access_seasonal_food), # 86
       social_values_diet_4_score = access_traditional_food, # 87
-      social_values_diet_5_label = diet_labels(access_traditional_food) # 88
+      social_values_diet_4_label = diet_labels(access_traditional_food) # 88
     ) %>%
     select(household_id, starts_with("social_values_diet"))
 
@@ -886,51 +1018,68 @@ diet_scores <- function() {
 ################################################################################
 
 fairness_scores <- function() {
-  tmp_a <- products %>%
-    filter(product_name %in% c("crop", "livestock", "fish", "trees", "honey")) %>%
+  tmp_a <- main_surveys %>%
     mutate(
-      score = fair_price,
-      label = case_when(
-        score == 5 ~ "Always get a fair price",
-        score == 4 ~ "Usually get a fair price, depending on the product",
-        score == 3 ~ "Occasionally get a fair price, depending on the product",
-        score == 2 ~ "Rarely get a fair price",
-        score == 1 ~ "Never get a fair price./I don't know"
-      )
-    ) %>%
-    mutate(
-      name_prefix = case_when(
-        product_name == "crop" ~ "fairness_1_", # 90
-        product_name == "livestock" ~ "fairness_2_", # 92
-        product_name == "fish" ~ "fairness_3_", # 94
-        product_name == "trees" ~ "fairness_4_", # 96
-        product_name == "honey" ~ "fairness_5_" # 98
-      )
-    ) %>%
-    arrange(name_prefix) %>%
-    pivot_wider(
-      id_cols = farm_id,
-      names_from = name_prefix,
-      values_from = c(score, label),
-      names_glue = "{name_prefix}_{.value}",
-      names_vary = "slowest"
-    )
+      ## Fairness 1 = Crops
+      fairness_1_score = crop_fair_price,
+      fairness_1_label = case_when(
+        crop_fair_price == 5 ~ "Always get a fair price",
+        crop_fair_price == 4 ~ "Usually get a fair price, depending on the product",
+        crop_fair_price == 3 ~ "Occasionally get a fair price, depending on the product",
+        crop_fair_price == 2 ~ "Rarely get a fair price",
+        crop_fair_price == 1 ~ "Never get a fair price./I don't know"
+      ),
 
-  tmp_b <- products %>%
-    filter(!is.na(product_name)) %>%
-    group_by(farm_id) %>%
-    summarise(fairness_6_score = round(mean(as.numeric(fair_price), na.rm = TRUE), 0)) %>% # 99
-    mutate(fairness_6_label = case_when( # 100
-      fairness_6_score == 5 ~ "Always get a fair price",
-      fairness_6_score == 4 ~ "Usually get a fair price, depending on the product",
-      fairness_6_score == 3 ~ "Occasionally get a fair price, depending on the product",
-      fairness_6_score == 2 ~ "Rarely get a fair price",
-      fairness_6_score == 1 ~ "Never get a fair price./I don't know"
-    ))
+      ## Fairness 2 = Livestock
+      fairness_2_score = livestock_fair_price,
+      fairness_2_label = case_when(
+        livestock_fair_price == 5 ~ "Always get a fair price",
+        livestock_fair_price == 4 ~ "Usually get a fair price, depending on the product",
+        livestock_fair_price == 3 ~ "Occasionally get a fair price, depending on the product",
+        livestock_fair_price == 2 ~ "Rarely get a fair price",
+        livestock_fair_price == 1 ~ "Never get a fair price./I don't know"
+      ),
+      ## Fairness 3 = Fish
+      fairness_3_score = fish_fair_price,
+      fairness_3_label = case_when(
+        fish_fair_price == 5 ~ "Always get a fair price",
+        fish_fair_price == 4 ~ "Usually get a fair price, depending on the product",
+        fish_fair_price == 3 ~ "Occasionally get a fair price, depending on the product",
+        fish_fair_price == 2 ~ "Rarely get a fair price",
+        fish_fair_price == 1 ~ "Never get a fair price./I don't know"
+      ),
+      ## Fairness 4 = Trees
+      fairness_4_score = trees_fair_price,
+      fairness_4_label = case_when(
+        trees_fair_price == 5 ~ "Always get a fair price",
+        trees_fair_price == 4 ~ "Usually get a fair price, depending on the product",
+        trees_fair_price == 3 ~ "Occasionally get a fair price, depending on the product",
+        trees_fair_price == 2 ~ "Rarely get a fair price",
+        trees_fair_price == 1 ~ "Never get a fair price./I don't know"
+      ),
+      ## Fairness 5 = Honey
+      fairness_5_score = honey_fair_price,
+      fairness_5_label = case_when(
+        honey_fair_price == 5 ~ "Always get a fair price",
+        honey_fair_price == 4 ~ "Usually get a fair price, depending on the product",
+        honey_fair_price == 3 ~ "Occasionally get a fair price, depending on the product",
+        honey_fair_price == 2 ~ "Rarely get a fair price",
+        honey_fair_price == 1 ~ "Never get a fair price./I don't know"
+      ),
+      ## Fairness 6 Score = Other
+      fairness_6_score = other_fair_price,
+      fairness_6_label = case_when(
+        other_fair_price == 5 ~ "Always get a fair price",
+        other_fair_price == 4 ~ "Usually get a fair price, depending on the product",
+        other_fair_price == 3 ~ "Occasionally get a fair price, depending on the product",
+        other_fair_price == 2 ~ "Rarely get a fair price",
+        other_fair_price == 1 ~ "Never get a fair price./I don't know"
+      )
+    ) %>%
+    select(household_id, starts_with("fairness"))
 
   agroecology_scores <- agroecology_scores %>%
-    left_join(tmp_a, by = c("farm_id" = "farm_id")) %>%
-    left_join(tmp_b, by = c("farm_id" = "farm_id"))
+    left_join(tmp_a, by = c("household_id" = "household_id"))
 
   return(agroecology_scores)
 }
@@ -952,15 +1101,16 @@ connectivity_scores <- function() {
     }
   }
 
-  tmp_a <- products %>%
-    filter(product_name %in% c("crop", "livestock", "fish", "trees", "honey")) %>%
+  tmp_a <- main_surveys %>%
     mutate(
-      score = case_when(
-        str_detect(buyer, "direct_to_consumer") ~ 5,
-        str_detect(buyer, "trader_or_supermarket") | str_detect(buyer, "cooperative") ~ 4,
-        str_detect(buyer, "retailers") ~ 3,
-        str_detect(buyer, "middle_man_aggregator") ~ 2,
-        sales == 0 ~ 1,
+      ## Connectivity 1 = Crops
+      connectivity_1_score = case_when(
+        str_detect(crop_sell_to, "direct_to_consumer") ~ 5,
+        str_detect(crop_sell_to, "trader_or_supermarket") |
+          str_detect(crop_sell_to, "cooperative") ~ 4,
+        str_detect(crop_sell_to, "retailers") ~ 3,
+        str_detect(crop_sell_to, "middle_man_aggregator") ~ 2,
+        crop_salessales == 0 ~ 1,
         buyer_other == 1 ~ 4
       ),
       label = case_when(
@@ -971,51 +1121,9 @@ connectivity_scores <- function() {
         score == 1 ~ "Does not sell its products"
       )
     ) %>%
-    mutate(
-      name_prefix = case_when(
-        product_name == "crop" ~ "connectivity_1_", # 102
-        product_name == "livestock" ~ "connectivity_2_", # 104
-        product_name == "fish" ~ "connectivity_3_", # 106
-        product_name == "trees" ~ "connectivity_4_", # 108
-        product_name == "honey" ~ "connectivity_5_" # 110
-      )
-    ) %>%
-    arrange(name_prefix) %>%
-    pivot_wider(
-      id_cols = farm_id,
-      names_from = name_prefix,
-      values_from = c(score, label),
-      names_glue = "{name_prefix}_{.value}",
-      names_vary = "slowest"
-    )
 
-  tmp_b <- products %>%
-    filter(!is.na(product_name)) %>%
-    group_by(farm_id) %>%
-    mutate(
-      score = case_when(
-        str_detect(buyer, "direct_to_consumer") ~ 5,
-        str_detect(buyer, "trader_or_supermarket") | str_detect(buyer, "cooperative") ~ 4,
-        str_detect(buyer, "retailers") ~ 3,
-        str_detect(buyer, "middle_man_aggregator") ~ 2,
-        sales == 0 ~ 1,
-        buyer_other == 1 ~ 4
-      )
-    ) %>%
-    summarise(connectivity_6_score = round(mean(score, na.rm = TRUE), 0)) %>% # 111
-    mutate(
-      connectivity_6_label = case_when( # 112
-        connectivity_6_score == 5 ~ "Directly to consumers",
-        connectivity_6_score == 4 ~ "To farmers organisation/cooperative",
-        connectivity_6_score == 3 ~ "To retailers such us supermarkets, grocery stores, or restaurants.",
-        connectivity_6_score == 2 ~ "To a middle man/aggregator",
-        connectivity_6_score == 1 ~ "Does not sell its products"
-      )
-    )
 
-  agroecology_scores <- agroecology_scores %>%
-    left_join(tmp_a, by = c("farm_id" = "farm_id")) %>%
-    left_join(tmp_b, by = c("farm_id" = "farm_id"))
+
 
   return(agroecology_scores)
 }
@@ -1027,7 +1135,8 @@ connectivity_scores <- function() {
 
 governance_scores <- function() {
   required_vars <- c(
-    "activities_land_management", "influence_land_management",
+    "activities_land_management",
+    "influence_land_management",
     "land_management_view"
   )
 
@@ -1041,7 +1150,8 @@ governance_scores <- function() {
   tmp <- main_surveys %>%
     mutate(
       governance_1_score = activities_land_management, # 113
-      governance_1_label = factor( # 114
+      governance_1_label = factor(
+        # 114
         activities_land_management,
         levels = c(1:5),
         labels = c(
@@ -1053,7 +1163,8 @@ governance_scores <- function() {
         )
       ),
       governance_2_score = influence_land_management, # 115
-      governance_2_label = factor( ## 116
+      governance_2_label = factor(
+        ## 116
         influence_land_management,
         levels = c(1:5),
         labels = c(
@@ -1065,7 +1176,8 @@ governance_scores <- function() {
         )
       ),
       governance_3_score = land_management_view, # 117
-      governance_3_label = factor( # 118
+      governance_3_label = factor(
+        # 118
         land_management_view,
         levels = c(1:5),
         labels = c(
@@ -1103,10 +1215,14 @@ participation_scores <- function() {
 
   tmp <- main_surveys %>%
     mutate(
-      participation_score = ifelse( # 119
-        association_effectiveness == 999, 1, association_effectiveness
+      participation_score = ifelse(
+        # 119
+        association_effectiveness == 999,
+        1,
+        association_effectiveness
       ),
-      participation_label = case_when( # 120
+      participation_label = case_when(
+        # 120
         association_effectiveness == 5 ~ "Associations/organizations demonstrate exceptional effectiveness in supporting farmers' business ventures,
         offering comprehensive assistance, fostering growth, and ensuring long-term success",
         association_effectiveness == 4 ~ "Associations/organizations play a significant role in supporting farmers' businesses,
@@ -1137,32 +1253,105 @@ agroecology_scores <- recylcing_scores()
 agroecology_scores <- input_reduction_scores()
 agroecology_scores <- soil_health_score()
 agroecology_scores <- animal_health_scores()
-# agroecology_scores <- biodiversity_scores()
+agroecology_scores <- biodiversity_scores()
 agroecology_scores <- synergy_scores()
 agroecology_scores <- economic_div_score()
 agroecology_scores <- cc_knowledge_scores()
 agroecology_scores <- diet_scores()
-# agroecology_scores <- fairness_scores()
+agroecology_scores <- fairness_scores()
 # agroecology_scores <- connectivity_scores()
-agroecology_scores <- governance_scores()
-agroecology_scores <- participation_scores()
+#   agroecology_scores <- governance_scores()
+#   agroecology_scores <- participation_scores()
 
-################################################################################
-# WRITE TABLE TO DATBASE
-################################################################################
 
-agroecology_scores <- agroecology_scores %>%
-  mutate(id = row_number()) %>%
-  mutate_at(vars(recycling_1_score:participation_label), as.character) %>%
-  pivot_longer(cols = -c(id, farm_id, owner_id, submission_id)) %>%
-  group_by(id, farm_id, owner_id, submission_id) %>%
-  mutate(value = replace_na(value, "NA")) %>%
-  summarise(properties = jsonlite::toJSON(data.table::transpose(cur_data(), make.names = TRUE))) %>%
-  mutate(properties = str_remove_all(properties, "\\["))
+# Final scores
 
 agroecology_scores <- agroecology_scores %>%
-  mutate(properties = str_remove_all(properties, "\\]"))
+  mutate(
+    overall_recycling_score = median(
+      recycling_1_score,
+      recycling_2_score,
+      recycling_3_score,
+      recycling_4_score,
+      recycling_5_score,
+      na.rm = TRUE
+    ),
+    overall_input_reduction_score = median(
+      input_reduction_1_score,
+      input_reduction_2_score,
+      input_reduction_3_score,
+      input_reduction_4_score,
+      input_reduction_5_score,
+      input_reduction_6_score,
+      na.rm = TRUE
+    ),
+    overall_soil_health_score = soil_health_score,
+    overall_animal_health_score = median(
+      animal_health_1_score,
+      animal_health_2_score,
+      animal_health_3_score,
+      na.rm = TRUE
+    ),
+    overall_biodiversity_score = median(
+      biodiversity_1_score,
+      biodiversity_2_score,
+      biodiversity_3_score,
+      biodiversity_4_score,
+      biodiversity_5_score,
+      biodiversity_6_score,
+      biodiversity_7_score,
+      biodiversity_8_score,
+      biodiversity_9_score,
+      biodiversity_10_score,
+      biodiversity_11_score,
+      na.rm = TRUE
+    ),
+    overall_synergy_score = median(
+      synergy_1_score,
+      synergy_2_score,
+      synergy_3_score,
+      synergy_4_score,
+      synergy_5_score,
+      synergy_6_score,
+      na.rm = TRUE
+    ),
+    overall_economic_diversification_score = economic_diversification_score,
+    overall_co_creation_knowledge_score = median(
+      co_creation_knowledge_1_score,
+      co_creation_knowledge_2_score,
+      co_creation_knowledge_3_score,
+      co_creation_knowledge_4_score,
+      co_creation_knowledge_5_score,
+      co_creation_knowledge_6_score,
+      co_creation_knowledge_7_score,
+      na.rm = TRUE
+    ),
+    overall_social_values_diet_score = median(
+      social_values_diet_1_score,
+      social_values_diet_2_score,
+      social_values_diet_3_score,
+      social_values_diet_4_score,
+      na.rm = TRUE
+    ),
+    overall_fairness_score = median(
+      fairness_1_score,
+      fairness_2_score,
+      fairness_3_score,
+      fairness_4_score,
+      fairness_5_score,
+      fairness_6_score,
+      na.rm = TRUE
+    )
+  )
 
-dbWriteTable(con, "agroecology_scores", agroecology_scores, overwrite = TRUE)
 
-dbDisconnect(con)
+
+
+# ################################################################################
+# # WRITE TABLE TO OUTPUT EXCEL FILE
+# ################################################################################
+
+
+
+
+write.xlsx(agroecology_scores, file = "output/agroecology_scores_bfa.xlsx", rowNames = FALSE)
