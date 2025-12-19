@@ -1,5 +1,4 @@
-# 1.5 [Energy use]{.mark}
-
+# 1.5 [Energy use]
 +---------------+------------------------------------------------------+
 | **Indicator** | [Sustainable energy security aims to meet present    |
 |               | energy needs without compromising the ability of     |
