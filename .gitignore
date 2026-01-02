@@ -49,3 +49,7 @@ rsconnect/
 .env
 user-test.csv
 /.quarto/
+
+# Generated output files from analysis scripts
+unique_sectors.csv
+sector_frequency.csv
