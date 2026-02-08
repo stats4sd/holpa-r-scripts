@@ -6,67 +6,11 @@ library(jsonlite)
 library(dotenv)
 library(data.table)
 
-'%!in%' <- function(x,y)!('%in%'(x,y))
-
-env_path <- paste(getwd(), ".env", sep = '/')
-
-dotenv::load_dot_env(env_path)
-
-can.be.numeric <- function(x) {
-  stopifnot(is.atomic(x) || is.list(x)) # check if x is a vector
-  numNAs <- sum(is.na(x))
-  numNAs_new <- suppressWarnings(sum(is.na(as.numeric(x))))
-  return(numNAs_new == numNAs)
-}
-
-na_99 <- function(data){
-  
-  data <- data%>%
-    mutate_if(is.numeric, function(x) ifelse(x < 0, NA, x))
-  
-  return(data)
-  
-}
-
-#Convert back to numbers as variables are otherwise presented as characters
-number_fix <- function(data){
-  
-  #convert "NA" or "NaN" to NA proper
-  data <- data%>%
-    mutate_all(function(x) ifelse(x == "NA", NA, x))%>%
-    mutate_all(function(x) ifelse(x == "NaN", NA, x))
-  
-  data <- as.data.frame(lapply(data, function(col) {
-    if (can.be.numeric(col)) {
-      as.numeric(col)
-    } else {
-      col
-    }
-  }))
-  
-  data <- na_99(data)
-  
-  return(data)
-  
-}
+source("data_processing/helper_functions.R")
 
 ################################################################################
 # GET DATA TABLES
 ################################################################################
-
-get_db <- function() {
-  return(dbConnect(RMariaDB::MariaDB(),
-                   dbname = Sys.getenv("DB_DATABASE"),
-                   host = Sys.getenv("DB_HOST"),
-                   port = as.integer(Sys.getenv("DB_PORT")),
-                   user = Sys.getenv("DB_USERNAME"),
-                   password = Sys.getenv("DB_PASSWORD"),
-                   bigint = "numeric",
-                   int = "numeric"
-
-  ))
-}
-
 con <- get_db()
 
 entity_values <- dbGetQuery(con, "SELECT * FROM entity_values")
@@ -391,38 +335,66 @@ if("chemical_applied" %in% colnames(main_surveys)){
 }
 
 if("non_chemical_applied" %in% colnames(main_surveys)){
-  main_surveys <- main_surveys%>%
-    mutate(   
-    non_chemical_applied_kg = ifelse(is.na(non_chemical_applied),NA, non_chemical_applied_kg),
-    non_chemical_area_ha = ifelse(is.na(non_chemical_area),NA, non_chemical_area_ha),
-    non_chemical_applied_per_area = ifelse(is.na(non_chemical_applied) | is.na(non_chemical_area),NA, non_chemical_applied_per_area),
-    non_chemical_kg_ha = ifelse(is.na(non_chemical_applied)  | is.na(non_chemical_area),NA, non_chemical_kg_ha)
+  main_surveys <- main_surveys %>%
+    mutate(
+      non_chemical_applied_kg = ifelse(
+        is.na(non_chemical_applied),
+        NA,
+        non_chemical_applied_kg
+      ),
+      non_chemical_area_ha = ifelse(
+        is.na(non_chemical_area),
+        NA,
+        non_chemical_area_ha
+      ),
+      non_chemical_applied_per_area = ifelse(
+        is.na(non_chemical_applied) | is.na(non_chemical_area),
+        NA,
+        non_chemical_applied_per_area
+      ),
+      non_chemical_kg_ha = ifelse(
+        is.na(non_chemical_applied) | is.na(non_chemical_area),
+        NA,
+        non_chemical_kg_ha
+      )
     )
 }
 
 if("total_crop_area" %in% colnames(main_surveys)){
-main_surveys <- main_surveys%>%
-  mutate(   
-    total_crop_area_ha = ifelse(is.na(total_crop_area), NA, total_crop_area))
+main_surveys <- main_surveys %>%
+  mutate(
+    total_crop_area_ha = ifelse(is.na(total_crop_area), NA, total_crop_area)
+  )
 }
 
 if("livestock_land_own" %in% colnames(main_surveys)){
-  main_surveys <- main_surveys%>%
-    mutate(   
-      livestock_land_own_ha = ifelse(is.na(livestock_land_own), NA, livestock_land_own_ha),
-      livestock_land_share_ha = ifelse(is.na(livestock_land_share), NA, livestock_land_share_ha))
+  main_surveys <- main_surveys %>%
+    mutate(
+      livestock_land_own_ha = ifelse(
+        is.na(livestock_land_own),
+        NA,
+        livestock_land_own_ha
+      ),
+      livestock_land_share_ha = ifelse(
+        is.na(livestock_land_share),
+        NA,
+        livestock_land_share_ha
+      )
+    )
 }
 
 if("fish_area" %in% colnames(main_surveys)){
-  main_surveys <- main_surveys%>%
-    mutate(   
-      fish_area_ha = ifelse(is.na(fish_area), NA, fish_area_ha))
+  main_surveys <- main_surveys %>%
+    mutate(
+      fish_area_ha = ifelse(is.na(fish_area), NA, fish_area_ha)
+    )
 }
 
 if("area_at_threat" %in% colnames(main_surveys)){
-  main_surveys <- main_surveys%>%
-    mutate(   
-      area_at_threat_ha = ifelse(is.na(area_at_threat), NA, area_at_threat_ha))
+  main_surveys <- main_surveys %>%
+    mutate(
+      area_at_threat_ha = ifelse(is.na(area_at_threat), NA, area_at_threat_ha)
+    )
 }
 
 permanent_workers <- permanent_workers%>%
